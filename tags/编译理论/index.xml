@@ -1,78 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>编译理论 on 树洞</title>
-    <link>https://Wo0dsHole.github.io/tags/%E7%BC%96%E8%AF%91%E7%90%86%E8%AE%BA/</link>
-    <description>Recent content in 编译理论 on 树洞</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 26 Jun 2019 13:34:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://Wo0dsHole.github.io/tags/%E7%BC%96%E8%AF%91%E7%90%86%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>我注虎书</title>
-      <link>https://Wo0dsHole.github.io/2019/tiger_start/</link>
-      <pubDate>Wed, 26 Jun 2019 13:34:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/tiger_start/</guid>
-      <description>我注虎书 [TOC]
-0.赘言 0.程序语言大略 粗读了《EOPL》、《虎书》后，对程序语言有了一个大致的认识，小结如下。
-两部分
-程序语言分为两个部分：
- 设计：研究对象是语义，而解释器只是媒介 实现：研究对象是解释器，专门针对其实现的工程细节  两者其实有点“前端-后端”的意思。
-关联和差异PL设计借助 lambda 演算，相关元语言（Scheme）近似于语法树，所以词法、语法分析阶段简单，几乎不用考虑。得到 AST 之后，便在 AST、数据上下文、控制上下文的基础上，通过函数式编程来实现各种语言特性，借此研究语义。
-PL实现相比设计，区别主要是在 AST之后，由于工程要求需要考虑，如可移植性、效率、优化、生成机器相关目标语言等方面。因而，在 AST 之后会进一步在中间表示上作文章，比如中间语言、规范树，这是为了进一步方便后续阶段，这与具体语法转化为抽象语法的目的一样。再之后便是对这些更靠近机器的中间表示，进行到机器指令的翻译。优化则是在翻译前，对中间表示的分析、改变上完成的。
-因此，不同 PL 的差异主要是在，AST附近（设计：直接对AST的解释操作，实现：生成中间表示）就已经实现，即各种语言特性。此后，对于实现，都是向目标机器指令转化的工程细节（后端）。对于设计，之后都是直接对 AST 的解释操作。
-大体掌握内容
-对于设计：EOPL教材解释器-&amp;gt;EOPL练习解释器
- 理解各种语言特性的语义本质，基于 lambda 演算编写对应的解释器。  对于实现：虎书前12章的 6 个实验，基本都是给一些框架代码，然后自己现实补全。
- 词法、语法分析对应的两种抽象原理：正则表达式（有限自动机）、上下文无关语法 各类语法的分类特点，分析原理 生成器的使用：Lex、Yacc 数据上下文（环境）的实现 语义对应的类型检查 控制上下文（栈帧）的实现 中间表示 基本块和轨迹 指令选择 活跃分析 寄存器分配  1.我注虎书 已粗读一遍，正如作者自己引用的名言“尽可能简单，但不过于简单”。这很能概括虎书的专业和实用程度。
-虎书的知识结构、讲述方式都是我所喜欢的，尤其是自己去写实现代码，是对书最好的理解、翻译。
-但是阅读虎书并没有 EOPL 那般清晰，根源就在于实现语言 C 身上。
-如 SICP 中的注释所说——
-“允许结构的元素又是结构，但却要程序员显式地操作指针，并限制性地要求结构的每个域只能包含预先定义好的形式。”
-“这样过多的可声明数据结构导致函数的专用化，对合作造成阻碍和惩罚。”
-因此，我打算用图的方式，去梳理虎书实现时的相关结构。这样使得理解清晰化，可以更专注于其中的编译理论逻辑。同时也可以学习编程能力，这是我转做开发所缺少的。
-基本上就是以前 12 章的 6个实验为主体，配合对理论的梳理。
-但在内容上，主要是写我自己的理解，而知识的摘抄行为尽量避免，除非是必要的，或是我现在无法理解的知识。
- lab1：Straight-line program interpreter（直线式程序解释器） lab2：Lexical Analysis（词法分析） lab3：Syntax Analysis（语法分析） lab4：Type Checking（类型检查） lab5：Intermediate Code（活动记录、中间代码生成） lab6：A Workable Tiger Compiler（基本块和轨迹、指令选择、寄存器分配）  1.</description>
-    </item>
-    
-    <item>
-      <title>《虎书》粗读随记</title>
-      <link>https://Wo0dsHole.github.io/2019/tiger_c/</link>
-      <pubDate>Mon, 20 May 2019 20:00:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/tiger_c/</guid>
-      <description>《虎书》 1.绪论 理解和实现大型软件工程中应注意其：基本抽象（模块）和接口。
-编译器的各个阶段和接口
-语法、词法分析的工具（Yacc-Bison、Lex-Flex），涉及的抽象是：上下文无关文法、正则表达式
-树语言（中间表示）结构
-编程时的设计约定、模块化规则：前缀模拟模块、typedef对应结构指针、构造函数&amp;hellip;&amp;hellip;（推荐阅读：C接口和实现）
-函数式实现理解语义和属性文法
-练习：二叉平衡树、平衡搜索树
-2.词法分析 （意义：扩展到其他领域）
-词法规范的静态描述：正则表达式
-正则表达式的二义性消除：最长匹配（if8）、规则优先（if）
- （DFA）确定的有限自动机：不存在从同一状态出发的两条边标记为相同的符号。
-转化矩阵、终结数组（状态编号-&amp;gt;动作）
-识别最长匹配：Last-Final（最近遇到的终态编号）、Input-Position-at-Last-Final（当前输入位置）。每次进入终态时更新。
- （NFA）非确定的有限自动机：存在从同一状态出发的两条边标记为相同的符号。（尤其是“空”边）
- 正则表达式转NFA
-原因：对某种 token的正则表达式先是单独定义的，之后需要对这些正则表达式合并、连接，这使得 NFA是最直接的“整合”方式，只需要“空边”连接、也不用管合并中的公共部分。也许有限状态机的处理到最后更像是“图”问题。
- NFA转 DFA
-按上述原因可知主要是：空边处理、合并（最小化）。
-转化过程是一种枚举尝试解决“猜测需求”的过程，NFA（n个）-&amp;gt;DFA（至多 2^n^个），但最后的算法中避免了这种指数膨胀。
-edge(s,c)：从状态 s沿着标有 c的一条边可到达的所有 NFA状态集合。
-closure(S)：从 S中的状态出发，无需接收任何字符，即只有空边可到达的状态组成集合。
-相关简单算法：
-closure(S) = T = S || （edge(s，空)） （s属于T）
-DFAedge(d,c) = closure(edge(s,c))（s属于d）
-转化算法：
-states[0] &amp;lt;- {};states[1] &amp;lt;- closure({s1})p &amp;lt;- 1;	j&amp;lt;- 0while j &amp;lt;= pforeach c属于 字母表e &amp;lt;- DFAedge(states[j],c)if e == states[i] for some i &amp;lt;= pthen trans[j,c] &amp;lt;- ielse p &amp;lt;- p + 1states[p] &amp;lt;- etrans[j,c] &amp;lt;- pj &amp;lt;- j + 1其实就是：单个状态间的转移-&amp;gt;状态集合间的转移。其中状态集合 = DFAedge(d,c) + closure(空)。得到新的转化表。</description>
-    </item>
-    
-  </channel>
-</rss>

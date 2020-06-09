@@ -1,186 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>二进制 on 树洞</title>
-    <link>https://Wo0dsHole.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/</link>
-    <description>Recent content in 二进制 on 树洞</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 15 Jan 2020 14:45:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://Wo0dsHole.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>0-读书笔记</title>
-      <link>https://Wo0dsHole.github.io/2020/1-1-3-plp/</link>
-      <pubDate>Wed, 15 Jan 2020 14:45:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2020/1-1-3-plp/</guid>
-      <description>PLP 0.引言 PL在计算机领域处于中心位置，既适合作为起点，又可以作为一种纲领性的思想，给其他方面以指导、归纳。（思想的意义需要背后的具象支撑，思想是一种归纳简化，形成一个可推导的过程，也使得认知体系化）
-编译各阶段的概览：识别 PL结构、意思（语法、语义）= 前端；构建目标程序 = 后端；优化。
-指出 PL背后的共性，也是本书的着力点，即提供深入 PL领域（设计、实现）的铺垫。
-1.语法 1-描述 规则：拼接、选择、重复 =&amp;gt; + 单字符 + 空 = 正则表达式 =&amp;gt; 字符集 = 正则集 =&amp;gt; + 递归 = 上下文无关文法（CFG） =&amp;gt; 产生式：非终结符（开始符号）、终结符 =&amp;gt; 推导：
-2-识别 3-理论 temp p35：递归定义可保证左右括号配对，正则无法做到，2.3.3细节。</description>
-    </item>
-    
-    <item>
-      <title>4-浏览器经验</title>
-      <link>https://Wo0dsHole.github.io/2019/brower-exprience/</link>
-      <pubDate>Mon, 16 Dec 2019 17:14:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/brower-exprience/</guid>
-      <description> 浏览器的缓存是一个隐蔽而重要的影响，最好的方式是  </description>
-    </item>
-    
-    <item>
-      <title>3-浏览器断点</title>
-      <link>https://Wo0dsHole.github.io/2019/math-bp/</link>
-      <pubDate>Thu, 12 Dec 2019 14:38:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/math-bp/</guid>
-      <description>Why？ alert 浏览器的调试信息打印最要避免使用 alert。
-在 MDN js-教程-高级-《并发模型与事件循环》最后也可获知，js中处理 I/O是不会阻塞 js 的，而 alert 属于例外而已。
-具体如何例外，每种浏览器应该有自己的处理，要避免这种时序的不确定性。而且在实际调试中，经常遇到 alert 对 exp 的干扰。
-console.log console.log 其实和 alert 同属 Web API，但感觉它对 exp 本身没有影响，但还是存在时序问题。
-曾在 Edge 漏洞调试时遇到过，打开浏览器中的控制台，漏洞不能触发的情况。
-Math函数 源码断点感觉是最可靠的，但没有打印信息。不过有变通方式。
-Firefox——
-Math.asin(0.5)bu xul!js::math_asin结论  对于一些失败退出，用 alert 来打印。 一般情况下，console.log 和 Math断点一起使用。 浏览器的缓存问题，可以改动 console.log 信息来确定。 最好还是一切调试开始之初，打快照。缓存问题太严重了，在控制台的代码窗口才发现这一点。  </description>
-    </item>
-    
-    <item>
-      <title>目录</title>
-      <link>https://Wo0dsHole.github.io/2019/research-total/</link>
-      <pubDate>Mon, 09 Dec 2019 10:14:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/research-total/</guid>
-      <description>0.MISC  0-补丁相关 1-符号表获取 2-内存搜索 3-浏览器断点 4-Firefox72.0源码编译  各部分可并发进行，各步内部可并发进行。
-1.JS引擎研究 STEP.1初级理论  熟悉js语法——by MDN  0-JavaScript语法   编译大致流程——by 虎书、垃圾回收  0-虎书粗读随记 1-我注虎书 2-垃圾回收   程序语言铺垫——by 程序设计语言：实践之路  0-PLP   语言特性——by eopl plai  0-EOPL    STEP.2 理论补全  中级编译器理论——by eac 高级编译器理论——by 鲸书 语义学——by plalc  STEP.3实现参照  C++——by google 编码风格规范 js规范——by ESMA2019 js引擎实现——self+quickjs  STEP.4漏洞挖掘  工业级js引擎研究  2.Fuzz研究 STEP.1基础框架  异常捕获框架——winappdbg 简单的随机输入fuzz实例——Openxml、kernelfuzz、domato  STEP.2中间信息加入  源码编译路径覆盖率——afl 更进一步  STEP.</description>
-    </item>
-    
-    <item>
-      <title>垃圾回收</title>
-      <link>https://Wo0dsHole.github.io/2019/1-1-2-gc/</link>
-      <pubDate>Mon, 09 Dec 2019 10:00:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/1-1-2-gc/</guid>
-      <description>参考 《垃圾回收的算法与实现》2016.7 第一版
- </description>
-    </item>
-    
-    <item>
-      <title>0-CVE-2018-17463</title>
-      <link>https://Wo0dsHole.github.io/2019/chrome-cve-2018-17463/</link>
-      <pubDate>Fri, 06 Dec 2019 15:01:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/chrome-cve-2018-17463/</guid>
-      <description>参考 http://phrack.org/papers/jit_exploitation.html
-随记  漏洞信息 官方提供的v8机制探索支持 对象与值 JIT原理  </description>
-    </item>
-    
-    <item>
-      <title>3-语言特性</title>
-      <link>https://Wo0dsHole.github.io/2019/1-1-4-pl-feature-eopl/</link>
-      <pubDate>Fri, 06 Dec 2019 14:45:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/1-1-4-pl-feature-eopl/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>0-JavaScript语法</title>
-      <link>https://Wo0dsHole.github.io/2019/1-1-1-js-grammar/</link>
-      <pubDate>Mon, 02 Dec 2019 10:43:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/1-1-1-js-grammar/</guid>
-      <description>参考 MDN——
-https://developer.mozilla.org/zh-CN/docs/Web/JavaScript
- JavaScript指南、中级内容、高级内容 JavaScript参考  1 相当于是 2 的解说版（删减细节、更平滑），2 相当于是语法字典（更详细）
-JavaScript指南 Time：2019.12.2~2019.12.6
-不要笔记，先通看完。总共 16 篇，计划一周之内看完。
-每篇的次级标题，是很好的自检关键词，但应该是处于排版考虑，这些标题没有列全。
-用 Firefox 的控制台、代码草稿纸测试其中的代码，会出现问题。还是新建一个 html 来测试吧。
-自检索引 2-语法与数据类型 注释声明：3变量命名：$声明变量：3变量求值：undefined、null变量作用域：ES6-块变量提升：undefined、暂时性死区函数提升：2全局变量：window常量：数据结构和类型数据类型：7+1数据类型转换：+字符串转数字：2字面量数组字面量：[]、多余逗号布尔字面量整数：10、16、8、2浮点数字面量：+-10、.、小数、指数e对象字面量：{}、属性/值、属性名合法性与访问：2增强：原型、简写、方法、父方法、动态计算属性名RegExp字面值：//字符串字面量：&#39;、&amp;quot;、临时字符串对象、模板字符串：${}、控制字符、转移字符3-流程控制与错误处理 语句块：{}条件判断语句if...else：!赋值、错误的值：6switch：default、[break]异常处理语句异常类型throw：任意表达式try...catchcatch：标识符：ref-&amp;gt;value(throw)finally：返回覆盖值、二次异常嵌套Error对象Promises对象：44-循环与迭代 区别：确定start/end的机制for语句：顺序、省略do...while语句：1while语句label语句：引用标识符、break、continuebreak语句：[label]、大退continue语句：[label]for.</description>
-    </item>
-    
-    <item>
-      <title>2-内存搜索</title>
-      <link>https://Wo0dsHole.github.io/2019/search-memory/</link>
-      <pubDate>Mon, 02 Dec 2019 10:11:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/search-memory/</guid>
-      <description>定位数组 在数组中设置“标志值”，比如0x40414140这种，然后内存搜索。
-关于内存搜索，要清楚32位、64位下各自的Ring3/Ring0地址空间范围。
-32位——
-Ring0 = Ring3
-但由于32位内存不大，所以搜索范围随手8个F（0~0xFFFFFFFF）也很快就搜完了。
-64位——
-Ring0 != Ring3，用户空间是0~0x7FF&amp;rsquo;FFFFFFFF。
-但是个范围还是太大了，一般先在windbg中 “!address”才看一下。
-通常用户使用的空间范围在0~0x1‘FFFFFFFF以内，这搜起来速度就能接受了。
-s 指令——
--a：ascii，-u：unicode。
-字符串不超过 qword 时，单引号。超出后，双引号。
-s -d 0 l?0xffffffff 40414140s -d 0 l?0x1ffffffff 40414140</description>
-    </item>
-    
-    <item>
-      <title>研究计划</title>
-      <link>https://Wo0dsHole.github.io/2019/research-plan/</link>
-      <pubDate>Thu, 28 Nov 2019 10:31:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/research-plan/</guid>
-      <description>时间  7年（荒废：2017-2019，剩余：2020-2023）：24岁-30岁 工作日（2019.12起）  内容安排 各部分可并发进行，各步内部可并发进行。
-具体安排见外部各级标题
-日志 第1周：2019.12.2-6 计划进度 2019.12.2-6，5天，完成了1-1-1。
-最大的获益有两方面：对 javascript 的去魅、对语言特性作用的认识。
-从语言特性出发，即使Javascript这么臃肿的语言看完也没多少新东西。因而 sicp 从复杂度控制出发对语言的观点：基本元素-组合方式-抽象方式。这一种简洁有力的语言学习之道。
-同时感觉 javascript 弄了很多绕弯的概念，却既没有 Scheme 表达力强，也没有 Scheme 的清晰。
-将对于 Javascript 的语法细节深入，放到读 ECMAScript 上时，而 MDN 的字典版参考，既不非常的详细，又看不到更多的语言细节，没必要逐一翻看。
-之后需要深入对语言特性的学习，以面对 ECMAScript；入门到深入编译原理，以面对 JS 引擎的工业级实现源码。
-前者需要先行，因为会和后者前端中最重要的语义解析关联，而后端的各种固定算法、优化方式相对独立。
-因而，eopl/plai、虎书、程序设计语言：实践之路 3 者并发进行，实践之路像是调剂，毕竟前两者我已经进行了不少了，它的铺垫作用对我不怎么有意义。
-工作琐事 IE：CVE-2019-1429——jscript.dll——可利用的对象？——写时复制
-卡巴斯基企业版c/s环境
-第2周：2019.12.9-13 计划进度 开始看第一篇关于 v8 的系统性文章时(http://phrack.org/papers/jit_exploitation.html)，发觉这里开头对 v8 中对象、指针的介绍，与之前看过一眼的《gc》中很老版本的 v8 实例有很大关联。故将对 gc 的部分提到现在与 v8 的漏洞文章一起进行。
-之前《gc》的算法篇基本看完，发觉 3 种基本算法是支柱，之后的许多改进算法都是一些优化，其实没必要看得太细。这次看把握主干：gc算法、几种组合算法的思想、一些额外的必知点(读写屏障)。重点在于后面对 v8 的 gc 分析，一是更全面的了解 v8 gc，二是学习一下(有了理论积累后)如何去分析工业软件中的特定模块。</description>
-    </item>
-    
-    <item>
-      <title>1-符号表获取</title>
-      <link>https://Wo0dsHole.github.io/2019/symbol-file/</link>
-      <pubDate>Wed, 27 Nov 2019 10:43:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/symbol-file/</guid>
-      <description>符号表获取 设置符号表本地、远程服务器路径 Firefox：
-https://developer.mozilla.org/en-US/docs/Mozilla/Using_the_Mozilla_symbol_server一般设置：
-SRV*c:\symcache\*http://msdl.microsoft.com/download/symbols;SRV*c:\symcache\*https://symbols.mozilla.org/符号表获取方式一：
-!sym noisy.reload /f符号表获取方式二：
-.\symchk.exe /r D:\sym\xul.dll /s SRV*D:\sym\*https://symbols.mozilla.org/.\symchk.exe /r D:\sym\xul.dll /s SRV*http://msdl.microsoft.com/download/symbols位置：
-C:\ProgramData\dbg\sym或windbg中指定的符号表路径</description>
-    </item>
-    
-    <item>
-      <title>0-补丁相关</title>
-      <link>https://Wo0dsHole.github.io/2019/patch/</link>
-      <pubDate>Tue, 26 Nov 2019 17:31:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2019/patch/</guid>
-      <description>补丁更新问题 services.msc Background Intelligent Transfer Services Cryptographic Services Windows Installer software licensing service  这四项服务存在的，设置成自动启动。
-补丁更新方式 最好使用 Windows Update，若使用 360 存在补丁不连续情况，在补丁对比的时候会有非常多的差异，而且有 IE 未更新的情况。
-而且 360 打补丁之后，若要安装卡巴斯基并测试，会出现安装冲突，且卸载 360 之后仍不可安装的情况。
-使用命令行提取msu/msp/msi/exe文件 Microsoft Hotfix Installer (.exe) setup.exe /t:C:&amp;lt;target_dir&amp;gt; /cMicrosoft Update Standalone Package (.msu) expand -F:* update.msu C:&amp;lt;target_dir&amp;gt;cd &amp;lt;target_dir&amp;gt;expand -F:* update.cab C:&amp;lt;target_dir&amp;gt;Microsoft Patch File (.msp) msix patch.msp /out C:&amp;lt;target_dir&amp;gt;msix.zipWindows Installer Package (.msi) msiexec /a setup.msi /qb TARGETDIR=C:&amp;lt;target_dir&amp;gt;</description>
-    </item>
-    
-    <item>
-      <title>2002-二进制</title>
-      <link>https://Wo0dsHole.github.io/2002/2002/</link>
-      <pubDate>Wed, 13 Mar 2002 00:00:00 +0800</pubDate>
-      
-      <guid>https://Wo0dsHole.github.io/2002/2002/</guid>
-      <description> 0-研究计划 1-目录  </description>
-    </item>
-    
-  </channel>
-</rss>
