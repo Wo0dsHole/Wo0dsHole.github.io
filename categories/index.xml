@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on 树洞</title>
+    <title>Categories on 二进制</title>
     <link>https://Wo0dsHole.github.io/categories/</link>
-    <description>Recent content in Categories on 树洞</description>
+    <description>Recent content in Categories on 二进制</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 08 Jun 2020 15:28:07 +0800</lastBuildDate>
     
 	<atom:link href="https://Wo0dsHole.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Nday积累</title>
+      <link>https://Wo0dsHole.github.io/categories/nday%E7%A7%AF%E7%B4%AF/</link>
+      <pubDate>Mon, 08 Jun 2020 15:28:07 +0800</pubDate>
+      
+      <guid>https://Wo0dsHole.github.io/categories/nday%E7%A7%AF%E7%B4%AF/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
