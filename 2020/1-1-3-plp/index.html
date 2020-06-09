@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Wo0dsHole">
+  
+  
+  
+  <link rel="prev" href="https://Wo0dsHole.github.io/2020/poker-math/" />
+  <link rel="next" href="https://Wo0dsHole.github.io/2020/wife-0/" />
+  <link rel="canonical" href="https://Wo0dsHole.github.io/2020/1-1-3-plp/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           0-读书笔记 | 树洞
+       
+  </title>
+  <meta name="title" content="0-读书笔记 | 树洞">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/Wo0dsHole.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "0-读书笔记",
+    "headline" : "0-读书笔记",
+    "description" : "PLP 0.引言 PL在计算机领域处于中心位置，既适合作为起点，又可以作为一种纲领性的思想，给其他方面以指导、归纳。（思想的意义需要背后的具象支撑，思想是一种归纳简化，形成一个可推导的过程，也使得认知体系化）\n编译各阶段的概览：识别 PL结构、意思（语法、语义）= 前端；构建目标程序 = 后端；优化。\n指出 PL背后的共性，也是本书的着力点，即提供深入 PL领域（设计、实现）的铺垫。\n1.语法 1-描述 规则：拼接、选择、重复 =\u0026gt; \u002b 单字符 \u002b 空 = 正则表达式 =\u0026gt; 字符集 = 正则集 =\u0026gt; \u002b 递归 = 上下文无关文法（CFG） =\u0026gt; 产生式：非终结符（开始符号）、终结符 =\u0026gt; 推导：\n2-识别 3-理论 temp p35：递归定义可保证左右括号配对，正则无法做到，2.3.3细节。",
+    "inLanguage" : "en-us",
+    "author" : "Wo0dsHole",
+    "creator" : "Wo0dsHole",
+    "publisher": "Wo0dsHole",
+    "accountablePerson" : "Wo0dsHole",
+    "copyrightHolder" : "Wo0dsHole",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-01-15 14:45:00 \u002b0800 CST",
+    "dateModified" : "2020-01-15 14:45:00 \u002b0800 CST",
+    "url" : "https:\/\/Wo0dsHole.github.io\/2020\/1-1-3-plp\/",
+    "wordCount" : "38",
+    "keywords" : [ "二进制", "树洞"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">0-读书笔记</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://Wo0dsHole.github.io/" rel="author">Wo0dsHole</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-01-15 itemprop="datePublished">January 15, 2020</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="plp">PLP</h1>
+<h2 id="0引言">0.引言</h2>
+<p>PL在计算机领域处于中心位置，既适合作为起点，又可以作为一种纲领性的思想，给其他方面以指导、归纳。（思想的意义需要背后的具象支撑，思想是一种归纳简化，形成一个可推导的过程，也使得认知体系化）</p>
+<p>编译各阶段的概览：识别 PL结构、意思（语法、语义）= 前端；构建目标程序 = 后端；优化。</p>
+<p>指出 PL背后的共性，也是本书的着力点，即提供深入 PL领域（设计、实现）的铺垫。</p>
+<h2 id="1语法">1.语法</h2>
+<h3 id="1-描述">1-描述</h3>
+<p>规则：拼接、选择、重复 =&gt; + 单字符 + 空 = 正则表达式 =&gt; 字符集 = 正则集 =&gt; + 递归 = 上下文无关文法（CFG） =&gt; 产生式：非终结符（开始符号）、终结符 =&gt; 推导：</p>
+<h3 id="2-识别">2-识别</h3>
+<h3 id="3-理论">3-理论</h3>
+<h2 id="temp">temp</h2>
+<p>p35：递归定义可保证左右括号配对，正则无法做到，2.3.3细节。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Wo0dsHole </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://Wo0dsHole.github.io/2020/1-1-3-plp/>https://Wo0dsHole.github.io/2020/1-1-3-plp/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://Wo0dsHole.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">
+                    #二进制</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://Wo0dsHole.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://Wo0dsHole.github.io/2020/poker-math/" class="prev" rel="prev" title="2-德州扑克数学"><i class="iconfont icon-left"></i>&nbsp;2-德州扑克数学</a>
+         
+        
+        <a href="https://Wo0dsHole.github.io/2020/wife-0/" class="next" rel="next" title="0-二十七封信">0-二十七封信&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">1993 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://Wo0dsHole.github.io/">Wo0dsHole</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

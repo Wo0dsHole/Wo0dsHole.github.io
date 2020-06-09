@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Wo0dsHole">
+  
+  
+  
+  <link rel="prev" href="https://Wo0dsHole.github.io/2019/search-memory/" />
+  <link rel="next" href="https://Wo0dsHole.github.io/2019/1-1-4-pl-feature-eopl/" />
+  <link rel="canonical" href="https://Wo0dsHole.github.io/2019/1-1-1-js-grammar/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           0-JavaScript语法 | 树洞
+       
+  </title>
+  <meta name="title" content="0-JavaScript语法 | 树洞">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/Wo0dsHole.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "0-JavaScript语法",
+    "headline" : "0-JavaScript语法",
+    "description" : "参考 MDN——\nhttps:\/\/developer.mozilla.org\/zh-CN\/docs\/Web\/JavaScript\n JavaScript指南、中级内容、高级内容 JavaScript参考  1 相当于是 2 的解说版（删减细节、更平滑），2 相当于是语法字典（更详细）\nJavaScript指南 Time：2019.12.2~2019.12.6\n不要笔记，先通看完。总共 16 篇，计划一周之内看完。\n每篇的次级标题，是很好的自检关键词，但应该是处于排版考虑，这些标题没有列全。\n用 Firefox 的控制台、代码草稿纸测试其中的代码，会出现问题。还是新建一个 html 来测试吧。\n自检索引 2-语法与数据类型 注释\r声明：3\r变量命名：$\r声明变量：3\r变量求值：undefined、null\r变量作用域：ES6-块\r变量提升：undefined、暂时性死区\r函数提升：2\r全局变量：window\r常量：\r数据结构和类型\r数据类型：7\u002b1\r数据类型转换：\u002b\r字符串转数字：2\r字面量\r数组字面量：[]、多余逗号\r布尔字面量\r整数：10、16、8、2\r浮点数字面量：\u002b-10、.、小数、指数e\r对象字面量：{}、属性\/值、属性名合法性与访问：2\r增强：原型、简写、方法、父方法、动态计算属性名\rRegExp字面值：\/\/\r字符串字面量：\u0027、\u0026quot;、临时字符串对象、模板字符串：${}、控制字符、转移字符\r3-流程控制与错误处理 语句块：{}\r条件判断语句\rif...else：!赋值、错误的值：6\rswitch：default、[break]\r异常处理语句\r异常类型\rthrow：任意表达式\rtry...catch\rcatch：标识符：ref-\u0026gt;value(throw)\rfinally：返回覆盖值、二次异常\r嵌套\rError对象\rPromises对象：4\r4-循环与迭代 区别：确定start\/end的机制\rfor语句：顺序、省略\rdo...while语句：1\rwhile语句\rlabel语句：引用标识符、break、continue\rbreak语句：[label]、大退\rcontinue语句：[label]\rfor.",
+    "inLanguage" : "en-us",
+    "author" : "Wo0dsHole",
+    "creator" : "Wo0dsHole",
+    "publisher": "Wo0dsHole",
+    "accountablePerson" : "Wo0dsHole",
+    "copyrightHolder" : "Wo0dsHole",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-12-02 10:43:00 \u002b0800 CST",
+    "dateModified" : "2019-12-02 10:43:00 \u002b0800 CST",
+    "url" : "https:\/\/Wo0dsHole.github.io\/2019\/1-1-1-js-grammar\/",
+    "wordCount" : "320",
+    "keywords" : [ "二进制", "树洞"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">0-JavaScript语法</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://Wo0dsHole.github.io/" rel="author">Wo0dsHole</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-12-02 itemprop="datePublished">December 2, 2019</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="参考">参考</h2>
+<p><strong>MDN——</strong></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript</a></p>
+<ol>
+<li>JavaScript指南、中级内容、高级内容</li>
+<li>JavaScript参考</li>
+</ol>
+<p>1 相当于是 2 的解说版（删减细节、更平滑），2 相当于是语法字典（更详细）</p>
+<h2 id="javascript指南">JavaScript指南</h2>
+<p>Time：2019.12.2~2019.12.6</p>
+<p>不要笔记，先通看完。总共 16 篇，计划一周之内看完。</p>
+<p>每篇的次级标题，是很好的自检关键词，但应该是处于排版考虑，这些标题没有列全。</p>
+<p>用 Firefox 的控制台、代码草稿纸测试其中的代码，会出现问题。还是新建一个 html 来测试吧。</p>
+<h3 id="自检索引">自检索引</h3>
+<h3 id="2-语法与数据类型">2-语法与数据类型</h3>
+<pre><code>注释
+声明：3
+	变量命名：$
+	声明变量：3
+	变量求值：undefined、null
+	变量作用域：ES6-块
+	变量提升：undefined、暂时性死区
+	函数提升：2
+	全局变量：window
+	常量：
+数据结构和类型
+	数据类型：7+1
+	数据类型转换：+
+	字符串转数字：2
+字面量
+	数组字面量：[]、多余逗号
+	布尔字面量
+	整数：10、16、8、2
+	浮点数字面量：+-10、.、小数、指数e
+	对象字面量：{}、属性/值、属性名合法性与访问：2
+		增强：原型、简写、方法、父方法、动态计算属性名
+	RegExp字面值：//
+	字符串字面量：'、&quot;、临时字符串对象、模板字符串：${}、控制字符、转移字符
+</code></pre><h3 id="3-流程控制与错误处理">3-流程控制与错误处理</h3>
+<pre><code>语句块：{}
+条件判断语句
+	if...else：!赋值、错误的值：6
+	switch：default、[break]
+异常处理语句
+	异常类型
+	throw：任意表达式
+	try...catch
+		catch：标识符：ref-&gt;value(throw)
+		finally：返回覆盖值、二次异常
+		嵌套
+	Error对象
+	Promises对象：4
+</code></pre><h3 id="4-循环与迭代">4-循环与迭代</h3>
+<pre><code>区别：确定start/end的机制
+for语句：顺序、省略
+do...while语句：1
+while语句
+label语句：引用标识符、break、continue
+break语句：[label]、大退
+continue语句：[label]
+for...in语句：对属性、!Array
+for...of语句：对值
+</code></pre><h3 id="5-函数">5-函数</h3>
+<p>内容有些相互重叠</p>
+<pre><code>定义函数
+	函数定义(声明、语句)：值参数-值传递、对象参数-引用传递
+	函数表达式：[匿名]、函数参数、方法
+调用函数：函数域-声明提升
+作用域和函数堆栈
+	递归：3
+嵌套函数和闭包
+	保存变量：作用域链
+	命名冲突
+	闭包
+arguments对象：实际参数、类似数组：2
+函数参数
+	默认参数：undefined、=
+	剩余参数：...
+箭头函数：匿名、this
+预定义函数：少
+</code></pre><h3 id="6-表达式和运算符">6-表达式和运算符</h3>
+<pre><code>运算符
+	赋值：复合、解构
+	比较：类型转换、===、!==
+	算数：自增减的返回
+	位：&gt;&gt;&gt;
+	逻辑
+	字符串：+
+	条件
+	逗号操作符
+	一元操作符
+		delete：var、预定义属性、undefined
+		typeof
+		void
+	关系操作符：布尔值
+		in：属性
+		instanceof：类型
+	运算符优先级：略
+表达式：副作用、纯计算、类型
+	算数
+	字符串
+	逻辑值
+	基本表达式	
+		this：当前对象
+		分组操作符：()
+	左值表达式
+		new：类型的对象实例
+		super：调用对象父类的函数
+		扩展语句：表达式原地展开：...name
+</code></pre><h3 id="7-数字和日期">7-数字和日期</h3>
+<pre><code>数字：范围、10、8、2、16、指数语法
+数字对象：内置Number对象本身
+数学对象：Math
+日期对象：Data、读、写、形式转换
+</code></pre><h3 id="8-文本格式化">8-文本格式化</h3>
+<p>正则表达式部分，比起正则表达式这个概念本身，多出了一些语法糖的组合，还有少许的可编程逻辑。</p>
+<pre><code>字符串：2
+	String字面量
+	字符串对象：临时转化、差异：eval
+		方法：读写匹配
+多行模板字符串：``
+	多行：直接
+	嵌入表达式：${}
+国际化：Intl
+	日期和时间格式化：DataTimeFormat
+	数字格式化：NumberFormat
+	定序：Collator
+正则表达式
+	
+</code></pre><h3 id="9-索引集合">9-索引集合</h3>
+<pre><code>数组对象
+	创建：3、作属性
+	填充：赋值、非整型数值-属性
+	引用：[]、[&quot;属性&quot;]
+	length：last+1、改动清理
+	遍历：forEach、undefined：2
+	方法：组合、首位增删、切片、排序、匹配、迭代方法
+	正则相关
+	类数组：prototype
+数组推导式：ES7
+类型化数组：原始二进制数据
+	缓冲和视图：无格式、访问机制：3
+	ArrayBuffer：类型数组视图、DataView
+	类型数组视图：3、2、1
+</code></pre><h3 id="10-带建集合">10-带建集合</h3>
+<pre><code>映射
+	Map对象：键值对集合
+	Object和Map比较
+		Object：{：，：}、键为String
+	WeakMap对象：键为对象、GC、不可枚举
+集合
+	Set对象：值集、不重复
+	数组&lt;-&gt;集合：Array.from、展开操作符、去重
+	WeakSet对象：对象集、GC、不可枚举
+Map键、Set值的等值判断：类===、-0=+0、NaN
+</code></pre><h3 id="11-处理对象">11-处理对象</h3>
+<pre><code>对象：属性集合、关联数组
+对象和属性
+	属性：变量
+	属性名：有效标识符、访问方式、转化
+枚举对象属性
+	for...in：所有、可枚举
+	Object.keys(o)：所有、自身
+	Object.getOwnPropertyNames(o)：所有、(不)可枚举
+创建新对象：3
+	对象初始化器：{:}
+	构造函数：2
+		类型信息：名、属性、方法
+	Object.create：选择原型对象
+	继承：原型
+	对象属性索引：定义-访问匹配
+	定义属性+：prototype
+	定义方法：函数
+	this引用对象：当前对象
+	定义getters/setters：专用属性读写
+		对象初始化器：get n()、set n(x)
+		添入对象：Object.defineProperties
+	删除属性：非继承、!var-global
+	比较对象：引用类型
+</code></pre><h3 id="12-对象模型的细节">12-对象模型的细节</h3>
+<pre><code>基于类vs基于原型的语言：2-1
+	定义类：专用
+	子类和继承：类定义、原型链
+	添加和移除属性：运行时的变动性
+创建层级结构：原型、prototype、重载自身
+对象的属性
+	继承属性：原型链遍历
+	添加属性：原型链、继承
+更灵活的构造器
+	创建时属性指定：参数、||
+	call()/apply()：构造器调用、一次性继承
+再谈属性的继承
+	本地值和继承值：实例化-本地值，拦截原型链遍历
+	判断实例关系：obj.__proto__==makefunc.prototype
+	构造器中的全局信息：判断逻辑、副本
+	没有多重继承：伪-无新属性继承
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Employee</span> () {
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">dept</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;general&#34;</span>;
+}
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">function Employee () {
+</span><span style="color:#75715e">  this.dept = &#34;general&#34;;
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">Employee.prototype.name = &#34;&#34;;
+</span><span style="color:#75715e">*/</span>
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">WorkerBee</span> () {
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">projects</span> <span style="color:#f92672">=</span> [];
+}
+<span style="color:#a6e22e">WorkerBee</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Employee</span>;
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">amy</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WorkerBee</span>;
+
+<span style="color:#a6e22e">Employee</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Unknown&#34;</span>
+</code></pre></div><h3 id="13-promises">13-Promises</h3>
+<p>官方默认略过了。</p>
+<p>不能略过，遇到 exp 有问题部分用到它了。其实当时感觉就是一种控制流的骚操作而已。</p>
+<p>使用：</p>
+<h3 id="14-迭代器与生成器">14-迭代器与生成器</h3>
+<pre><code>迭代器：next实现的对象、value、done
+生成器函数：自有迭代算法、自维护状态
+	function*：返回生成器-next方法调用-消耗迭代器-yield
+可迭代对象：@@iterator-&gt;Symbol.iterator、1：本身、n：新迭代器
+	自定义：*[Symbol.iterator](){yield}
+	内置：String、Array、TypedArray、Map、Set
+	适用语法：for-of、...、yield*、解构赋值
+高级生成器：
+	next传参：yield接受参数、增添逻辑以改变内部状态、miss 1st
+</code></pre><h3 id="15-元编程">15-元编程</h3>
+<pre><code>元编程：改变语言的内置操作
+代理
+	Proxy对象
+	可撤销的Proxy：Proxy.revocable、revoke
+反射：类似代理、内置非函数对象
+</code></pre><h3 id="16-javascript模块">16-JavaScript模块</h3>
+<p>官方默认略过了</p>
+<h2 id="中级内容">中级内容</h2>
+<p>快速看了一下，基本没什么新的</p>
+<h2 id="高级内容">高级内容</h2>
+<p>更像是对一些点的专题</p>
+<h3 id="继承和原型链">继承和原型链</h3>
+<p>略</p>
+<h3 id="严格模式">严格模式</h3>
+<p>略</p>
+<h3 id="类型数组">类型数组</h3>
+<p>略，没什么新的</p>
+<h3 id="内存管理">内存管理</h3>
+<p>略，只是垃圾回收的简单介绍</p>
+<h3 id="并发模型以及事件循环">并发模型以及事件循环</h3>
+<pre><code>基于事件循环的并发模型
+运行时：栈、堆、队列
+	消息队列：消息处理函数(消息)-栈空-下个消息
+事件循环：循环等待-处理消息
+	执行至完成：函数不被抢占、消息裁剪
+	添加消息：setTimeout、实际等待
+	多运行时通信：postMessage
+永不阻塞：
+	处理I/O：其他线程-（js 处理其他）-返回，队列添加事件-回调关联事件
+	例外：alert
+</code></pre><h2 id="参考-1">参考</h2>
+<p>其实没有太多新内容了，量的差异。由此可见对语言特性掌握的重要，即使Javascript这么臃肿的语言看完也没多少新东西。也一如 sicp 从复杂度控制出发对语言的观点：基本元素-组合方式-抽象方式。相比之下，感觉 js 弄了很多绕弯的概念，却既没有 Scheme 表达力强，也没有 Scheme 的清晰。</p>
+<p>之后对于 Javascript 的语法细节，就放到读 ECMAScript 上时了，这里的字典版参考，既不非常的详细，又看不到更多的语言细节，没必要逐一翻看。</p>
+<p>这几天通过 MDN 对 Javascript 的体系学习，获益良多——去魅的同时，对大型语言有了新的认识，以及 sicp 观点对语言学习的简洁性。不过之后要专门针对语言特性学习，这是更直接彻底的掌握所有语言之道。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Wo0dsHole </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://Wo0dsHole.github.io/2019/1-1-1-js-grammar/>https://Wo0dsHole.github.io/2019/1-1-1-js-grammar/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://Wo0dsHole.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">
+                    #二进制</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://Wo0dsHole.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://Wo0dsHole.github.io/2019/search-memory/" class="prev" rel="prev" title="2-内存搜索"><i class="iconfont icon-left"></i>&nbsp;2-内存搜索</a>
+         
+        
+        <a href="https://Wo0dsHole.github.io/2019/1-1-4-pl-feature-eopl/" class="next" rel="next" title="3-语言特性">3-语言特性&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">1993 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://Wo0dsHole.github.io/">Wo0dsHole</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

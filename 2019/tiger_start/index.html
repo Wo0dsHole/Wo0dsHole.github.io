@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Wo0dsHole">
+  
+  
+  
+  <link rel="prev" href="https://Wo0dsHole.github.io/2019/11/" />
+  <link rel="next" href="https://Wo0dsHole.github.io/2019/12/" />
+  <link rel="canonical" href="https://Wo0dsHole.github.io/2019/tiger_start/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           我注虎书 | 树洞
+       
+  </title>
+  <meta name="title" content="我注虎书 | 树洞">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/Wo0dsHole.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "我注虎书",
+    "headline" : "我注虎书",
+    "description" : "我注虎书 [TOC]\n0.赘言 0.程序语言大略 粗读了《EOPL》、《虎书》后，对程序语言有了一个大致的认识，小结如下。\n两部分\n程序语言分为两个部分：\n 设计：研究对象是语义，而解释器只是媒介 实现：研究对象是解释器，专门针对其实现的工程细节  两者其实有点“前端-后端”的意思。\n关联和差异PL设计借助 lambda 演算，相关元语言（Scheme）近似于语法树，所以词法、语法分析阶段简单，几乎不用考虑。得到 AST 之后，便在 AST、数据上下文、控制上下文的基础上，通过函数式编程来实现各种语言特性，借此研究语义。\nPL实现相比设计，区别主要是在 AST之后，由于工程要求需要考虑，如可移植性、效率、优化、生成机器相关目标语言等方面。因而，在 AST 之后会进一步在中间表示上作文章，比如中间语言、规范树，这是为了进一步方便后续阶段，这与具体语法转化为抽象语法的目的一样。再之后便是对这些更靠近机器的中间表示，进行到机器指令的翻译。优化则是在翻译前，对中间表示的分析、改变上完成的。\n因此，不同 PL 的差异主要是在，AST附近（设计：直接对AST的解释操作，实现：生成中间表示）就已经实现，即各种语言特性。此后，对于实现，都是向目标机器指令转化的工程细节（后端）。对于设计，之后都是直接对 AST 的解释操作。\n大体掌握内容\n对于设计：EOPL教材解释器-\u0026gt;EOPL练习解释器\n 理解各种语言特性的语义本质，基于 lambda 演算编写对应的解释器。  对于实现：虎书前12章的 6 个实验，基本都是给一些框架代码，然后自己现实补全。\n 词法、语法分析对应的两种抽象原理：正则表达式（有限自动机）、上下文无关语法 各类语法的分类特点，分析原理 生成器的使用：Lex、Yacc 数据上下文（环境）的实现 语义对应的类型检查 控制上下文（栈帧）的实现 中间表示 基本块和轨迹 指令选择 活跃分析 寄存器分配  1.我注虎书 已粗读一遍，正如作者自己引用的名言“尽可能简单，但不过于简单”。这很能概括虎书的专业和实用程度。\n虎书的知识结构、讲述方式都是我所喜欢的，尤其是自己去写实现代码，是对书最好的理解、翻译。\n但是阅读虎书并没有 EOPL 那般清晰，根源就在于实现语言 C 身上。\n如 SICP 中的注释所说——\n“允许结构的元素又是结构，但却要程序员显式地操作指针，并限制性地要求结构的每个域只能包含预先定义好的形式。”\n“这样过多的可声明数据结构导致函数的专用化，对合作造成阻碍和惩罚。”\n因此，我打算用图的方式，去梳理虎书实现时的相关结构。这样使得理解清晰化，可以更专注于其中的编译理论逻辑。同时也可以学习编程能力，这是我转做开发所缺少的。\n基本上就是以前 12 章的 6个实验为主体，配合对理论的梳理。\n但在内容上，主要是写我自己的理解，而知识的摘抄行为尽量避免，除非是必要的，或是我现在无法理解的知识。\n lab1：Straight-line program interpreter（直线式程序解释器） lab2：Lexical Analysis（词法分析） lab3：Syntax Analysis（语法分析） lab4：Type Checking（类型检查） lab5：Intermediate Code（活动记录、中间代码生成） lab6：A Workable Tiger Compiler（基本块和轨迹、指令选择、寄存器分配）  1.",
+    "inLanguage" : "en-us",
+    "author" : "Wo0dsHole",
+    "creator" : "Wo0dsHole",
+    "publisher": "Wo0dsHole",
+    "accountablePerson" : "Wo0dsHole",
+    "copyrightHolder" : "Wo0dsHole",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-06-26 13:34:00 \u002b0800 CST",
+    "dateModified" : "2019-06-26 13:34:00 \u002b0800 CST",
+    "url" : "https:\/\/Wo0dsHole.github.io\/2019\/tiger_start\/",
+    "wordCount" : "2676",
+    "keywords" : [ "编译理论", "树洞"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">我注虎书</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://Wo0dsHole.github.io/" rel="author">Wo0dsHole</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-06-26 itemprop="datePublished">June 26, 2019</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="我注虎书">我注虎书</h1>
+<p>[TOC]</p>
+<h2 id="0赘言">0.赘言</h2>
+<h3 id="0程序语言大略">0.程序语言大略</h3>
+<p>粗读了《EOPL》、《虎书》后，对程序语言有了一个大致的认识，小结如下。</p>
+<p><strong><!-- raw HTML omitted -->两部分<!-- raw HTML omitted --></strong></p>
+<p>程序语言分为两个部分：</p>
+<ul>
+<li>设计：研究对象是语义，而解释器只是媒介</li>
+<li>实现：研究对象是解释器，专门针对其实现的工程细节</li>
+</ul>
+<p>两者其实有点“前端-后端”的意思。</p>
+<p><!-- raw HTML omitted --><strong>关联和差异</strong><!-- raw HTML omitted --></p>
+<p>PL设计借助 lambda 演算，相关元语言（Scheme）近似于语法树，所以词法、语法分析阶段简单，几乎不用考虑。得到 AST 之后，便在 AST、数据上下文、控制上下文的基础上，通过函数式编程来实现各种语言特性，借此研究语义。</p>
+<p>PL实现相比设计，区别主要是在 AST之后，由于工程要求需要考虑，如可移植性、效率、优化、生成机器相关目标语言等方面。因而，在 AST 之后会进一步在中间表示上作文章，比如中间语言、规范树，这是为了进一步方便后续阶段，这与具体语法转化为抽象语法的目的一样。再之后便是对这些更靠近机器的中间表示，进行到机器指令的翻译。优化则是在翻译前，对中间表示的分析、改变上完成的。</p>
+<p>因此，不同 PL 的差异主要是在，AST附近（设计：直接对AST的解释操作，实现：生成中间表示）就已经实现，即各种语言特性。此后，对于实现，都是向目标机器指令转化的工程细节（后端）。对于设计，之后都是直接对 AST 的解释操作。</p>
+<p><strong><!-- raw HTML omitted -->大体掌握内容<!-- raw HTML omitted --></strong></p>
+<p>对于设计：EOPL教材解释器-&gt;EOPL练习解释器</p>
+<ul>
+<li>理解各种语言特性的语义本质，基于 lambda 演算编写对应的解释器。</li>
+</ul>
+<p>对于实现：虎书前12章的 6 个实验，基本都是给一些框架代码，然后自己现实补全。</p>
+<ul>
+<li>词法、语法分析对应的两种抽象原理：正则表达式（有限自动机）、上下文无关语法</li>
+<li>各类语法的分类特点，分析原理</li>
+<li>生成器的使用：Lex、Yacc</li>
+<li>数据上下文（环境）的实现</li>
+<li>语义对应的类型检查</li>
+<li>控制上下文（栈帧）的实现</li>
+<li>中间表示</li>
+<li>基本块和轨迹</li>
+<li>指令选择</li>
+<li>活跃分析</li>
+<li>寄存器分配</li>
+</ul>
+<h3 id="1我注虎书">1.我注虎书</h3>
+<p>已粗读一遍，正如作者自己引用的名言“尽可能简单，但不过于简单”。这很能概括虎书的专业和实用程度。</p>
+<p>虎书的知识结构、讲述方式都是我所喜欢的，尤其是自己去写实现代码，是对书最好的理解、翻译。</p>
+<p>但是阅读虎书并没有 EOPL 那般清晰，根源就在于实现语言 C 身上。</p>
+<p>如 SICP 中的注释所说——</p>
+<p>“允许结构的元素又是结构，但却要程序员显式地操作指针，并限制性地要求结构的每个域只能包含预先定义好的形式。”</p>
+<p>“这样过多的可声明数据结构导致函数的专用化，对合作造成阻碍和惩罚。”</p>
+<p>因此，我打算用图的方式，去梳理虎书实现时的相关结构。这样使得理解清晰化，可以更专注于其中的编译理论逻辑。同时也可以学习编程能力，这是我转做开发所缺少的。</p>
+<p>基本上就是以前 12 章的 6个实验为主体，配合对理论的梳理。</p>
+<p>但在内容上，主要是写我自己的理解，而知识的摘抄行为尽量避免，除非是必要的，或是我现在无法理解的知识。</p>
+<ul>
+<li>lab1：Straight-line program interpreter（直线式程序解释器）</li>
+<li>lab2：Lexical Analysis（词法分析）</li>
+<li>lab3：Syntax Analysis（语法分析）</li>
+<li>lab4：Type Checking（类型检查）</li>
+<li>lab5：Intermediate Code（活动记录、中间代码生成）</li>
+<li>lab6：A Workable Tiger Compiler（基本块和轨迹、指令选择、寄存器分配）</li>
+</ul>
+<h2 id="1直线式程序解释器">1.直线式程序解释器</h2>
+<h3 id="0编译器软件设计">0.(编译器)软件设计</h3>
+<p>计算机领域最主要的问题，不是解决特定问题，而是控制复杂度。</p>
+<p>因此，关注一个系统的<strong>基本抽象</strong>和<strong>接口</strong>，与关注具体局部算法一样重要，可以把握其设计，使得对此系统的实现变得容易理解。</p>
+<ul>
+<li>
+<p>基本抽象，是指系统的模块化分割，然后如何对每个模块进行抽象。这相当于是实际问题到计算机问题的转化。</p>
+</li>
+<li>
+<p>接口，是指模块间的对接，有一种承前启后的连通关系，而不是简单的参数约定、函数约定。</p>
+</li>
+</ul>
+<p>因此，虎书在这里列出了整个编译过程的阶段（模块）和接口，尤其是在粗看了一遍之后，这里的罗列更加具有 “观其大略，知晓始终” 的意义，值得摘录：</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t2.png" alt="t2"></p>
+<ul>
+<li>词法分析：源文件 -&gt; 独立的<strong>单词符号</strong></li>
+<li>语法分析：分析程序的<strong>短语结构</strong></li>
+<li>语义动作：建立每个短语对应的 <strong>AST</strong></li>
+<li>语义分析：确定短语<strong>含义</strong>，建立变量和其声明的关联，<strong>检查</strong>表达式<strong>类型</strong>，<strong>翻译</strong>每个短语</li>
+<li>栈帧布局：按<strong>机器要求</strong>的方式，将变量、函数参数等<strong>分配</strong>于活跃记录（即<strong>栈帧</strong>）内</li>
+<li>翻译：生成<strong>中间表示</strong>树（IR树），与特定 PL、体系结构<strong>无关</strong></li>
+<li>规范化：提取表达式中的<strong>副作用</strong>，整理<strong>条件分支</strong>，以<strong>方便</strong>下一阶段处理</li>
+<li>指令选择：将 IR树的<strong>结点组合</strong>成与目标机<strong>指令</strong>的动作相<strong>对应</strong>的块</li>
+<li>控制流分析：分析指令的<strong>顺序</strong>并建立控制流图，以此表示程序执行时可能经过的<strong>所有</strong>控制流</li>
+<li>数据流分析：收集程序<strong>变量</strong>的<strong>数据流信息</strong>，如活跃分析计算每个变量仍需使用其值的地方（即活跃点）</li>
+<li>寄存器分配：为每个变量和临时数据，<strong>选择</strong>一个寄存器。不在<strong>同一时间活跃</strong>的两个变量可共享同一寄存器</li>
+<li>代码流出：机器寄存器<strong>代替</strong>出现的临时变量名</li>
+</ul>
+<p>对于解释器，到语义分析时，其实就可以进行解释执行了。EOPL专注于语言特性，也是主要在这一步，甚至把前面的 parse 省去。但之后的阶段其实对于理解 PL 本身没多少相关性，都是转换成目标机器指令的工程细节。</p>
+<p>因此，对 PL 本身的理解以 EOPL 中的形式（lambda演算）最好，也更有深度。而这些编译器的工程细节，我感觉应该是有限的。</p>
+<h3 id="1此书编程约定">1.(此书)编程约定</h3>
+<p>语言这类数据最大的特性，是<strong>递归</strong>。</p>
+<p>因此，对 PL 进行描述的 grammer 也具有递归的特点，在结构组织上是常用树的形式，在编程处理上最关键的技巧是递归。</p>
+<p><!-- raw HTML omitted -->**相关约定——**<!-- raw HTML omitted -->（结合 Lab1 中的相关代码，一目了然）</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t5.png" alt="t5"></p>
+<p>这些约定是书中代码的基础，有必要罗列摘录：</p>
+<ul>
+<li>文法左部（非终结符）-&gt; 构造函数，如上图</li>
+<li>多种可选的右部规则 -&gt; 数据结构，如上图。</li>
+<li>union中域是不同可选规则的结构体，这种结构体相当于可选规则的抽象语法。</li>
+<li>有些左部的右部可选规则极为简单（全是终结符），不需要建立 “union-kind” 这样的复杂形式来描述，比如 Lab1 中代表四则运算符号的 Binop。</li>
+<li>每个 typedef 对应一个文法符号，由文法描述的一棵树，用 1-n 个 typedef 描述。</li>
+<li>typedef 定义一个指向 struct 的指针，struct 命名以 &ldquo;_&rdquo; 结束，此 struct 只用在 typedef 声明中。</li>
+<li>每个类的构造函数对所有成员初始化，其他地方不会直接调用 malloc 函数。</li>
+<li>命名上以唯一前缀标识模块（头文件）。</li>
+<li>类型定义（文法左部）：前缀+小写开头</li>
+<li>构造函数（单条规则）：前缀+大写开头</li>
+<li>union成员：无前缀+小写开头</li>
+<li>每个阶段或模块，归入各自的 “.c” 文件，且有对应的 “.h” 文件。</li>
+<li>函数应有原型</li>
+<li>每个文件中以 #include “util.h” 包含 util.h</li>
+<li>string 类型是堆中分配的字符串，初次创建后不会改变。</li>
+<li>用 checked_malloc 封装的 malloc，不会返回 NULL（有断言）。</li>
+<li>前 12 章的编译器，没有 free，这应交给第 13 章的 GC。</li>
+</ul>
+<h3 id="2lab1直线式程序解释器">2.Lab1:直线式程序解释器</h3>
+<p>这个实验主要是对解释器最核心的功能：解释执行，有一个认知。</p>
+<p>因此直接以 AST 作为输入，以函数式风格进行语义解释。输入如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// a := 5+3; b := (print (a, a-1),10*a); print(b)
+</span><span style="color:#75715e"></span>A_stm prog <span style="color:#f92672">=</span> 
+A_CompoundStm(A_AssignStm(<span style="color:#e6db74">&#34;a&#34;</span>,
+				A_OpExp(A_NumExp(<span style="color:#ae81ff">5</span>), A_plus, A_NumExp(<span style="color:#ae81ff">3</span>))),
+	A_CompoundStm(A_AssignStm(<span style="color:#e6db74">&#34;b&#34;</span>,
+		A_EseqExp(A_PrintStm(A_PairExpList(A_IdExp(<span style="color:#e6db74">&#34;a&#34;</span>), 
+					A_LastExpList(A_OpExp(A_IdExp(<span style="color:#e6db74">&#34;a&#34;</span>), A_minus,
+										  A_NumExp(<span style="color:#ae81ff">1</span>))))),
+			A_OpExp(A_NumExp(<span style="color:#ae81ff">10</span>), A_times, A_IdExp(<span style="color:#e6db74">&#34;a&#34;</span>)))),
+	 A_PrintStm(A_LastExpList(A_IdExp(<span style="color:#e6db74">&#34;b&#34;</span>)))));
+</code></pre></div><p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t9.png" alt="t9"></p>
+<p>正如作者所言，“用函数式编程实现解释器是理解语义、属性文法的好方法。”因此，这和我在 EOPL 里学的重叠了：对 LL(1) 文法的递归下降编程，所以对我而言，这里主要是通过写解释器，关注一下对语义的理解。</p>
+<h4 id="文法">文法</h4>
+<pre><code>Stm -&gt; Stm ; Stm		(CompoundStm)
+Stm -&gt; id := Exp		(AssignStm)
+Stm -&gt; print (ExpList)	 (PrintStm)
+Exp -&gt; id				(IdExp)
+Exp -&gt; num				(NumExp)
+Exp -&gt; Exp Binop Exp	 (OpExp)
+Exp -&gt; (Stm,Exp)		 (EseqExp)
+ExpList -&gt; Exp , ExpList  (PairExpList)	
+ExpList -&gt; Exp			(LastExpList)
+Binop -&gt; +				(Plus)
+Binop -&gt; -				(Minus)
+Binop -&gt; x				(Times)
+Binop -&gt; /				(Div)
+</code></pre><p>表达式序列（s,e）：先计算 s 的副作用，再计算 e（并返回结果）。</p>
+<h4 id="实验要求">实验：要求</h4>
+<ul>
+<li>编写 int maxargs(A_stm)：返回语句中 print 的参数最多个数</li>
+<li>编写 void interp(A_stm)：对用此直线式程序语言写的程序“解释执行”</li>
+</ul>
+<p><strong>分析：</strong></p>
+<ol>
+<li>
+<p>所有 id-num 的绑定、四则计算结果，都是保存在数据上下文（环境）中，因此需要对 env 进行查找、更新，这由作者给出了代码。查找时，重名 id 的情况，就近覆盖。</p>
+</li>
+<li>
+<p>副作用体现在了环境中，因此对于（s,e），解释 s，e 是在两个不同的环境。更具体的说，所有解释函数的参数都是：输入+环境。但需要注意相关联（一个环境更新得另一个环境）的环境之间的先后顺序，这其实是对语义的理解。</p>
+</li>
+</ol>
+<h4 id="实现已有框架">实现：已有框架</h4>
+<pre><code>main.c：空
+makefile：略
+prog1.c：抽象语法形式的输入
+prog1.h：略
+slp.c：文法的构造函数
+slp.h：构造函数声明、右部可选规则对应数据结构
+util.c：checked_malloc()、String()、U_BoolList()
+util.h：略
+</code></pre><h4 id="实现环境">实现：环境</h4>
+<ul>
+<li>main.c：填充内容——简单的调用要求实现的函数，打印返回结果即可。</li>
+<li>myimpl.c：实现要求的两个函数、环境</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Table_ <span style="color:#a6e22e">init</span>();
+Table_ <span style="color:#a6e22e">update</span>(Table_ t,string key,<span style="color:#66d9ef">int</span> value);
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lookup</span>(Table_ t, string key);
+Table_ <span style="color:#a6e22e">Table</span>(string id, <span style="color:#66d9ef">int</span> value, Table_ tail);
+<span style="color:#66d9ef">struct</span> IntAndTable <span style="color:#a6e22e">newIntAndTable</span>(<span style="color:#66d9ef">int</span> i,Table_ t);
+</code></pre></div><p>newIntAndTable 函数，下面的 “语义理解” 部分解释。</p>
+<p>简单的 “键-值” 对链表，如图：
+<img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t8.png" alt="t8"></p>
+<h4 id="实验解释执行">实验：解释执行</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">interp</span>(A_stm s);
+Table_ <span style="color:#a6e22e">interpStm</span>(A_stm s, Table_ t);
+<span style="color:#66d9ef">struct</span> IntAndTable <span style="color:#a6e22e">interpExp</span>(A_exp e, Table_ t);
+Table_ <span style="color:#a6e22e">interpExpList</span>(A_expList el, Table_ t);
+</code></pre></div><p>简单的 switch + 递归，不多赘言。少了一个 interpBinop 函数，觉得太简单了，合并到 interpExp 里了，但不应该这样做，函数变得大而冗余。</p>
+<p>maxargs 基本上就是 interpstm 的 copycat，要避免这种重复，可以解释的时候，填充更多的数据域来存储信息。也可以设置一个全局变量用于计数，。因为搭了 interpstm 的便车，细致一点可以对 print 设置一个打印开关，避免两次显示 interpstm 结果。</p>
+<h4 id="实现语义理解">实现：语义理解</h4>
+<h5 id="intandtable">IntAndTable</h5>
+<p><code>Stm -&gt; id := Exp	(AssignStm)</code>从语句的解释结果是反应在 env 中。但是之前实现的 env 构建函数需要 id、value 同时传入，从文法上可知，这里对应 2 类表达式的解释：Exp、ExpList。</p>
+<p>因此，需要将产生于不同时刻的 id、value 先临时保存，再一起传入 update，扩展环境。而 IntAndTable 就是充当这个作用。但其实也可以不用一个临时的数据结构 IntAndTable 来暂存，已相应解释函数作为 update 参数即可。</p>
+<h5 id="print">print</h5>
+<p><code>Stm -&gt; print (ExpList)	 (PrintStm)</code>对打印的解释执行并没有放在 interpStm 对应的 A_printStm 分支。因为 ExpList 有两种可能，需要进一步解释，所以打印放在 interpExpList 中了。</p>
+<p>从返回上可以看出，print 产不产生副作用：</p>
+<pre><code>return interpExpList(el-&gt;u.pair.tail,head.t);
+return last.t;
+</code></pre><h5 id="四则计算中的副作用">四则计算中的副作用</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> IntAndTable left <span style="color:#f92672">=</span> interpExp(e<span style="color:#f92672">-&gt;</span>u.op.left,t);
+<span style="color:#75715e">//struct IntAndTable right = interpExp(e-&gt;u.op.right,t);
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> IntAndTable right <span style="color:#f92672">=</span> interpExp(e<span style="color:#f92672">-&gt;</span>u.op.right,left.t);
+<span style="color:#66d9ef">case</span> A_plus:
+	<span style="color:#75715e">//return newIntAndTable(left.i + right.i,t);
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> newIntAndTable(left.i <span style="color:#f92672">+</span> right.i,right.t);
+</code></pre></div><p>这是我没注意到的，从左至右计算时，副作用对 env 的更新，以及最后 env 的返回。</p>
+<h5 id="小结">小结</h5>
+<p>对 PL 语义的解释，其实就是关注三个方面，需要时刻注意：</p>
+<ul>
+<li>解释逻辑本身</li>
+<li>数据上下文（环境）</li>
+<li>控制上下文（栈帧）</li>
+</ul>
+<h4 id="实验结果">实验：结果</h4>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t10.png" alt="t10"></p>
+<h4 id="编程积累">编程积累</h4>
+<ol>
+<li>
+<p>strcmp：相等时，返回0。</p>
+</li>
+<li>
+<p>官方的框架里少了许多头文件的引用 prog1.h中少了 #include &ldquo;slp.h&rdquo;，slp.h少了#include &ldquo;util.h&rdquo;</p>
+</li>
+<li>
+<p>struct 如果没有结构体变量，每次使用时需要以 struct tag 的形式。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> tag { 
+    member<span style="color:#f92672">-</span>list
+    member<span style="color:#f92672">-</span>list 
+    member<span style="color:#f92672">-</span>list  
+    ...
+} variable<span style="color:#f92672">-</span>list ;
+   
+</code></pre></div></li>
+<li>
+<p>头文件还是加上：避免重定义</p>
+<pre><code>#ifndef xxx_H
+#define xxx_H
+   
+#endif
+</code></pre></li>
+<li>
+<p>如前面的约定，对于定义的结构体，用 typedef 定义一个指向 struct 的指针，这样分配内存时也方便：</p>
+<pre><code>malloc(sizeof(*xxx))
+</code></pre></li>
+</ol>
+<h2 id="2词法分析">2.词法分析</h2>
+<h3 id="0关于parse">0.关于parse</h3>
+<p>之前看 EOPL、PLAI，也包括虎书，其实对于 parse（词法、语法分析） 是持一种 “轻视” 态度的，是编译理论的 “第0步”。我也比较认同，所以对于这两章，弄清正则表达式、上下文无关文法这两种抽象，能用 Lex、Yacc 即可。</p>
+<h3 id="1流程概览">1.流程概览</h3>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t14.png" alt="t14"></p>
+<ul>
+<li>词法分析是一个要求对单词 “准确描述” 的实际问题。（问题是什么：定义词法规范）</li>
+<li>正则表达式完成对实际问题的抽象。（理论可解：是什么）</li>
+<li>DFA 是正则表达式的计算机形式化。（编程可解：怎么做）</li>
+<li>NFA 其实就是对每个单词对应 DFA 的简单合并。（实现）</li>
+<li>NFA-&gt;DFA 这种转化是对上一步简单合并的化简。（实现）</li>
+</ul>
+<h3 id="2正则表达式">2.正则表达式</h3>
+<p>描述任意字符串集合，需要的要素：</p>
+<ul>
+<li>符号</li>
+<li>可选</li>
+<li>联结</li>
+<li>空</li>
+<li>重复</li>
+</ul>
+<p>消除二义性的重要规则：</p>
+<ul>
+<li>最长匹配</li>
+<li>规则优先</li>
+</ul>
+<h3 id="3有限自动机">3.有限自动机</h3>
+<p>有限自动机形式化正则，需要的要素：</p>
+<ul>
+<li>初态</li>
+<li>终态</li>
+<li>边：符号</li>
+</ul>
+<p>转化矩阵：状态下标、输入字符（数字对应字符）</p>
+<p>DFA：从同一状态出发的两条边，不存在相同的符号。</p>
+<p>最长匹配识别（选用消除二义性的一个规则）：每次到达一个终态，记录——</p>
+<ul>
+<li>最近到达的终态编号</li>
+<li>到达此终态的输入位置</li>
+</ul>
+<h3 id="4nfa">4.NFA</h3>
+<p>我觉得 NFA 就是在针对每个单词完成正则描述、DFA之后，想要对所有单词进行简单合并，以便之后统一处理的产物。</p>
+<p>这种简单合并非常直接——几乎是用空边连接即可。有少许的形式改动，规则如下：
+<img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t17_1j.png" alt="t17_1j"></p>
+<h3 id="5nfa-dfa">5.NFA-&gt;DFA</h3>
+<p>合并主要是两方面：空边、重叠的输入。</p>
+<p>转化成的计算机问题：不动点迭代。而 “有限状态” 就是 “不动点”。</p>
+<p>为了方便形式化描述，定义了一些概念：</p>
+<ul>
+<li>edge(s，c)：状态 s 沿 c 边可到达状态集合</li>
+<li>closure(S)：状态 S 沿空边可到达状态集合</li>
+<li>DFAedge(d，c)：closure(edge(s，c))。（s 属于状态集合 d 的元素）</li>
+</ul>
+<p>但我觉得单从理解触发，不必搞这么形式化，抓住 “不动点迭代” 的思想即可：</p>
+<ol>
+<li>对 NFA 的当前状态 s0：s0 = closure(s0)，当前状态完成。</li>
+<li>DFAedge(s0，输入)，这里需要对 “输入” 进行分类和合并处理，这决定了之后产生几个新的边，对于每个边重复步骤 1，得到 DFAedge(s0，某边上输入)。</li>
+<li>对新的各个当前状态重复步骤 1、2。</li>
+<li>到没有新的当前状态产生时，结束。</li>
+</ol>
+<p>算法很简单，被书上的伪代码绕晕的话，可以直接看实例，自己即可琢磨出来，实例如下：</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t14j.png" alt="t14j"></p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t17j.png" alt="t17j"></p>
+<p><strong>最小化——</strong></p>
+<p>没有细说，只列了一个必要条件：</p>
+<p>对于同为终态或非终态的 s1,s2，等价的必要条件是 trans[s1,c] = trans[s2,c]。</p>
+<p>不充分如下，2、4是等价的：</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t21.png" alt="t21"></p>
+<h3 id="6lab2词法分析">6.Lab2.词法分析</h3>
+<h4 id="lex用法">Lex用法</h4>
+<p>Lex 就是省略了正则抽象之后，向计算机问题的转化。</p>
+<p>也即由正则的 “静态、说明性” 到自动机的 “动态、命令式”。</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t20.png" alt="t20"></p>
+<p>Lex规范：</p>
+<pre><code>%{
+  ... 第一部分  
+%}
+  ... 第二部分
+%%
+  ... 第三部分
+</code></pre><ul>
+<li>第一部分：C代码声明。（全局变量 yylval 是不同语义值的联合，传递给语法分析器）</li>
+<li>第二部分：Lex声明。正则的简写形式和状态说明（初态声明，用于正则表达式的前缀。）</li>
+<li>第三部分：正则表达式和动作。（动作可以改变初态，BEGIN <!-- raw HTML omitted -->进入此状态。无前缀表示在所有状态中通用。）</li>
+</ul>
+<p>注意：</p>
+<ol>
+<li>第二部分中，初态 <!-- raw HTML omitted --> 不需要声明</li>
+<li>第三部分中，不能有注释</li>
+</ol>
+<h4 id="tiger词法">Tiger词法</h4>
+<p>保留字：</p>
+<pre><code>while、for、to、break、let、in、end、function、
+var、type、array、if、then、else、do、of、nil
+</code></pre><p>符号：</p>
+<pre><code>, : ; () [] {} . + - * / = &lt;&gt; &lt; &lt;= &gt; &gt;= &amp; | := 
+</code></pre><p>标识符：字符、数字、下划线，字符开头</p>
+<p>注释：/**/，可以嵌套</p>
+<p>字符串字面量：对转义字符转换到其含义</p>
+<p>负整型字面量：没有，需返回两个单词</p>
+<h4 id="实验要求-1">实验：要求</h4>
+<ul>
+<li>使用lex工具，编写正则表达式对 tiger 程序进行词法分析</li>
+</ul>
+<h4 id="实验分析">实验：分析</h4>
+<ul>
+<li>注释嵌套：根据所在状态、注释符号的计数器增减来实现。<!-- raw HTML omitted --> 遇到 /* 时，计数自增，转入 <!-- raw HTML omitted -->，在 <!-- raw HTML omitted --> 中遇到 */ 时，计数自减，判断计数是否为零，为零时转入  <!-- raw HTML omitted -->。</li>
+<li>第三部分的正则相当于是匹配条件，它们之间的顺序是有影响的。比如所有情况之外的任意字符是非法字符<code>&lt;INITIAL&gt;. {adjust(); EM_error(charPos, &quot;illegal char&quot;);}</code>，这一句若是放在开头，会导致后面所有对单字符的匹配出问题。</li>
+<li>其实从词法分析这里已经可以看出，具体语法向抽象语法的过渡，通过返回的取舍，即可对无意义字符的过滤。</li>
+<li>虎书对 Lex 的介绍省略了很多用法细节。但主要是一些 Lex 内置的全局变量、函数，用于信息的传递，尤其是给之后的语法分析部分。</li>
+</ul>
+<h4 id="实验结果-1">实验：结果</h4>
+<p>测试时使用了作者给的测试用例，但如果直接用 Windows 版的，会因编码差异导致有非法字符的报错。</p>
+<p>输入——</p>
+<pre><code>/* an array type and an array variable */
+let
+	type  arrtype = array of int
+	var arr1:arrtype := arrtype [10] of 0
+in
+	arr1
+end
+</code></pre><p>输出——</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/lab2.png" alt="lab2"></p>
+<h2 id="3语法分析">3.语法分析</h2>
+<h3 id="0流程概览">0.流程概览</h3>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t27.png" alt="t27"></p>
+<ul>
+<li>
+<p>语言这种数据最大的特点，是具有递归特性。这是它的强大表现力根源，也是复杂性的根源。</p>
+</li>
+<li>
+<p>用上下文无关文法来表示这种递归特性，完成对语言的抽象。</p>
+</li>
+<li>
+<p>解决这种抽象而来的问题，有两种手段：推导和归约。</p>
+</li>
+<li>
+<p>推导和归约的选择与具体文法相关，目前流行的文法是对归约进行了支持。</p>
+</li>
+<li>
+<p>何为推导？自上而下（实现：递归下降）——求数列 S</p>
+<pre><code>n = 0
+n-3 ∈ S
+</code></pre></li>
+<li>
+<p>何为归约？自下而上（实现：DFA用于栈）——求数列 S</p>
+<pre><code>0 ∈ S
+if n ∈ S,then n+3 ∈ S
+</code></pre></li>
+</ul>
+<h3 id="parse理论观止">parse理论观止</h3>
+<p>这一段 parse 的理论暂时略过，我记得到最后也就是一个不动点迭代的算法而已。</p>
+<p>parse确实有些烦人，最后得到的只是一个 AST 而已，而在《EOPL》中写的 S表达式本身就近乎 AST了，parse 很简单，这里浪费了我太多时间。还是直接以代码实现为目标吧，粗读时，我记得之后的阶段，反而没这么花里胡哨的东西。代码是最清楚、直接的语言。我直接源码实现、分析就可以了，书上理论作为补充。</p>
+<h3 id="lab3语法分析抽象语法">Lab3.语法分析（+抽象语法）</h3>
+<h4 id="实验yacc用法">实验：Yacc用法</h4>
+<pre><code>第一部分：parser decls
+%%
+第二部分：grammar rules
+%%
+第三部分：programs
+</code></pre><ul>
+<li>第一部分：终结符、非终结符组成的表	——	声明</li>
+<li>第二部分：非终结符：对应右部    {语义动作}    ——       规则</li>
+<li>第三部分：原始 C 代码，可供语义动作使用      ——       C代码</li>
+</ul>
+<p>注意：</p>
+<ol>
+<li>%union 列出用到的数据类型</li>
+<li>%token|%type <!-- raw HTML omitted --> 成员：指明语义值对应的成员</li>
+<li>%token：终结符；%type：非终结符</li>
+<li>%left：左结合。最后列出的，具有更高的优先级</li>
+<li>%nonassoc：非结合操作</li>
+<li>%prec：终结符</li>
+<li>yacc 会保持两个栈，一个是语法栈，一个是由 YYSTYPE（默认int，实际union指定）的值组成的值栈，这两个栈完全同步，一边是识别的文本，一边是记号流的值。yytext的值就是语法栈里的值， 而 yylval 以及yacc 的语法规则部分正则后的操作里出现的 $$（栈顶） $1 $2 等都是值栈的值。</li>
+</ol>
+<h4 id="实验语法分析">实验：语法分析</h4>
+<p>未添加语义动作，之后将抽象语法的构造添入其中。</p>
+<p>这里和 Tiger 参考手册中的冲突在于，tydec、fundec 其实都是支持一系列连续声明的，但手册中的命名上没有体现。应该命为 tydecs、fundecs，这导致 tydec、fundec 强行表示了连续声明，而单个声明用 tydec_one、fundec_one。</p>
+<p>从这里的匹配规则和之后语义动作中，对抽象语法树的构造函数所传参数，明显可知抽象语法的含义。抽象语法树完全的代替了源程序文本，使得语法问题和后续语义问题得以分离，实现模块化。</p>
+<p>对于左值，多出的一条规则：（这里我理解不到位）</p>
+<pre><code>lvalue	:	ID
+		|	lvalue DOT ID
+		|	ID LBRACK exp RBRACK     (多出的) 
+		|	lvalue LBRACK exp RBRACK
+		;
+</code></pre><p>这是为了避免与exp的 <code>ID LBRACK exp RBRACK OF exp</code>规则冲突。</p>
+<p>例如，a[i]+1，在读入“[”时由于移入（exp的ID LBRACK exp RBRACK规则）归约（lvalue的ID规则）冲突，默认选择移入;但当读入“+”时发现不是OF，栈里的a[i]又无法归约为lvalue（因为最开始的a没有归约为lvalue，无法应用lvalue的lvalue LBRACK exp RBRACK规则），产生错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#f92672">%</span>{
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;util.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;symbol.h&#34; </span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;errormsg.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;absyn.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> yylex(<span style="color:#66d9ef">void</span>); <span style="color:#75715e">/* function prototype */</span>
+
+A_exp absyn_root;
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">yyerror</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>s)
+{
+ EM_error(EM_tokPos, <span style="color:#e6db74">&#34;%s&#34;</span>, s);
+}
+<span style="color:#f92672">%</span>}
+
+
+<span style="color:#f92672">%</span><span style="color:#66d9ef">union</span> {
+	<span style="color:#66d9ef">int</span> 			pos;
+	<span style="color:#66d9ef">int</span> 			ival;
+	string 			sval;
+	A_var 			var;
+	A_exp 			exp;
+	A_expList 		expList;
+	A_dec 			dec;
+	A_decList 		decList;
+	A_field			field;
+	A_fieldList 	fieldList;
+	A_fundec 		fundec;
+	A_fundecList 	fundecList;
+	A_namety 		namety;
+	A_nametyList 	nametyList;
+	A_efield 		efield;
+	A_efieldList 	efieldList;
+	A_ty  			ty;
+	}
+
+<span style="color:#f92672">%</span>token <span style="color:#f92672">&lt;</span>sval<span style="color:#f92672">&gt;</span> ID STRING
+<span style="color:#f92672">%</span>token <span style="color:#f92672">&lt;</span>ival<span style="color:#f92672">&gt;</span> INT
+
+<span style="color:#f92672">%</span>token 
+  COMMA COLON SEMICOLON LPAREN RPAREN LBRACK RBRACK 
+  LBRACE RBRACE DOT 
+  PLUS MINUS TIMES DIVIDE EQ NEQ LT LE GT GE
+  AND OR ASSIGN
+  ARRAY IF THEN ELSE WHILE FOR TO DO LET IN END OF 
+  BREAK NIL
+  FUNCTION VAR TYPE 
+
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>var<span style="color:#f92672">&gt;</span>			lvalue
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>exp<span style="color:#f92672">&gt;</span> 		exp expseq
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>explist<span style="color:#f92672">&gt;</span>		actuals sequencing
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>dec<span style="color:#f92672">&gt;</span>			dec vardec
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>declist<span style="color:#f92672">&gt;</span>		decs
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>field<span style="color:#f92672">&gt;</span>		field
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>fieldList<span style="color:#f92672">&gt;</span>	tyfields
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>fundec<span style="color:#f92672">&gt;</span>		fundec_one
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>fundecList<span style="color:#f92672">&gt;</span>	fundec
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>namety<span style="color:#f92672">&gt;</span>		tydec_one
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>nametyList<span style="color:#f92672">&gt;</span>	tydec
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>efield<span style="color:#f92672">&gt;</span>		rec_one
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>efieldList<span style="color:#f92672">&gt;</span>	rec
+<span style="color:#f92672">%</span>type <span style="color:#f92672">&lt;</span>ty<span style="color:#f92672">&gt;</span>			ty
+
+<span style="color:#f92672">%</span>nonassoc FUNCTION IF WHILE FOR
+<span style="color:#f92672">%</span>right  ASSIGN
+<span style="color:#f92672">%</span>left  OR
+<span style="color:#f92672">%</span>left  AND
+<span style="color:#f92672">%</span>nonassoc  EQ NEQ LT LE GT GE
+<span style="color:#f92672">%</span>left  PLUS MINUS
+<span style="color:#f92672">%</span>left  TIMES DIVIDE
+<span style="color:#f92672">%</span>right UMINUS
+
+<span style="color:#f92672">%</span>start program
+
+<span style="color:#f92672">%%</span>
+
+decs:	dec
+	<span style="color:#f92672">|</span>	dec decs
+	;
+dec	:	tydec
+	<span style="color:#f92672">|</span>	vardec
+	<span style="color:#f92672">|</span>	fundec
+	;
+
+tydec		:	tydec_one
+			<span style="color:#f92672">|</span>	tydec_one tydec
+			;
+tydec_one	:	TYPE ID EQ ty	 
+ty			:	ID
+			<span style="color:#f92672">|</span>	LBRACE tyfields RBRACE
+			<span style="color:#f92672">|</span>	ARRAY OF ID
+			;
+tyfields	:	field
+			<span style="color:#f92672">|</span>	field COMMA tyfields
+			;
+field		:	
+			<span style="color:#f92672">|</span>	ID COLON ID	
+			;
+
+vardec	:	VAR ID ASSIGN exp
+		<span style="color:#f92672">|</span>	VAR ID COLON ID ASSIGN exp
+		;
+	
+fundec		:	fundec_one
+			<span style="color:#f92672">|</span>	fundec_one fundec
+			;
+fundec_one	:	FUNCTION ID LPAREN tyfields RPAREN EQ exp
+			<span style="color:#f92672">|</span>	FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp
+			;
+
+			
+lvalue	:	ID
+		<span style="color:#f92672">|</span>	lvalue DOT ID
+		<span style="color:#f92672">|</span>	ID LBRACK exp RBRACK      
+		<span style="color:#f92672">|</span>	lvalue LBRACK exp RBRACK
+		;
+	
+	
+exp			:	lvalue
+			<span style="color:#f92672">|</span>	NIL
+			<span style="color:#f92672">|</span>	LPAREN sequencing RPAREN
+			<span style="color:#f92672">|</span>	LPAREN RPAREN
+			<span style="color:#f92672">|</span>	INT
+			<span style="color:#f92672">|</span>	STRING
+			<span style="color:#f92672">|</span>	MINUS exp <span style="color:#f92672">%</span>prec UMINUS	
+			<span style="color:#f92672">|</span>	ID LPAREN RPAREN
+			<span style="color:#f92672">|</span> 	ID LPAREN actuals RPAREN
+			<span style="color:#f92672">|</span>	exp PLUS exp
+			<span style="color:#f92672">|</span>	exp MINUS exp
+			<span style="color:#f92672">|</span>	exp TIMES exp 
+			<span style="color:#f92672">|</span>	exp DIVIDE exp
+			<span style="color:#f92672">|</span>	exp EQ exp
+			<span style="color:#f92672">|</span>	exp NEQ exp
+			<span style="color:#f92672">|</span>	exp LT exp
+			<span style="color:#f92672">|</span>	exp GT exp
+			<span style="color:#f92672">|</span>	exp LE exp
+			<span style="color:#f92672">|</span> 	exp GE exp
+			<span style="color:#f92672">|</span>	exp AND exp
+			<span style="color:#f92672">|</span> 	exp OR exp
+			<span style="color:#f92672">|</span>	ID LBRACE rec RBRACE
+			<span style="color:#f92672">|</span>	ID LBRACE RBRACE
+			<span style="color:#f92672">|</span>	ID LBRACK exp RBRACK OF exp
+			<span style="color:#f92672">|</span>	lvalue ASSIGN exp
+			<span style="color:#f92672">|</span>	IF exp THEN exp ELSE exp
+			<span style="color:#f92672">|</span>	IF exp THEN	exp
+			<span style="color:#f92672">|</span>	WHILE exp DO exp
+			<span style="color:#f92672">|</span> 	FOR ID ASSIGN exp TO exp DO exp
+			<span style="color:#f92672">|</span>	BREAK
+			<span style="color:#f92672">|</span>	LET decs IN expseq END
+			<span style="color:#f92672">|</span>	LPAREN exp RPAREN
+			;
+sequencing	:	exp
+			<span style="color:#f92672">|</span> 	exp SEMICOLON sequencing
+			;
+actuals		:	exp
+			<span style="color:#f92672">|</span>	exp COMMA actuals
+			;
+rec			:	rec_one
+			<span style="color:#f92672">|</span>	rec_one COMMA rec
+			;
+rec_one		:	ID EQ exp
+expseq		:	sequencing
+
+program:   exp    {absyn_root<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>;}
+</code></pre></div><h4 id="实验抽象语法">实验：抽象语法</h4>
+<p>语义动作中，只是将对语法的匹配到的短句中的 “有意义” 成分，传入抽象语法的构造函数，而具体构造函数又是在别处实现，Yacc中不需要考虑其细节，这样的抽象很模块化。</p>
+<p>不需要再贴代码，关注一下抽象语法的数据结构设计即可，而这与 lab1 很相似：</p>
+<ul>
+<li>主要的数据结构和 lab1 是一样的设计：kind + union</li>
+<li>如前所说，Tiger参考手册中文法没有指出声明可以是连续的，因此多了链式结构 xxxList</li>
+<li>对于字符串安排在链表中，需调用 S_Symbol() 转化</li>
+<li>对于文法中非终结符的构造函数，都带有位置参数 EM_tokPos</li>
+<li>对 .lex 文件需修改包含的头文件，不需要之前的 tokens.h</li>
+<li>框架中没有 main函数，我将其添加到 parse.c 中，虎书原意是另行编写。</li>
+<li>对于局部变量在嵌套的函数内使用，于varDec、field中增加 escape 成员，它始终被设为 TRUE（保守做法）。</li>
+</ul>
+<h4 id="实验结果-2">实验：结果</h4>
+<p>输入——</p>
+<pre><code>/* an array type and an array variable */
+let
+	type  arrtype = array of int
+	var arr1:arrtype := arrtype [10] of 0
+in
+	arr1
+end
+</code></pre><p>输出——</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/lab3.png" alt="lab3"></p>
+<hr>
+<h2 id="4语义分析">4.语义分析</h2>
+<h3 id="0数据上下文环境">0.数据上下文（环境）</h3>
+<h4 id="概览">概览</h4>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/env.png" alt="env"></p>
+<ul>
+<li>
+<p>环境（亦符号表）即绑定集合。</p>
+</li>
+<li>
+<p>这里明显存在两种绑定关系：类型绑定-类型、值绑定-变量/函数。对应产生：类型环境（tenv）、值环境（venv）。</p>
+</li>
+<li>
+<p>命令式风格的环境，是具有副作用的更新。从基本环境开始 “修改”、“恢复” 来演变为求值时需要的不同环境。</p>
+</li>
+<li>
+<p>函数式风格的环境，是环境的新建。不同的环境彼此独立（比如用在闭包中）。</p>
+</li>
+</ul>
+<h4 id="高效实现命令式风格">高效实现：命令式风格</h4>
+<ul>
+<li>带有外部散列链的散列表</li>
+<li>散列链：由具有相同散列值的元素组成的一张链表</li>
+<li>（Tiger）绑定和插入，按栈的方式操作</li>
+</ul>
+<h4 id="高效实现函数式风格">高效实现：函数式风格</h4>
+<ul>
+<li>二叉搜索树：在 d 层添加一个新节点，创建 d 个新节点，然后共享原树的一部分（log n）</li>
+</ul>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t77.png" alt="t77"></p>
+<h4 id="高效实现tiger">高效实现：Tiger</h4>
+<ul>
+<li>基本实现同 “高效实现：命令式风格”</li>
+<li>改进：字符串转化——对于相同字符串的不同出现，都被转化成同一个符号对象。</li>
+<li>改进优点：很多字符串的比较操作，成了指针比较。散列值的计算也是用指针（即符号的地址）。</li>
+</ul>
+<h3 id="1类型">1.类型</h3>
+<h4 id="何为类型">何为类型</h4>
+<p>这里一开始把 “类型” 和 AST中的各种结构，理解混淆了。</p>
+<p>抽象一下理解看待，即类型、AS都是一种区分：</p>
+<ul>
+<li>AS是对源程序不同语法之间的区分</li>
+<li>类型是对环境中不同值的区分</li>
+</ul>
+<p>按照 Tiger的规范，类型首先有其定义的 3 种：</p>
+<ul>
+<li>内建：Ty_int，Ty_string</li>
+<li>记录：Ty_record</li>
+<li>数组：Ty_array</li>
+</ul>
+<p>还有 3 种特殊的情况：</p>
+<ul>
+<li>nil表达式属于任何记录类型：Ty_nil</li>
+<li>没有返回值的表达式：Ty_void</li>
+<li>处理相互递归的类型所需要的：Ty_name</li>
+</ul>
+<h4 id="环境实现">环境实现</h4>
+<p>分成了三个模块：env、symbol、table。env是开始，symbol 多是 table 的封装。</p>
+<p>环境是基于带外部散列链的散列表实现的。插入、查找操作，不多说。主要是关注：绑定对象的<strong>结构</strong>、<strong>撤销</strong>操作。</p>
+<hr>
+<p>相关结构如下图：</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t81.png" alt="t81"></p>
+<p>在 binder 中，除了 next 域，其余都是 void*。尤其是 value，这使得 value 可以同时用于值绑定、类型绑定。在 env 模块中有 “值/类型的预定义环境” 的构建，可以清晰的看出两种不同的绑定，构建两种不同的环境。</p>
+<p>具体而言，被绑定的 “类型”、“值” 是有对应的构造函数产生的。</p>
+<ul>
+<li>“类型”：Ty_Xxxx 产生类型对象。</li>
+<li>“值”：“环境登记项”，其实对类型对象的封装，分为变量（关注类型）、函数（关注形参、返回类型）。</li>
+</ul>
+<p>注意：这里其实最后绑定的东西都是类型对象，因为这里的语言是有类型的，所以值环境中无法不带类型（区别于 EOPL 中 tenv、venv完全不同的情况）。而类型对象 Ty_ty 中有一个域 sym 是含标识符的。</p>
+<hr>
+<p>撤销操作：</p>
+<pre><code>S_beginScope 记住表的当前状态
+S_endScope 恢复表到最近一次执行且还未结束的 beginScope 时的状态
+</code></pre><p>S_beginScope 是将一个特殊的标记符+NULL绑定对象，压入（S_enter）表中。</p>
+<p>S_endScope 则是出栈（TAB_pop），直至遇到特殊标记符。</p>
+<p>关键在于这个 “辅助栈” 的实现：</p>
+<ul>
+<li>push：全局变量 top 记录最近绑定的符号，在散列表对应的位置，创建 binder 插入到其外部散列链。而 top 复制到了 binder 的 prevtop 域。</li>
+<li>pop：由 top 找到散列表对应位置（栈），将栈顶的 binder 的 next 作为新栈顶，将 prevtop 更新 top，返回 key 即可。</li>
+</ul>
+<p>这样分散于散列表中不同外部散列链的 binder 便通过 “栈” 串起来了。</p>
+<h3 id="2类型检查">2.类型检查</h3>
+<h4 id="何为类型检查">何为类型检查</h4>
+<p>这里我有两处理解上的弯路：一是类型检查的意义，二是类型检查处于的 “位置”。</p>
+<p><strong>对于一：</strong></p>
+<p>思考这样一个问题：已经通过 parse 的代码，什么情况下会出现类型错误？</p>
+<p>这一点也是我之前提到的，刚开始把类型和 AS 有些理解混淆的原因所在。提出这样一个问题后，就明显可以想到——声明和使用的不一致。</p>
+<p>比如我只声明了变量 a，之后使用的却是一个没声明的变量 b。这两条语句明显是可以通过 parse 的，但却存在语义错误。这也就是为什么这一章叫 “语义分析”，实际上的检查是类型检查了（这里的认识不对，从下一章可知，语义分析还要做更多的事，不只是类型检查）。</p>
+<p><strong>对于二：</strong></p>
+<p>我忽视了类型检查应该处于，整个编译流程主体的 “分支” 位置。它是 “依附” 于 “抽象语法到中间代码” 这一步的。我也就突然理解了，为什么有些编译器提供的特殊功能选项，叫做 pass。因为很多时候都是在处理 AST 的过程中实现的这些功能。</p>
+<hr>
+<p>在《EOPL》上学到的类型检查（推导）是很清晰明了的：</p>
+<ul>
+<li>有类型语言：基本上就是 AST 遍历构建起类型环境，然后提取类型环境对应类型，按照语法规范写比较判断（特别需要知道的是，<strong>声明导致</strong>了类型环境、值环境的扩张！）</li>
+<li>无类型语言：以最初的代码为基础，进行类型推导，看之后会不会出现与这基础冲突的情况</li>
+</ul>
+<h4 id="表达式类型检查">表达式类型检查</h4>
+<p>如上所言，4个 AST 上的递归函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> expty <span style="color:#a6e22e">transVar</span>(S_table venv, S_table tenv, A_var v);
+<span style="color:#66d9ef">struct</span> expty <span style="color:#a6e22e">transExp</span>(S_table venv, S_table tenv, A_exp a);
+<span style="color:#66d9ef">void</span>		 <span style="color:#a6e22e">transDec</span>(S_table venv, S_table tenv, A_dec d);
+Ty_ty		 <span style="color:#a6e22e">transTy</span> (              S_table tenv, A_ty a);
+</code></pre></div><p>而返回的 expty 结构，包含两个结果：转化后的表达式（中间代码）、类型。</p>
+<p>这里也就可以看出之前提到的 “类型检查” 的 “位置” 问题了。exp 暂时用 NULL。</p>
+<pre><code>struct expty 
+{
+	Tr_exp exp; 
+	Ty_ty ty;
+};
+struct expty expTy(Tr_exp exp, Ty_ty ty)
+{
+	struct expty e;
+
+	e.exp = exp;
+	e.ty = ty;
+
+	return e;
+}
+</code></pre><hr>
+<p>如前所言，检查基本就是 AST 遍历，查 tenv，按规范写判断即可。</p>
+<p>反而是 tenv 如何构建（变化）更为重要，而这是和 “声明类型检查” 相关的，其实这两部分内容顺序应该对调。不过由于声明检查更复杂，就放后面了。</p>
+<h4 id="声明类型检查">声明类型检查</h4>
+<p>声明只存在于 let 表达式。在 transExp 中对应的处理是——</p>
+<pre><code>记住 tenv、venv 当前状态
+transDec 扩大 tenv、venv
+翻译函数体表达式
+恢复 tenv、venv
+</code></pre><h5 id="变量声明">变量声明</h5>
+<p>对于<code>var id := exp</code></p>
+<pre><code>transExp 处理 exp
+排除初值nil表达式
+S_enter 将声明类型用于构建 tenv 
+（因为t-&gt;kind == Ty_nil and e.ty-&gt;kind == Ty_array || Ty_record is allowed）-没太懂？
+</code></pre><p>对于<code>var id:type-id := exp</code></p>
+<pre><code>transExp 处理 exp
+提取 type-id
+排除 type-id 为 NULL、Ty_void
+判断 type-id 和 exp 类型一致性
+S_enter 将 exp 类型用于构建 tenv
+</code></pre><h5 id="递归声明">递归声明</h5>
+<p>类型、函数声明中，可以存在一组相互递归的对象。</p>
+<p>此时的处理方式是：</p>
+<p>递归类型声明——</p>
+<ul>
+<li>
+<p>将对象的 “头” 绑定一个空的 Ty_name类型，送入环境，得 e1</p>
+<pre><code>S_enter(tenv, name, Ty_Name(name,NULL))
+</code></pre></li>
+<li>
+<p>在 e1 下调用 transTy 处理这些对象的 “体”</p>
+<pre><code>transTy 到达任何 Ty_Name 类型，停止。若像 actual_ty 则找到 NULL，类型未定义完毕。
+当 “体” 转换完后，才有一个有效类型代替 NULL，即transTy 返回的类型，赋给 Ty_Name 的ty域
+（actual_ty 是跳过 Ty_Name 类型查找）
+</code></pre></li>
+</ul>
+<p>递归函数声明——（类似）</p>
+<ul>
+<li>“头” = 函数名、形参表（不关信名字，因为对外不可见）、返回类型</li>
+<li>“体”再次处理形参表，参数作为 VarEntry 加入 venv</li>
+</ul>
+<h5 id="类型声明">类型声明</h5>
+<pre><code>遍历 AST 检查重复声明
+加入“头”得到环境
+transTy对 AST 递归，查 tenv 转换成对应类型结构
+</code></pre><h5 id="函数声明">函数声明</h5>
+<pre><code>遍历 AST 检查重复声明
+tenv 查找结果类型标识符
+遍历形参表，（查 tenv）返回其对应类型的表
+构造 FunEntry 加入 venv
+venv 处理 “体”
+从 venv 中删除形参，不删 FunEntry（新环境可用于处理调用此函数的表达式）
+</code></pre><h2 id="5活动记录">5.活动记录</h2>
+<h3 id="0内容概述">0.内容概述</h3>
+<p>这里的活动记录不只是《EOPL》中用 continuation 实现的控制上下文，更多的是向机器码转化需要的细节。</p>
+<ul>
+<li>帧指针：栈内寻址</li>
+<li>寄存器的保护：调用者、被调用者，两个角度</li>
+<li>参数传递方式：寄存器参数、存储器参数</li>
+<li>返回地址</li>
+<li>栈帧内的变量：变量存寄存器or存储器的选择</li>
+<li>静态链：访问到更多的栈帧（else：嵌套层次显示表，lambda提升）</li>
+</ul>
+<p>非高阶函数的 PL 中，函数的调用是 后进先出 的，而局部变量在函数出口删除，即可使用 先进先出 的数据结构（栈）来保存。但对于局部变量的访问不是按栈的方式进行，所以需要帧指针。（栈指针用于界定栈）</p>
+<p>体系结构常会规定 “标准” 栈帧布局，这使得不同 PL 的函数可以互调。</p>
+<p>变量逃逸：传地址实参、被取地址、内层嵌套函数访问。</p>
+<h3 id="1tiger实现">1.Tiger实现</h3>
+<h4 id="0栈帧的抽象表示">0.栈帧的抽象表示</h4>
+<p>为了屏蔽特定体系结构对标准布局的要求，栈帧接口（frame.h）需要使用抽象表示，其实现是机器相关的（mipsframe.c、x86frame.c &hellip;&hellip;），包括接口中用到的数据结构。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">F_frame <span style="color:#a6e22e">F_newFrame</span>(Temp_label name, U_boolList formals);
+Temp_label <span style="color:#a6e22e">F_name</span>(F_frame f);
+F_accessList <span style="color:#a6e22e">F_formals</span>(F_frame f);
+F_access <span style="color:#a6e22e">F_allocLocal</span>(F_frame f, <span style="color:#66d9ef">bool</span> escape);
+......
+</code></pre></div><ul>
+<li>F_frame：描述栈帧——函数开始点标号、形参、局部变量、参数个数、栈帧大小、寄存器</li>
+<li>F_access：描述存放于 [栈|寄存器] 中的 [形参|局部变量]</li>
+<li>F_formals()：被调用者视角形参位置</li>
+<li>F_allocLocal()：局部变量的分配</li>
+</ul>
+<h4 id="1局部变量">1.局部变量</h4>
+<p>变量是否逃逸：</p>
+<ul>
+<li>逃逸：放入栈帧</li>
+<li>不逃逸：放入寄存器</li>
+</ul>
+<p>在变量声明时，调用此函数分配一个单元，<strong>并与变量名关联</strong>，出作用域后遗忘此关联。</p>
+<h4 id="2计算逃逸变量">2.计算逃逸变量</h4>
+<p>类似于类型检查器，遍历 AST 即可，在静态嵌套深度 d 的函数中发现 [变量|形参] a声明时，<code>EscapeEntry(d,&amp;(x-&gt;escape))</code>扩展环境，此时标志 escape = FALSE。当在大于 d 深度使用 a 时，escape = TRUE。</p>
+<h4 id="3临时变量和标号">3.临时变量和标号</h4>
+<p>语义分析时需要：</p>
+<ul>
+<li>为 [参数|局部变量] 选择寄存器（Temp）</li>
+<li>确定过程体机器代码的地址（label）</li>
+</ul>
+<p>太此时明显太早了，所以用各自的抽象名代替。Temp 模块用于管理这两种不同名字组成的集合。</p>
+<h4 id="4两层抽象">4.两层抽象</h4>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t100.png" alt="t100"></p>
+<p>这里的名字有些不清楚，语义分析中的类型检查、语义转化是分开的。</p>
+<p>这里 Translate 模块为 Semant 模块管理局部变量、静态函数嵌套。</p>
+<p><strong>静态函数嵌套——</strong></p>
+<p><code>tranDec</code> 中通过 <code>Tr_newLevel-&gt;F_newFrame</code> 为每个函数创建新栈帧，作为嵌套层保存到函数的 <code>FunEntry </code>结构中（还需要机器代码入口点标号）</p>
+<p><strong>局部变量——</strong></p>
+<p>Semant 在变量的创建 <code>Tr_allocLocal(lev,esc)</code>，得到 <code>Tr_access</code> (Tr_level + F_access)，其中含有变量的生存层次，用于计算静态链。</p>
+<h4 id="5管理静态链">5.管理静态链</h4>
+<p>Frame 模块应该是和特定源语言无关的，因此静态链的信息由 Translate 模块处理。</p>
+<p>将静态链作为形参对待，在指明参数逃逸表的前端插入 TRUE 对应 “静态链形参”。</p>
+<h4 id="6追踪层次信息">6.追踪层次信息</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Tr_level <span style="color:#a6e22e">Tr_newLevel</span>(Tr_level parent, Temp_label name, U_boolList formals);
+</code></pre></div><p>创建层次时，传入包围层的 level 值。对于主函数，此值由 <code>Tr_level Tr_outermost(void);</code> 产生一个特殊值代替。</p>
+<h2 id="6翻译成中间代码">6.翻译成中间代码</h2>
+<h3 id="0中间表示的意义">0.中间表示的意义</h3>
+<ol>
+<li>可移植性：N源语言+M不同目标机器代码。N*M -&gt; N+1+M。</li>
+<li>模块化：对前端屏蔽机器细节，对后端屏蔽源语言细节。</li>
+</ol>
+<p>中间表示相当于 “抽象汇编”。</p>
+<h3 id="1中间表示树">1.中间表示树</h3>
+<p>Tiger 的中间表示与之前的抽象语言类似，Tree 模块的实现就是一些数据结构的内存申请+填充。</p>
+<p>关键在于 Tree 模块的接口体现的对汇编的 “抽象”。不过这也并不难，因为这些抽象本身就要求是简单清晰的个体，方便对抽象语法中复杂部分、复杂机器指令的组合构建。</p>
+<p>但真正难点在于语义转化中，如何用这些 “抽象汇编” 来表示源语言的语义。</p>
+<pre><code>CONST(i)
+NAME(n)
+TEMP(t)
+BINOP(o,e1,e2)
+MEM(e)
+CALL(f,l)
+ESEQ(s,e)
+MOVE(TEMP t,e)
+MOVE(MEM(e1),e2)
+EXP(e)
+JUMP(e,labs)
+CJUMP(o,e1,e2,t,f)
+SEQ(s1,s2)
+LABEL(n)
+</code></pre><p>这里没有过程和函数的定义，过程的入口、出口序列之后将结合于函数体，而它们又是机器相关的。</p>
+<h3 id="2抽象语法-中间语言">2.抽象语法-&gt;中间语言</h3>
+<p>这种翻译就是从一种数据结构中提取信息，填充于另一种数据结构里。这是很直接的，而我之前关注的语义转化，书中似乎夹杂到此部分内了。可能是因为 Tiger 语言的简单，使得语义转化并不困难，我需要特别的关注对数据上下文、控制上下文的操作。</p>
+<p>Translate 模块中相关的几个数据结构，只是对这里中间语言（Tree 模块）的简单封装。</p>
+<h4 id="0表达式的种类">0.表达式的种类</h4>
+<p>从中间表示的意义可知，它应该要抽取源语言的共性，从而保证其通用性。尤其是源语言中的各种表达式，明显不能一一对应，因而将其抽象为 3 类：</p>
+<ul>
+<li>Ex：（计算值的）表达式——T_exp</li>
+<li>Nx：无结果语句——T_stm</li>
+<li>Cx：条件语句——T_stm+2*Temp_labels</li>
+</ul>
+<p>由条件语句引出了，真假值标号回填表。由于目标地址确定很晚，暂时用 NULL 占位。</p>
+<p>由表达式的转化引出了，转化函数（unEx、unNx、unCx），剥离对应构造函数（Ex、Nx、Cx）。</p>
+<p>这种转化其实也就是提取所需信息，但有些信息不能直接照搬，就涉及到了语义。比如 Cx-&gt;Ex，就需要在 unEx 中，实现对 Cx 的计算。</p>
+<h4 id="1简单变量">1.简单变量</h4>
+<p>Translate：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Tr_exp <span style="color:#a6e22e">Tr_simpleVar</span>(Tr_access acc, Tr_level lv);
+</code></pre></div><p>Frame：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Temp_temp <span style="color:#a6e22e">F_FP</span>(<span style="color:#66d9ef">void</span>);
+<span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> F_wordSize;
+T_exp <span style="color:#a6e22e">F_exp</span>(F_access acc, T_exp framePtr);
+</code></pre></div><p>这里需要包含变量的储存信息：栈帧、寄存器。还涉及嵌套时，由静态链进行的追踪。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Tr_Ex</span>(F_exp(acc<span style="color:#f92672">-&gt;</span>access, unEx(Tr_staticLink(lv, acc<span style="color:#f92672">-&gt;</span>level))));
+<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">T_Mem</span>(T_Binop(T_plus, framePtr, T_Const(acc<span style="color:#f92672">-&gt;</span>u.offset)));
+<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">T_Temp</span>(acc<span style="color:#f92672">-&gt;</span>u.reg);
+</code></pre></div><p>在接口设计上，所有对 IR 的操作交给 Translate，而 Semant 不直接引用 Tree、Frame。</p>
+<h4 id="2追踪静态链">2.追踪静态链</h4>
+<p>这里主要是要求 Tr_simpleVar 生成一条 MEM 与 +(CONST k1,TEMP FP) 组成的链。</p>
+<p>这相当于递归计算过程中的收缩阶段，每次回到上一个栈帧，+不同偏移，继续收缩。</p>
+<h4 id="3数组变量">3.数组变量</h4>
+<p>Tiger 的数组、记录赋值是指针赋值</p>
+<h4 id="4结构化左值">4.结构化左值</h4>
+<p>左值 = 一个可赋值的位置。</p>
+<p>左值出现在赋值句右端时，隐含取其内容。</p>
+<p>Tiger 的变量、左值都是标量，即只有一个成员，占一个字空间。</p>
+<p>而结构化左值，需要关于变量大小的信息。如：</p>
+<pre><code>T_exp T_Mem(T_exp, int size);
+=&gt;
+MEM(+(TEMP fp,CONST kn),S)
+</code></pre><p>但这样限制了 MEM 的通用性。</p>
+<h4 id="5下标和域选择">5.下标和域选择</h4>
+<p>C 中 a[i] 这样的左值是地址，应转化为：</p>
+<pre><code>+(TEMP fp,CONST k)
+</code></pre><p>Tiger 中左值是指针，指向了数组、记录结构，应转化为：</p>
+<pre><code>MEM(+(MEM(e),BINOP(MUL,i,CONST W)))
+</code></pre><h4 id="6数组越界的安全问题">6.数组越界的安全问题</h4>
+<p>这里是想说优化编译器在编译时，分析安全性，并消除这些检查代码。</p>
+<p>但在浏览器漏洞中，很多都是 JIT 编译器分析不全面，消除这些检查代码后，遇到越界错误。</p>
+<h4 id="7算术操作">7.算术操作</h4>
+<p>整型，简单的对应一个 Tree 操作符即可。</p>
+<h4 id="8条件表达式">8.条件表达式</h4>
+<p>在抽象语法中，把 &amp;、| 这种组合条件，已转换为 if 表达式 <code>if e1 then e2 else e3</code></p>
+<p>最直接的处理：</p>
+<pre><code>e1 视为 Cx，e2、e3 视为 Ex。
+unCx(e1)、unCx(e2)、unCx(e3)
+分支标号 t、f
+临时变量 r
+t 之后，r = e2
+f 之后，r = e3
+t、f 转移到同一汇合点
+</code></pre><p>缺点：</p>
+<ol>
+<li>e2、e3 是 Nx，可行，但会强制转化。专门识别更佳。</li>
+<li>e2、e3 存在 Cx，强制转换将引发转移、标号混乱，需专门识别。</li>
+</ol>
+<pre><code>SEQ(s1(z,f),SEQ(LABEL z,s2(t,f)))
+</code></pre><p>字符串比较：</p>
+<p>调用运行时系统库函数 stringEqual，其返回为 0 或 1，则其 CALL 树必包含于一个 Ex 表达式中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Tr_Ex</span>(F_externalCall(<span style="color:#e6db74">&#34;stringEqual&#34;</span>, T_ExpList(unEx(left), T_ExpList(unEx(right), NULL))));
+</code></pre></div><h4 id="9字符串">9.字符串</h4>
+<p>Tiger 字符串设计：指针-&gt;len + string。使得与机器无关。</p>
+<p>对字符串常量 lit 生成新标号 lab，返回中间表示 T_NAME(lab)。同时将 F_string(lab,lit) 放入一个由这种片段组成的全局表。这些片段将交给代码流出器。</p>
+<h4 id="10记录和数组的创建">10.记录和数组的创建</h4>
+<p>记录的生存周期，可超过其创建的过程，因而要分配到堆中。</p>
+<pre><code>a{f1 = e1,f2 = e2 ...}
+调用外部的存储分配函数，得到一个指针，指向 n 个字的空间。
+将指针赋给临时变量 r
+用一串 MOVE 语句将 ei 的转化结果赋给从 r 开始的位移 0,1W,2W...(n-1)W。
+即 MOVE(TEMP(r),CALL(NAME(malloc),CONST(i*W)))
+结果为 TEMP(r)
+</code></pre><p>调用外部函数 ：</p>
+<p>initArray(a,b)</p>
+<pre><code>CALL(NAME(TEMP_namelabel(&quot;initArray&quot;)),T_ExpList(a,T_ExpList(b,NULL)))
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">T_exp <span style="color:#a6e22e">F_externalCall</span>(string s, T_expList args) {
+	<span style="color:#66d9ef">return</span> T_Call(T_Name(Temp_namedlabel(s)), args);
+}
+</code></pre></div><p>静态链、下划线标号，适当调整。</p>
+<h4 id="11while循环">11.while循环</h4>
+<pre><code>test:
+	if not(condition) goto done
+	body
+	goto test
+done:
+</code></pre><p>对于 break，转换为跳至 done 的 JUMP。</p>
+<h4 id="12for循环">12.for循环</h4>
+<p>重写为 let/while：</p>
+<pre><code>let var i := lo
+	var limit := hi
+in while i &lt;= limit
+	do(body;i:=i+1)
+end
+</code></pre><p>但为防止 limit = maxint 后，出现整数溢出。将测试放到 while 底部，增加 lo&lt;=hi 判断。</p>
+<h4 id="13函数调用">13.函数调用</h4>
+<p>很简单，主要是之前提到的静态链，作为第一个隐含的形参。</p>
+<pre><code>CALL(NAME lf,[sl,e1,e2...,en])
+</code></pre><h3 id="3声明">3.声明</h3>
+<p>上面我缺少一种思考——源程序可分为几个大部分？明白了这些大的部分，才能把各种 Tree 结构包容进去，最后得到一颗树结构。其实就是：声明、表达式、存储（内存、寄存器）</p>
+<p>声明对 frame数据结构产生副作用：</p>
+<ul>
+<li>变量声明：当前frame中保留空间</li>
+<li>函数声明：函数体内保留待完成的 Tree 代码段</li>
+</ul>
+<h4 id="0变量定义">0.变量定义</h4>
+<p>transDec 返回 Tr_exp，其中包含完成赋初值的 Nx，放置在 let 函数体之前。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Tr_initExp</span>(new_acc, e.exp);
+<span style="color:#f92672">=</span>
+<span style="color:#66d9ef">return</span> Tr_Nx(T_Move(F_exp(var<span style="color:#f92672">-&gt;</span>access, T_Temp(F_FP())), unEx(init)));
+</code></pre></div><h4 id="1函数定义">1.函数定义</h4>
+<p>函数中间表示 = 入口处理代码、函数体、出口处理代码</p>
+<p>函数体，即对表达式的翻译</p>
+<p>入口处理代码：</p>
+<ol>
+<li>特定汇编需要的声明一个函数开始的伪指令</li>
+<li>函数名的标号定义</li>
+<li>调整栈指针的指令（以分配新栈帧）</li>
+<li>将逃逸参数保存至栈帧的指令，非逃逸参数传送到临时寄存器的指令</li>
+<li>保存函数内对被调用者保护的寄存器的存储指令</li>
+</ol>
+<p>出口处理代码：</p>
+<ol start="6">
+<li></li>
+<li>将返回值传送至专用寄存器的指令</li>
+<li>恢复被调用者保护的寄存器的取数指令</li>
+<li>恢复栈指针的指令（释放栈帧）</li>
+<li>return（jump 返回地址）</li>
+<li>特定汇编需要的声明一个函数结束的伪指令</li>
+</ol>
+<p>对于 1,3,9,11，需知道栈帧的大小，要等到寄存器分配时。</p>
+<p>对于 2，10，也要等到寄存器分配时。</p>
+<p>对于 7：</p>
+<pre><code>MOVE(RV,body)
+Temp_temp F_RV(void)
+</code></pre><p>对于 4,5,8：</p>
+<p>属于视角移位，12章讨论。<code>T_stm F_procEntryExit1(F_frame frame, T_stm stm);</code></p>
+<h4 id="2片段">2.片段</h4>
+<p>对给定嵌套层次 level、翻译好的函数体表达式，生成此函数的描述符：</p>
+<ol>
+<li>栈帧：栈帧描述符——局部变量、参数的机器有关信息</li>
+<li>函数体：procEntryExit1 返回</li>
+</ol>
+<p>此 2 种信息成为一个片段，需翻译成汇编。另一种片段，是字符串常量的汇编伪指令序列。</p>
+<p>定义 frag 类型用于描述片段。</p>
+<pre><code>处理函数头——Tr_newLevel-&gt;调用body翻译函数:(这样的副作用可记住遇到的所有字符片段 DataFrag)
+最后——procEntryExit：(这样的副作用是记住一个过程的 ProcFrag)
+</code></pre><h2 id="7基本块和轨迹">7.基本块和轨迹</h2>
+<p>书中一开始的举例有些误导人，给人感觉是要消除副作用，从而达到任意顺序的计算。但实际上最后是将产生副作用的语句，提取到最开始的位置，先行计算，之后的都是无副作用语句。</p>
+<p>这一章最主要就是重写成规范树，而基本块、轨迹其实一个是简单的扫描，一个是简单的迭代而已。</p>
+<p>正确的阅读视角，应该是着眼于对 “中间表达式-&gt;机器语言” 冲突的 “填平”，主要是 2 个方面：</p>
+<ol>
+<li>副作用导致的计算顺序、返回值寄存器冲突</li>
+<li>CJUMP 在机器语言里的实际代码布置</li>
+</ol>
+<p>模块接口：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">T_stmList <span style="color:#a6e22e">C_linearize</span>(T_stm stm);<span style="color:#75715e">//删除ESEQ并将CALL移至顶层
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> C_block <span style="color:#a6e22e">C_basicBlocks</span>(T_stmList stmList);<span style="color:#75715e">//将语句分成一组组直线代码序列
+</span><span style="color:#75715e"></span>T_stmList <span style="color:#a6e22e">C_traceSchedule</span>(<span style="color:#66d9ef">struct</span> C_block b);<span style="color:#75715e">//基本块排序，使CJUMP后跟随false标号
+</span></code></pre></div><h3 id="0规范树">0.规范树</h3>
+<p>定义：</p>
+<ol>
+<li>无SEQ、ESEQ</li>
+<li>每个CALL的父节点，不是 EXP(&hellip;)，就是 MOVE(TEMP t, &hellip;)</li>
+</ol>
+<h4 id="0消除eseq">0.消除ESEQ</h4>
+<p>way：在书中一级一级提升，直到可以转化为SEQ，最后删除这些全在树顶部的SEQ。</p>
+<p>这样的提升当然是以“交换”为主要手段，但是额外的考虑是 s 和 e 之间是否有引用关系。采用保守的做法，是肯定常数、空语句能任意交换，其余都假定不可交换。将 e 用 t 中转，放到 s 执行后计算。</p>
+<p>具体实现：1.子表达式抽取；2.新子表达式插入</p>
+<p>其实就是在递归遍历中，建立子表达式的地址表。</p>
+<pre><code>reorder：抽出表达式表中的 ESEQ 并合并成一个 T_stm
+  do_exp：非ESEQ建立地址表并调用reorder，ESEQ调用do_stm处理stm部分
+    do_stm：抽取一个语句中的 ESEQ
+</code></pre><h4 id="1call移到顶层">1.CALL移到顶层</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">   <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> ((<span style="color:#f92672">*</span>rlist<span style="color:#f92672">-&gt;</span>head)<span style="color:#f92672">-&gt;</span>kind<span style="color:#f92672">==</span>T_CALL) {
+      Temp_temp t <span style="color:#f92672">=</span> Temp_newtemp();
+      <span style="color:#f92672">*</span>rlist<span style="color:#f92672">-&gt;</span>head <span style="color:#f92672">=</span> T_Eseq(T_Move(T_Temp(t),<span style="color:#f92672">*</span>rlist<span style="color:#f92672">-&gt;</span>head),T_Temp(t));
+      <span style="color:#66d9ef">return</span> reorder(rlist);
+    }
+</code></pre></div><p>返回值赋给新的临时寄存器。</p>
+<p>do_stm 对 MOVE 结点识别此情况，避免 reorder 处理 MOVE 中 CALL 子结点。</p>
+<h4 id="2线性语句表">2.线性语句表</h4>
+<p>删除 SEQ</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"> <span style="color:#66d9ef">if</span> (stm<span style="color:#f92672">-&gt;</span>kind <span style="color:#f92672">==</span> T_SEQ) 
+   <span style="color:#66d9ef">return</span> linear(stm<span style="color:#f92672">-&gt;</span>u.SEQ.left,linear(stm<span style="color:#f92672">-&gt;</span>u.SEQ.right,right));
+</code></pre></div><h3 id="1处理条件分支">1.处理条件分支</h3>
+<p>目标：使条件转移指令，为真时转移，为假时顺序执行进入 false 分支。</p>
+<ol>
+<li>规范树-&gt;基本块</li>
+<li>基本块排序</li>
+</ol>
+<h4 id="0基本块">0.基本块</h4>
+<p>定义：</p>
+<ol>
+<li>第一个语句是一个 LABEL</li>
+<li>最后一个语句是 JUMP 或 CJUMP</li>
+<li>没有其他 LABEL、JUMP、CJUMP</li>
+</ol>
+<p>方法：C_basicBlocks扫描序列</p>
+<ul>
+<li>每个LABEL，开始一个基本块（结束前一个）</li>
+<li>每个JUMP、CJUMP，结束一个基本块（开始下一个）</li>
+<li>遗留，无JUMP、CJUMP结束，添加转移到下个标号的JUMP</li>
+<li>遗留，无LABEL，插入标号</li>
+<li>添加标号done给出口代码，最后一个基本块添加JUMP(NAME done)</li>
+</ul>
+<h4 id="1轨迹">1.轨迹</h4>
+<p>算法：</p>
+<p>追踪-标记-添加-结束(后继已标记)-开始新轨迹</p>
+<p>疑问：</p>
+<ol>
+<li>轨迹将基本块任何排列，我有个疑问，之前产生副作用的语句只是移到了开头，并没有消除。那么开始这个基本块应该必须要先执行啊？</li>
+<li>算法中轨迹不止一条，但是给的例子却是一条覆盖基本块的，而且我觉得就应该只有一条轨迹才是啊？</li>
+</ol>
+<h4 id="2完善">2.完善</h4>
+<ol>
+<li>
+<p>CJUMP 后跟 false，不变</p>
+</li>
+<li>
+<p>CJUMP 后跟 false，交换 true、false 标号，条件反置</p>
+</li>
+<li>
+<p>CJUMP 后跟 无 true、false，重写：</p>
+<pre><code>CJUMP(cond,a,b,lt,lf')
+LABEL lf'
+JUMP(NAME lf)
+</code></pre></li>
+</ol>
+<h4 id="3最优轨迹">3.最优轨迹</h4>
+<p>频繁执行的指令序列，应是一条独立轨迹，以减少 JUMP 次数，有助优化。</p>
+<h2 id="8指令选择">8.指令选择</h2>
+<p>真实的机器指令，常可以一条完成多个中间表示定义的基本操作。因而，IR 树和机器指令是多对一的关系。IR 上对应的部分，称为树型。那么指令选择就是用树型（瓦片）的最小集合去覆盖 IR 树。</p>
+<ul>
+<li>最佳覆盖：不存在两个相邻的瓦片可连接成一个代价（执行时间）更小的瓦片。</li>
+<li>最优覆盖：瓦片代价最小</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>最优 =&gt; 最佳，最佳 !=&gt; 最优。</li>
+<li>CISC，瓦片大，最优与最佳覆盖之间有差别，但一般不会特别大。</li>
+<li>RISC，瓦片小，代价一致，最优与最佳覆盖之间，一般不存在差别。</li>
+</ul>
+<h3 id="0指令选择算法">0.指令选择算法</h3>
+<p>只看 Maximal Munch 算法，其他略过。</p>
+<h4 id="0maximal-munch-算法">0.Maximal Munch 算法</h4>
+<p>很简单的递归算法：</p>
+<pre><code>自IR树的根结点开始，寻找适合的最大瓦片，覆盖根结点，同时也可能覆盖附近结点。
+对遗留下的若干子树，重复相同的算法。
+</code></pre><p>实现：</p>
+<p>两个递归函数，munchStm用于语句，munchExp用于表达式。</p>
+<p>munchExp的每种分支将匹配一个瓦片（按优先级排列）。</p>
+<p>最后将这些描述机器指令的数据结构，加入到一张列表中。但没有指明寄存器。</p>
+<h3 id="1cisc机器">1.CISC机器</h3>
+<p>作者比较偏向 RISC 指令，因而在此对比了 RISC、CISC 的特征，针对差异采用向 CISC 转化的办法。</p>
+<ul>
+<li>寄存器少：任意生成 TEMP 结点，推迟到寄存器分配处理。</li>
+<li>寄存器分类：增加传递指令，显式传送</li>
+<li>两地址指令：增加一条传送指令</li>
+<li>算术运算访问存储器：先取数到寄存器</li>
+<li>若干寻址模式：？</li>
+<li>变长指令：不管</li>
+<li>有副作用指令：未说清</li>
+</ul>
+<h3 id="2tiger指令选择实现">2.Tiger指令选择实现</h3>
+<p>寄存器分配可在指令选择前，但是无法非常准确。而在指令选择后，则指令选择时需要生成 “没有指定寄存器的汇编指令”。也即中间表示-&gt;As_instr，寄存器由字符串占位，具体确定交由寄存器分配。这些占位的字符串没必要考虑具体内容。</p>
+<p>主要就3类：OPER、LABEL、MOVE。</p>
+<p>需要特别注意 2 种情况：过程调用、无帧指针</p>
+<h4 id="0过程调用">0.过程调用</h4>
+<pre><code>过程调用：EXP(CALL(f,args))
+函数调用：MOVE(TEMP t,CALL(f,args))
+</code></pre><p>munchArgs 传递参数到正确位置。返回的表包含CALL要的临时变量，作为源操作数列表，用于活跃分析时知道调用点需要保存的值。</p>
+<p>CALL可能破坏的寄存器，作为目的操作数列表 calldefs，用于知道这些寄存器于此定值。</p>
+<h4 id="1无帧指针">1.无帧指针</h4>
+<p>FP+k -&gt; SP+k+fs ，这需要知道栈帧大小，从而节省时间（fp&lt;-sp的复制）、空间（fp）。</p>
+<p>暂时生成 SP+Lx_framesize，让函数的入口代码 F_procEntryExit3 包含常数 Lx_framesize。需要给 codegen 传入 frame 参数。</p>
+<p>有帧指针的情况，使得栈帧建立后，仍可增长、收缩。但现在倾向于避免如此。</p>
+<h2 id="9活跃分析">9.活跃分析</h2>
+<p>活跃分析，诸多优化的铺垫，尤其是寄存器分配。</p>
+<ul>
+<li>活跃：是指变量在控制流图的边上的活跃。采用回溯的方法，由变量的使用结点回溯寻找变量的定值结点。</li>
+</ul>
+<h3 id="0数据流方程的解">0.数据流方程的解</h3>
+<ul>
+<li>流图：入边、出边、pred[n] 前驱结点集合、succ[n] 后继结点集合</li>
+<li>使用和定值：use、def</li>
+<li>活跃性：live-in 入口活跃、live-out 出口活跃</li>
+</ul>
+<h4 id="0活跃性计算">0.活跃性计算</h4>
+<pre><code>in[n] = use[n] U (out[n] - def[n])
+out[n] = in[s]  (s = succ[n])
+</code></pre><p>这明显是在递归定义，所以活跃性计算是一个不动点迭代的简单算法。</p>
+<ul>
+<li>结点的排序（深度优先搜索）可显著加快算法的收敛过程，应该是和活跃性的反方向流动相关。</li>
+<li>基本块：将流图上，只有一个前驱、后继的结点合并，提高速度。</li>
+<li>每次一个变量：很多临时变量的活跃范围很短，搜索很快结束，无需遍历全流图。</li>
+</ul>
+<h4 id="1集合表示">1.集合表示</h4>
+<ul>
+<li>位数组：流图密集时</li>
+<li>有序表：流图稀疏时（平均 &lt; N/K）</li>
+</ul>
+<h4 id="2最小不动点">2.最小不动点</h4>
+<p>方程的任何一个解都是保守近似解，但生成的代码总是正确的，而上述算法可以计算出最小不动点（使用寄存器最少）。</p>
+<h4 id="3静态活跃性与动态活跃性">3.静态活跃性与动态活跃性</h4>
+<p>定理：由停机问题引出，不存在可判断程序 X 执行中是否曾到达 L 标号的程序。</p>
+<p>定理是指不存在这样的通法，并非任何标号是否可达不能判断。</p>
+<p><strong>保守近似值</strong>：假定分支都会向两条支路 =&gt; 动态条件、此条件的静态近似值。</p>
+<p><strong>动态活跃</strong>：node(n) -&gt;use(a) 没有 def(a)，则 a 在 n 动态活跃。</p>
+<p><strong>静态活跃</strong>：存在一条 node(n) -&gt;use(a) 没有 def(a)，则 a 在 n 静态活跃。</p>
+<h4 id="4冲突图">4.冲突图</h4>
+<p>原因：最常见的冲突是活跃范围重叠造成的。</p>
+<p>表示：矩阵、无向图</p>
+<p>MOVE特殊处理：</p>
+<pre><code>s,t并不需要不同的寄存器
+t &lt;- s
+x &lt;- s
+y &lt;- t
+</code></pre><p>为新定值添加冲突边——</p>
+<ul>
+<li>变量 a 的定值、非传送指令，冲突边(a,out[all])</li>
+<li>a &lt;- c，冲突边(a,out[!c])</li>
+</ul>
+<h3 id="1tiger活跃分析实现">1.Tiger活跃分析实现</h3>
+<ol>
+<li>分析 Assem 程序控制流，得到控制流图</li>
+<li>分析控制流图中变量活跃性，得到冲突图</li>
+</ol>
+<h4 id="0图的抽象数据类型">0.图的抽象数据类型</h4>
+<p>略</p>
+<h4 id="1控制流图">1.控制流图</h4>
+<p>flowgraph 模块</p>
+<p>结点附加 3 类信息：FG_def、FG_use、FG_isMove（def=use，删除）</p>
+<p>FG_AssemFlowGraph 构建流图，返回的图中结点的 info 指向 AS_instr 指针，由此完成 Assem 程序到流图的导出。</p>
+<h4 id="2活跃分析">2.活跃分析</h4>
+<p>liveness 模块</p>
+<p>用之前迭代不动点的方式计算 in[]、out[]，构建布尔数组表示的冲突图。</p>
+<p>以及结点偶对表，代表尽可能分配相同寄存器的 MOVE（可删除）</p>
+<h2 id="10寄存器分配">10.寄存器分配</h2>
+<p>此章要解决 3 个问题，采用递进的方式一个个加入：</p>
+<ul>
+<li>寄存器分配——通过简化进行着色</li>
+<li>合并——删除 src=dst 的 MOVE 指令</li>
+<li>预着色结点——有专有用途的机器寄存器</li>
+</ul>
+<h3 id="0通过简化进行着色">0.通过简化进行着色</h3>
+<p>又是递归算法，递归真的是优雅而强大。</p>
+<ol>
+<li>构造：结点计算活跃性-&gt;冲突边-&gt;构造冲突图</li>
+<li>简化：启发式着色，压栈删除度数 &lt; K（寄存器个数）的结点-&gt;希望直接简化完所有结点</li>
+<li>溢出：当不存在 &lt; K的结点时，作为潜在溢出结点，压栈删除</li>
+<li>选择：出栈着色重建冲突图，此时潜在溢出点实际上周围总着色数可能 &lt; K，即可着色（乐观着色技术）</li>
+<li>重新开始：选择阶段后，存在实际溢出点，需对程序改写：r-def-w。即原本的一个溢出变量-&gt;几个较小活跃范围的新临时变量。这时可能发生冲突，需要重新迭代。但实际中，几乎总是一两次就足够了</li>
+</ol>
+<h3 id="1合并">1.合并</h3>
+<p>MOVE 指令的 src、dst 不存在冲突边，则可合并为新节点(src=dst)。（注意合并后，结点可能会变为传送无关的结点）</p>
+<p>问题：新节点的边是两结点的边的并集，可能导致破坏原图的可着色性。</p>
+<p>保守的合并策略：</p>
+<ul>
+<li>Briggs：若 a、b =&gt; ab 的高度数（&gt;=K）邻结点少于 K，则 a、b 可以合并。</li>
+<li>George：若 a 的每一个邻居 t，要么 t 与 b 已有冲突，要么 t 是低度数（&lt;K）结点，则 a、b可以合并。</li>
+</ul>
+<p>流程：</p>
+<p><img src="https://github.com/Wo0dsHole/Wo0dsHole.github.io/raw/master/pic/t169.png" alt="t169"></p>
+<ol>
+<li>构造：冲突图。结点按是否<code>传送有关</code>分类。</li>
+<li>简化：删除一个<strong>低度数</strong>、传送<strong>无关</strong>节点。</li>
+<li>合并：采用上述合并策略（合并可能会变为传送无关的，进而可用于下一轮简化），迭代 “简化-合并”。</li>
+<li>冻结：2、3无法继续时，找一个<strong>低度数</strong>、传送<strong>有关</strong>的结点，冻结它和相关传送指令（其实是定下了一些MOVE指令）。将它们转为传送<strong>无关</strong>，继续迭代 “简化-合并”。</li>
+<li>溢出：<strong>无低度数</strong>结点时，选择潜在溢出的高度数结点，压栈。（迭代 “简化-合并”）</li>
+<li>选择：出栈指派颜色</li>
+<li>重新开始：忽略已找到合并。</li>
+</ol>
+<p>我觉得书这里的文字表述不完整，没有按照图示的过程说清，也和上一节存在结构上的差异，而问题是递进引入的，不应该有此差异。所以我完善了 5、7。</p>
+<p><strong>溢出：</strong></p>
+<p>更有效的算法是<code>在发现第一个潜在溢出之前</code>照常合并，但发现溢出后忽略所有合并（即不合并）。</p>
+<p>没懂啥意思？</p>
+<p><strong>激进的合并：</strong></p>
+<ul>
+<li>寄存器 &gt;20 的机器上，一般只有少量溢出点。反之，则很多。</li>
+<li>SSA转化</li>
+<li>传送指令很多涉及一对被溢出结点</li>
+</ul>
+<p>但溢出的偶对很多不会同时活跃，栈帧单元没有数量限制，故不用考虑被溢出结点有多少高度数邻结点，进行激进的合并：</p>
+<ol>
+<li>构造</li>
+<li>合并：若传送指令涉及的一对溢出结点不冲突，合并</li>
+<li>简化、选择进行着色：此过程不会有进一步溢出，简化只选度数最低的结点，选择取第一个可用颜色，不限制颜色数量</li>
+<li>颜色对应被溢出变量在活动记录中的存储单元</li>
+</ol>
+<p>此算法在生成溢出指令、重新生成寄存器-临时变量的冲突图前进行，避免已合并的传送指令关联溢出结点生成的 存/取指令序列。</p>
+<h3 id="2预着色结点">2.预着色结点</h3>
+<p>将预着色结点视为度数 “无限大”，之前的着色算法，不断调用简化、合并、溢出，直到只剩预着色结点，然后选择阶段加入并指派结点颜色到冲突图中。</p>
+<p><strong>限制预着色结点的活跃范围：</strong></p>
+<p>生成保存、恢复预着色结点值的 MOVE 指令。如过程的入口、出口处。</p>
+<p><strong>调用者、被调用者保护寄存器：</strong></p>
+<p>被调用者保护寄存器：</p>
+<ul>
+<li>跨调用活跃变量</li>
+</ul>
+<p>调用者保护寄存器：</p>
+<ul>
+<li>局部变量、跨过程调用不活跃=&gt;临时变量</li>
+</ul>
+<p>启发式溢出：</p>
+<p>若 x 跨过程调用活跃，它与调用者保护的（预着色）寄存器、保存被调用者保护的寄存器而生产的临时变量冲突，即导致一个溢出。</p>
+<p>解：溢出一个度数较高、使用较少的结点 t，而不是 x，然后给 x 着色。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Wo0dsHole </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://Wo0dsHole.github.io/2019/tiger_start/>https://Wo0dsHole.github.io/2019/tiger_start/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://Wo0dsHole.github.io/tags/%E7%BC%96%E8%AF%91%E7%90%86%E8%AE%BA/">
+                    #编译理论</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://Wo0dsHole.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://Wo0dsHole.github.io/2019/11/" class="prev" rel="prev" title="11-潘多拉之盒"><i class="iconfont icon-left"></i>&nbsp;11-潘多拉之盒</a>
+         
+        
+        <a href="https://Wo0dsHole.github.io/2019/12/" class="next" rel="next" title="12-Free Solo(草稿)">12-Free Solo(草稿)&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">1993 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://Wo0dsHole.github.io/">Wo0dsHole</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

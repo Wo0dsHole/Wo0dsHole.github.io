@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Wo0dsHole">
+  
+  
+  
+  <link rel="prev" href="https://Wo0dsHole.github.io/2019/8/" />
+  <link rel="next" href="https://Wo0dsHole.github.io/2019/9/" />
+  <link rel="canonical" href="https://Wo0dsHole.github.io/2019/tiger_c/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           《虎书》粗读随记 | 树洞
+       
+  </title>
+  <meta name="title" content="《虎书》粗读随记 | 树洞">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/Wo0dsHole.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "《虎书》粗读随记",
+    "headline" : "《虎书》粗读随记",
+    "description" : "《虎书》 1.绪论 理解和实现大型软件工程中应注意其：基本抽象（模块）和接口。\n编译器的各个阶段和接口\n语法、词法分析的工具（Yacc-Bison、Lex-Flex），涉及的抽象是：上下文无关文法、正则表达式\n树语言（中间表示）结构\n编程时的设计约定、模块化规则：前缀模拟模块、typedef对应结构指针、构造函数\u0026hellip;\u0026hellip;（推荐阅读：C接口和实现）\n函数式实现理解语义和属性文法\n练习：二叉平衡树、平衡搜索树\n2.词法分析 （意义：扩展到其他领域）\n词法规范的静态描述：正则表达式\n正则表达式的二义性消除：最长匹配（if8）、规则优先（if）\n （DFA）确定的有限自动机：不存在从同一状态出发的两条边标记为相同的符号。\n转化矩阵、终结数组（状态编号-\u0026gt;动作）\n识别最长匹配：Last-Final（最近遇到的终态编号）、Input-Position-at-Last-Final（当前输入位置）。每次进入终态时更新。\n （NFA）非确定的有限自动机：存在从同一状态出发的两条边标记为相同的符号。（尤其是“空”边）\n 正则表达式转NFA\n原因：对某种 token的正则表达式先是单独定义的，之后需要对这些正则表达式合并、连接，这使得 NFA是最直接的“整合”方式，只需要“空边”连接、也不用管合并中的公共部分。也许有限状态机的处理到最后更像是“图”问题。\n NFA转 DFA\n按上述原因可知主要是：空边处理、合并（最小化）。\n转化过程是一种枚举尝试解决“猜测需求”的过程，NFA（n个）-\u0026gt;DFA（至多 2^n^个），但最后的算法中避免了这种指数膨胀。\nedge(s,c)：从状态 s沿着标有 c的一条边可到达的所有 NFA状态集合。\nclosure(S)：从 S中的状态出发，无需接收任何字符，即只有空边可到达的状态组成集合。\n相关简单算法：\nclosure(S) = T = S || （edge(s，空)） （s属于T）\nDFAedge(d,c) = closure(edge(s,c))（s属于d）\n转化算法：\nstates[0] \u0026lt;- {};states[1] \u0026lt;- closure({s1})\rp \u0026lt;- 1;\tj\u0026lt;- 0\rwhile j \u0026lt;= p\rforeach c属于 字母表\re \u0026lt;- DFAedge(states[j],c)\rif e == states[i] for some i \u0026lt;= p\rthen trans[j,c] \u0026lt;- i\relse p \u0026lt;- p \u002b 1\rstates[p] \u0026lt;- e\rtrans[j,c] \u0026lt;- p\rj \u0026lt;- j \u002b 1\r其实就是：单个状态间的转移-\u0026gt;状态集合间的转移。其中状态集合 = DFAedge(d,c) \u002b closure(空)。得到新的转化表。",
+    "inLanguage" : "en-us",
+    "author" : "Wo0dsHole",
+    "creator" : "Wo0dsHole",
+    "publisher": "Wo0dsHole",
+    "accountablePerson" : "Wo0dsHole",
+    "copyrightHolder" : "Wo0dsHole",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-05-20 20:00:00 \u002b0800 CST",
+    "dateModified" : "2019-05-20 20:00:00 \u002b0800 CST",
+    "url" : "https:\/\/Wo0dsHole.github.io\/2019\/tiger_c\/",
+    "wordCount" : "930",
+    "keywords" : [ "编译理论", "树洞"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">《虎书》粗读随记</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://Wo0dsHole.github.io/" rel="author">Wo0dsHole</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-05-20 itemprop="datePublished">May 20, 2019</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="虎书">《虎书》</h1>
+<h2 id="1绪论">1.绪论</h2>
+<p>理解和实现大型软件工程中应注意其：基本抽象（模块）和接口。</p>
+<p>编译器的各个阶段和接口</p>
+<p>语法、词法分析的工具（Yacc-Bison、Lex-Flex），涉及的抽象是：上下文无关文法、正则表达式</p>
+<p>树语言（中间表示）结构</p>
+<p>编程时的设计约定、模块化规则：前缀模拟模块、typedef对应结构指针、构造函数&hellip;&hellip;（推荐阅读：C接口和实现）</p>
+<p>函数式实现理解语义和属性文法</p>
+<p>练习：二叉平衡树、平衡搜索树</p>
+<h2 id="2词法分析">2.词法分析</h2>
+<p>（意义：扩展到其他领域）</p>
+<p>词法规范的静态描述：正则表达式</p>
+<p>正则表达式的二义性消除：最长匹配（if8）、规则优先（if）</p>
+<hr>
+<p>（DFA）确定的有限自动机：不存在从同一状态出发的两条边标记为相同的符号。</p>
+<p>转化矩阵、终结数组（状态编号-&gt;动作）</p>
+<p>识别最长匹配：Last-Final（最近遇到的终态编号）、Input-Position-at-Last-Final（当前输入位置）。每次进入终态时更新。</p>
+<hr>
+<p>（NFA）非确定的有限自动机：存在从同一状态出发的两条边标记为相同的符号。（尤其是“空”边）</p>
+<hr>
+<p>正则表达式转NFA</p>
+<p>原因：对某种 token的正则表达式先是单独定义的，之后需要对这些正则表达式合并、连接，这使得 NFA是最直接的“整合”方式，只需要“空边”连接、也不用管合并中的公共部分。也许有限状态机的处理到最后更像是“图”问题。</p>
+<hr>
+<p>NFA转 DFA</p>
+<p>按上述原因可知主要是：空边处理、合并（最小化）。</p>
+<p>转化过程是一种枚举尝试解决“猜测需求”的过程，NFA（n个）-&gt;DFA（至多 2^n^个），但最后的算法中避免了这种指数膨胀。</p>
+<p>edge(s,c)：从状态 s沿着标有 c的一条边可到达的所有 NFA状态集合。</p>
+<p>closure(S)：从 S中的状态出发，无需接收任何字符，即只有空边可到达的状态组成集合。</p>
+<p>相关简单算法：</p>
+<p><code>closure(S) = T = S || （edge(s，空)） </code>（s属于T）</p>
+<p><code>DFAedge(d,c) = closure(edge(s,c))</code>（s属于d）</p>
+<p>转化算法：</p>
+<pre><code>states[0] &lt;- {};states[1] &lt;- closure({s1})
+p &lt;- 1;	j&lt;- 0
+while j &lt;= p
+	foreach c属于 字母表
+		e &lt;- DFAedge(states[j],c)
+		if e == states[i] for some i &lt;= p
+			then trans[j,c] &lt;- i
+			else p &lt;- p + 1
+				states[p] &lt;- e
+				trans[j,c] &lt;- p
+	j &lt;- j + 1
+</code></pre><p>其实就是：单个状态间的转移-&gt;状态集合间的转移。其中状态集合 = DFAedge(d,c) + closure(空)。得到新的转化表。</p>
+<p>不访问 DFA不可到达的状态，故一般只有约 n个状态是从初态可到达的。</p>
+<p>states[d]中存在终态时，d即终态，用适当的单词标记 d（正则中最先出现的那个单词类型，即规则优先）</p>
+<hr>
+<p>最小化：</p>
+<p>必要不充分条件：trans[s1,c] = trans[s2,c]</p>
+<p>（从算法中就感觉到更像是一种化简，但还是重复得太多。）</p>
+<hr>
+<p>Lex用法、Lex写Tiger的词法分析器</p>
+<p>token类型、语义值</p>
+<hr>
+<p>推荐阅读：效率方面</p>
+<h2 id="3语法分析">3.语法分析</h2>
+<h3 id="上下文无关文法">上下文无关文法</h3>
+<p>递归描述获得额外的表达能力——文法</p>
+<p>正则、文法都是在描述某种结构，只是对于词法而言，前者更合适。后者需要比有限自动机更强的方法来分析。</p>
+<p>组成要素：产生式、开始符、非终结符、终结符。</p>
+<p>工作机制：推导，很类似于 NFA到 DFA的转化，需要解决“预测”。最左推导、最右推导。</p>
+<p>语法树，文法符号+对应源程序字符的树结构</p>
+<p>二义性文法，书中没说是如何导致的，我感觉是顺序问题，或者说是文法中递归形式和递归编程的差异。</p>
+<p>比如 E = E + E。对两个 E推导的先后可能导致二义性，改为 E = E + T。T只是少了 E的加法形式。这样 + *就有了优先级（原E含有四则运算），不存在二义性。</p>
+<p>我觉得之前 Scheme递归编程不存在这种问题，因为递归里是一个 cond是顺序执行的，那么递归每次处理当前可处理的，然后缩减了数据的递归结构大小，交给递归过程即可。</p>
+<p>因此这种二义性是文法中递归和编程中递归的差异，文法中没有“时间”、“执行”概念，右侧的两个 E递归处理是随机的。而从文法上消除二义性，就是用另一个符号来使得推导（代换）有了顺序性。这个符号有点像continuation的概念。</p>
+<p>（虎书有点像 tls作者的风格，没有很理论而形式化的概念定义（叫什么），而是直接讲述概念的内容（是什么）。）</p>
+<h3 id="预测分析">预测分析</h3>
+<p>也即递归下降：文法中子表达式的第一个终结符号能够为产生式的选择提供足够信息的文法。</p>
+<p>这一节基本上就是《EOPL》中的解释器风格，结合《EOPL》对递归编程的强调更容易理解。</p>
+<p>FIRST集合、FOLLOW集合、nullable。</p>
+<p>这里有一个求此三者的迭代算法，但其实只是一种简单的规律总结。从这三者本身的直接意思来理解更容易。</p>
+<p>预测分析表：非终结符、终结符为索引，用FIRST、FOLLOW来判断填入的产生式。</p>
+<p>由表可清楚看出文法的二义性</p>
+<p>二义性消除：</p>
+<p>消除左递归：正如我之前所觉，是一种顺序的指定，这在《EOPL》的递归编程中非常明显。属于多分支判断</p>
+<p>提取左因子：和消除左递归相比，属于单分支判断，输入数据没复杂到具有递归特性。</p>
+<p>错误恢复：</p>
+<p>为了编译一次报错后，继续检查出更多错误。</p>
+<p>del、insert、replace。因为程序语言的递归特性，del要安全些，递归结束条件明显可以到达。</p>
+<h3 id="lr分析">LR分析</h3>
+<h4 id="lrk">LR(k)</h4>
+<p>k是输入单词数</p>
+<p>栈+输入，由栈内容、超前查看的单词，进行两种动作：</p>
+<ul>
+<li>移进：输入单词压栈</li>
+<li>归约：选择文法规则：X-&gt;ABC，依次从栈pop C B A，push X</li>
+</ul>
+<p>栈初始为空，移进文件终结符$的动作，叫接收。</p>
+<p>LR分析表：解决何时移进？何时归约？的问题。基于作用于栈的DFA（能力不足处理输入）</p>
+<p>二维结构——状态号、栈中符号（非终结符部分：转移表，其他：动作表）</p>
+<p>直接按照DFA的本意画图，或填表即可，主要是非终结符的递归展开。</p>
+<p>分析算法：查看栈顶状态和输入符号，得到对应动作。主要是归约到X，查看X，得到动作“转换到n”。</p>
+<h4 id="lr0">LR(0)</h4>
+<p>项：文法规则+右部小圆点</p>
+<p>实际中不使用k&gt;1，分析表巨大且PL用LR(1)描述。</p>
+<p>LR(0)主要是为之后LR(1)做铺垫，由于文法的简单性，LR(0)分析表很易得到。</p>
+<p>基本就是从所有文法开始，把位置小圆点移位，到新非终结符左侧时，状态中扩展对应文法，最后无出口的状态，要么是到归约规则，要么是到$而被接收。</p>
+<h4 id="slr">SLR</h4>
+<p>Simple LR，构造比LR(0)更好分析器的一种简易方法。</p>
+<p>LR(0)出现“有进有出”的状态时，代表“冲突”，同时说明此文法不是LR(0)。（但感觉这种冲突和前面的二义性原因类似，都是递归无法逼近终结条件导致。）</p>
+<p>SLR几乎和LR(0)一样，但它只在FOLLOW集合指定的地方放置归约动作。</p>
+<p>回顾一下FOLLOW集合的概念就很明了了。FOLLOW集合是看右侧的输入字符串中指定字符的follow情况。</p>
+<p>其实就是相当于向前查看。SLR分析表中不含冲突的文法——SLR文法。</p>
+<p>这里的“更好”，其实是指处理的文法范围上的更大，因为它用到了更多的文法信息来指导处理。</p>
+<h4 id="lr1">LR(1)</h4>
+<p>大多数CFG都有一个LR(1)文法。</p>
+<p>项：一个文法产生式、一个右部位置（圆点）、一个超前查看的符号</p>
+<p>状态图：同LR(0)</p>
+<p>分析表：产生式末尾有圆点，则状态号（行）和超前查看符号（列），进行归约。</p>
+<h4 id="lalr1分析表">LALR(1)分析表</h4>
+<p>超前查看LR(1)：Look-Ahead LR(1)</p>
+<p>解决LR(1)分析表会非常大的问题，方法是忽略超前查看符号，合并相同状态。</p>
+<p>可能会产生原来没有的冲突，但实际中影响很小。而表的空间更受关注。</p>
+<p>LALR(1)分析表不含冲突时，文法是LALR(1)文法。</p>
+<h4 id="各文法层次关系">各文法层次关系</h4>
+<p>略</p>
+<p>所有合理的PL都有一个LALR(1)文法，且有对应分析器生成工具。</p>
+<h4 id="二义性文法的lr分析">二义性文法的LR分析</h4>
+<p>此类：</p>
+<pre><code>S -&gt; if E then S else S
+S -&gt; if E then S
+S -&gt; other
+</code></pre><p>LR分析表中存在“移进-归约”冲突。</p>
+<pre><code>if a then {if b then s1 else s2} -	移进
+if a then {if b then s1}else s2	 -	归约
+</code></pre><p>解决方式：1.重写文法；2.移进、归约选择时偏袒（S = if b then s1时的选择）</p>
+<pre><code>S -&gt; M
+S -&gt; U
+M -&gt; if E then M else M
+M -&gt; other
+U -&gt; if E then S
+U -&gt; if E then M else U
+</code></pre><p>这种重写不需要想清楚具体递归展开过程，而是直接看“表面意思”即可。注意为什么<code>M-&gt;other</code>?</p>
+<p>大部分移进-归约冲突、几乎所有归约-归约冲突，都是病态文法的征兆，不应该采用法2这种欺骗技巧。</p>
+<p>（少数明确情况：这里的悬挂else、算符优先）</p>
+<h3 id="分析器生成器">分析器生成器</h3>
+<p>冲突、优先级指导、语法和语义</p>
+<p>略</p>
+<h3 id="错误恢复">错误恢复</h3>
+<p>略</p>
+<h2 id="4抽象语法">4.抽象语法</h2>
+<h3 id="语义动作">语义动作</h3>
+<p>语义动作的返回值 match 非终结符的类型</p>
+<p>Yacc，语义动作解释器（限制：难阅读、维护、必须按语法分析顺序处理程序）</p>
+<h3 id="抽象语法分析树">抽象语法分析树</h3>
+<p>这基本在《EOPL》里讲过了</p>
+<p>语法分析树：语法问题、语义问题，分离</p>
+<p>消除文法依赖：具体语法分析树-&gt;抽象语法分析树</p>
+<p>因为AST是CST的简化，所以在yacc中提取CS中某些部分，直接使用AS定义的对应数据结构即可。</p>
+<h4 id="位置">位置</h4>
+<p>分离稍微增加了错误定义的难度，因为使用AST的解释器不需要一遍分析完。</p>
+<p>AST中带上pos域。</p>
+<p>语法分析器：+位置栈（Bison）；非终结符pos（Yacc）有危险</p>
+<h4 id="tiger的抽象语法">Tiger的抽象语法</h4>
+<p>列了一些例子源程序的AS，这一部分基本和《EOPL》是一样的。但是《EOPL》的处理更简单。</p>
+<p>用Scheme的实现了一个内嵌的模式匹配语言（define-datatype、cases），使得AS中的构造器不需要手写了，并且可以类型识别，只需要关心语义动作即可。</p>
+<h2 id="5语义分析">5.语义分析</h2>
+<h3 id="符号表环境">符号表（环境）</h3>
+<p>绑定、作用域、查找</p>
+<p>两种实现：</p>
+<ul>
+<li>函数式：其实就是闭包，不同环境互不影响</li>
+<li>命令式：全局环境的更新和恢复（撤销栈）</li>
+</ul>
+<h4 id="多个符号表">多个符号表</h4>
+<p>举例了一下不同作用域规则下，环境构建的不同形式。</p>
+<h4 id="高效命令式符号表">高效命令式符号表</h4>
+<p>带有外部散列链的散列表</p>
+<h4 id="高效函数式符号表">高效函数式符号表</h4>
+<p>二叉搜索树：第d层添加节点，只需复制d个节点（log(n)内，长效数据结构例子）</p>
+<p>有一种保持二叉树平衡的长效红黑树</p>
+<h4 id="tiger的符号">Tiger的符号</h4>
+<p>字符串转symbol对象，加快散列表中字符串比较速度（指针或整数比较）</p>
+<p>辅助栈记录次序，为实现beginScope、endScope。</p>
+<h4 id="函数式风格符号表">函数式风格符号表</h4>
+<p>S_enter返回新表，不需要beginScope、endScope</p>
+<h3 id="tiger编译器的绑定">Tiger编译器的绑定</h3>
+<p>类型的名字空间、函数和变量的名字空间。</p>
+<p>一些Tiger自己的类型说明</p>
+<h4 id="环境">环境</h4>
+<p>两个环境：类型环境、值环境</p>
+<p>类型标识符 -&gt; Ty_ty</p>
+<p>变量|函数 -&gt; VarEntry|FunEntry</p>
+<p>基本类型环境：int、string -&gt;Ty_xxxxx</p>
+<h3 id="表达式的类型检查">表达式的类型检查</h3>
+<p>4个语法树上的递归函数，和《EOPL》中的实现非常像，不同判断分支中直接对返回结果中含的类型比较即可。</p>
+<h4 id="变量下标和域的类型检查">变量、下标和域的类型检查</h4>
+<p>近似原理</p>
+<h3 id="声明的类型检查">声明的类型检查</h3>
+<p>声明（let）导致了环境的创建和扩展。</p>
+<p>翻译Dec：</p>
+<p>当前环境保存-&gt;声明扩展环境-&gt;翻译body-&gt;环境恢复</p>
+<h4 id="变量声明">变量声明</h4>
+<p>直接扩展环境即可</p>
+<p>难点在于（相互）递归类型声明、递归函数声明</p>
+<h4 id="类型声明">类型声明</h4>
+<p>A_ty -&gt; Ty_ty，一种结构遍历的转换，最后生成放入环境的结构</p>
+<p>（书中有长度限制，需修改）</p>
+<h4 id="函数声明">函数声明</h4>
+<pre><code>function f(a:ta,b:tb):rt = body
+</code></pre><ol>
+<li>
+<p>rt查找、遍历形参表得类型 =&gt; FunEntry =&gt; 值环境</p>
+</li>
+<li>
+<p>形参 =&gt; VarEntry =&gt; 值环境 ——用于函数体。删除环境中形参，不删FunEntry ——用于处理调用函数 f 的表达式</p>
+</li>
+</ol>
+<h4 id="递归声明">递归声明</h4>
+<p>先把所有这些对象（类型或函数）的“头”放入环境，再由此环境处理这些对象的“体”。</p>
+<h2 id="6活动记录">6.活动记录</h2>
+<p>高阶函数：函数嵌套、函数作为返回值。——不能用栈来保存所有局部变量。</p>
+<p>此章讨论可用栈存放局部变量的PL</p>
+<h3 id="栈帧">栈帧</h3>
+<p>不同于传统栈，可访问栈顶之下更深变量。不同体系结构有标准的栈帧布局。</p>
+<p>帧指针，函数调用时，FP、SP的转化。</p>
+<p>寄存器，效率和保护问题</p>
+<p>传参效率</p>
+<p>返回地址</p>
+<p>栈帧内的变量</p>
+<p>块结构（内层函数可使用外层函数声明）——</p>
+<p>静态链：调用f时，传给f一个指向包含f的函数指针</p>
+<p>其他实现：嵌套层次显示表、lambda提升</p>
+<h3 id="tiger的栈帧">Tiger的栈帧</h3>
+<p>Tiger相关的实现，可以移到最后实际撸代码时再看。现在先把编译理论过一遍。</p>
+<h2 id="7翻译成中间代码">7.翻译成中间代码</h2>
+<p>可移植性、模块化</p>
+<p>前端（屏蔽机器相关细节）、后端（屏蔽源语言干扰）</p>
+<p>=&gt;IR</p>
+<p>Tiger IR =&gt; 表达式树</p>
+<h3 id="中间表示树">中间表示树</h3>
+<p>评估：1.便于生成；2.便于转为机器语言；3.每种结构清晰简单，便于优化</p>
+<p>这里没给出过程、函数的定义，因为它和目标机有关。</p>
+<h3 id="翻译">翻译</h3>
+<p>AST到IR是很直接的，只是有很多种情况而已。</p>
+<h4 id="表达式种类">表达式种类</h4>
+<p>Ex、Nx、Cx（真假值标号回填表）、转换函数</p>
+<h4 id="简单变量">简单变量</h4>
+<h4 id="追随静态链">追随静态链</h4>
+<h4 id="数组变量">数组变量</h4>
+<h4 id="结构化的左值">结构化的左值</h4>
+<h4 id="下标和域选择">下标和域选择</h4>
+<h4 id="关于安全性的劝告">关于安全性的劝告</h4>
+<h4 id="算术操作">算术操作</h4>
+<h4 id="条件表达式">条件表达式</h4>
+<h4 id="字符串">字符串</h4>
+<h4 id="记录和数组的创建">记录和数组的创建</h4>
+<h4 id="while循环">while循环</h4>
+<h4 id="for循环">for循环</h4>
+<h4 id="函数调用">函数调用</h4>
+<p>静态链作为隐含参数传入</p>
+<h3 id="声明">声明</h3>
+<h4 id="变量定义">变量定义</h4>
+<h4 id="函数定义">函数定义</h4>
+<p>入口处理代码、函数体、出口处理代码</p>
+<h4 id="片段">片段</h4>
+<p>栈帧、函数体</p>
+<h2 id="8基本块和轨迹">8.基本块和轨迹</h2>
+<p>IR-&gt;（与机器语言不完全对应、优化分析冲突）-&gt;汇编/机器语言</p>
+<p>为什么IR有这些缺点？因为利于翻译阶段。</p>
+<p>比如，</p>
+<ul>
+<li>CJUMP的任意转移至一个标号，实际上，条件为真，发生转移；条件为假，下降到下一条指令</li>
+<li>CALL、ESEQ中赋值的副作用导致子表达式不能任意顺序计算</li>
+<li>CALL嵌套时，参数送入固定的形式参数寄存器集合，会出错。</li>
+</ul>
+<p>上述情况没有后，重写的树SEQ唯一可能父节点为另一SEQ，SEQ结点集中到树顶，SEQ可删除，建立 T_stm 组成的表。</p>
+<p>具体转换过程：</p>
+<ol>
+<li>重写为<strong>规范树</strong>：不含SEQ、ESEQ</li>
+<li>将这一列树分组组合成不含转移和标号的<strong>基本块</strong>集合</li>
+<li>基本块排序并形成一组<strong>轨迹</strong>，轨迹中每个CJUMP后直接跟它的false标号</li>
+</ol>
+<p>接口：</p>
+<ol>
+<li>linearize：删除ESEQ并将CALL移至顶层</li>
+<li>basicBlocks：将语句分成一组一组的直线代码序列</li>
+<li>traceSchedule：对基本块排序，使每个CJUMP后都有跟随的false标号</li>
+</ol>
+<h3 id="规范树">规范树</h3>
+<p>定义：</p>
+<ul>
+<li>无SEQ或ESEQ</li>
+<li>每一个CALL的父亲不是EXP(&hellip;)，就是MOVE(TEMP t,&hellip;)</li>
+</ul>
+<h4 id="eseq转换">ESEQ转换</h4>
+<p>方法：在书中将 ESEQ 一级一级往上提升，直至它们可以变为 SEQ 节点。</p>
+<p>一些树的等价形式列举。主要是就是《EOPL》中提到的，副作用的影响是全局的，注意这种影响的范围，调整树节点不改变这种影响的发生次序，就可以提升ESEQ。</p>
+<h4 id="一般重写规则">一般重写规则</h4>
+<p>基于等价树，重写规则，将ESEQ移出语句、表达式之外。</p>
+<p>比如：这里隐含的是，用交换来提升 ESEQ。</p>
+<pre><code>[e1,e2,ESEQ(s,e3)]
+(s;[e1,e2,e3])	——	s和e1,e2可交换
+(SEQ(MOVE(t1,e1),SEQ(MOVE(t2,e2),s));[TEMP(t1),TEMP(t2),e3])	——	e2和s不能交换
+(SEQ(MOVE(t1,e1),s);[TEMP(t1),e2,e3])	——	e1和s不能交换
+</code></pre><p>表达式表-&gt;reorder-&gt;(语句，表达式表)</p>
+<p>语句：所有必须在表达式之前执行的操作。</p>
+<p>（eg：ESEQ中s+左边不能交换的表达式；不存在ESEQ时，EXP(CONST(0))作为语句）</p>
+<p>reorder算法：</p>
+<ol>
+<li>每类表达式建立“子表达式抽取”方法：抽取所有ESEQ，将语句部分合并成一个较大的T_stm。</li>
+<li>建立“子表达式插入”方法：给定一个已清除了所有子表达式中ESEQ的表达式或语句，生成该表达式或语句的一个新版本。</li>
+</ol>
+<p>辅助函数do_exp：</p>
+<ol>
+<li>e1-&gt;(s1,e1&rsquo;)，e1&rsquo;不含ESEQ，ESEQ(s,e1&rsquo;)与原表达式e1等价。</li>
+<li>对于非ESEQ表达式，只是建立其子表达式的地址表，并调用reorder。</li>
+</ol>
+<p>do_stm：实现抽取ESEQ（建立子表达式地址表，调用reorder）</p>
+<p>这3个函数相互间接递归调用，实现reorder从给定的指针表，从右至左从每个表达式ei抽取语句s。</p>
+<h4 id="将call移到顶层">将CALL移到顶层</h4>
+<p>CALL：每个函数的结果返回到同一个规定的返回值寄存器 TEMP(RV)。</p>
+<pre><code>BINOP(PLUS,CALL(...),CALL(...))
+</code></pre><p>第二个调用会在PLUS执行前覆盖RV</p>
+<p>=&gt;重写规则</p>
+<pre><code>CALL(fun,args) -&gt; ESEQ(MOVE(TEMP t,CALL(fun,args)),TEMP t)
+</code></pre><p>消除ESEQ时，MOVE被从包含它的表达式中提取出来。</p>
+<p>生成少许多余MOVE，在寄存器分配时清除。</p>
+<p>do_stm此时不调用reorder处理CALL，而是f，args视为MOVE的儿子。</p>
+<h4 id="线性语句表">线性语句表</h4>
+<p>函数体s0由do_stm处理完毕，得到s0&rsquo;，所以SEQ集中于树顶。</p>
+<p>重复施加此规则：</p>
+<pre><code>SEQ(SEQ(a,b),c) = SEQ(a,seq(b,c))
+</code></pre><p>转化为：</p>
+<pre><code>SEQ(s1,SEQ(s2,...,SEQ(sn-1,sn)...))
+</code></pre><p>因为SEQ不提供结构化信息，故可视为语句组成的简单列表：</p>
+<pre><code>s1,s2,...,sn-1,sn
+</code></pre><p>至此，所有si都不包含SEQ、ESEQ结点。</p>
+<h3 id="处理条件分支">处理条件分支</h3>
+<p>重排CJUMP：CJUMP(cond,lt,lf)，紧接LABEL(lf) =&gt; 真实机器上，一个条件分支指令即可实现。</p>
+<p>实现转换：</p>
+<ol>
+<li>取一列规范树，形成基本块</li>
+<li>基本块排序，形成轨迹</li>
+</ol>
+<h4 id="基本块">基本块</h4>
+<p>控制流：指令执行的先后顺序</p>
+<p>分析控制流：只关心转移指令。可将非分支指令组成的序列集中到一个基本块中。</p>
+<p>基本块：控制只能从开始处进结尾处退出的语句序列，即：</p>
+<ol>
+<li>第一个语句是LABEL</li>
+<li>最后一个语句是JUMP或CJUMP</li>
+<li>没其他的LABEL、JUMP、CJUMP</li>
+</ol>
+<p>算法：线性扫描，判开始结束，余下的添加开始结束。</p>
+<h4 id="轨迹">轨迹</h4>
+<p>有了基本块的转移标记，基本块的排列可以随意安排，不影响执行。（只是便于机器语言对应）</p>
+<p>安排：</p>
+<ul>
+<li>CJUMP紧接false分支</li>
+<li>JUMP紧接目标标号，使得JUMP可删除</li>
+</ul>
+<p>轨迹：执行期间可能连贯执行的语句序列，可包含条件分支。</p>
+<p>程序中有很多不同、重叠的轨迹。为安排CJUMP、false，需建立一组正好能覆盖整个程序的轨迹，即每个基本块都在一条轨迹中。为了使轨迹间的JUMP少，覆盖集合中的轨迹越少越好。</p>
+<p>算法：简单的迭代</p>
+<p>取所有基本块。选一个基本块，模拟执行并标记轨迹上的基本块，直到遇上后继是已标记的基本块，得到一条轨迹。再选一个未标记的基本块开始，重复上述过程。</p>
+<h4 id="完善">完善</h4>
+<p>许多分析、优化算法更擅长处理基本块，故经常会将语句组合成基本块，提升效率。Tiger没有，为了简化后续实现。对轨迹排序，将排序后的轨迹表表示成一长串语句组成的表——</p>
+<ul>
+<li>
+<p>多数CJUMP后跟false标号，不变</p>
+</li>
+<li>
+<p>任何CJUMP跟true，true-&gt;false，条件更改成相反</p>
+</li>
+<li>
+<p>无true、false的CJUMP(cond,a,b,lt,lf)，新标号lf&rsquo;，并重写——</p>
+<pre><code>CJUMP(cond,a,b,lt,l'f)
+LABEL l'f
+JUMP(NAME lf)
+</code></pre></li>
+</ul>
+<p>重排后，许多JUMP紧随其目标标号，可删除此类JUMP。</p>
+<h4 id="最优轨迹">最优轨迹</h4>
+<p>重要要求：任何频繁执行的指令序列（如循环体）都应该是一条独立的轨迹。</p>
+<p>减少无条件转移次数，有助其他优化（寄存器分配、指令调度），举例。</p>
+<p>Tiger不优化，但整理好用于生成汇编代码的Tree语句表（足够了）。</p>
+<h2 id="9指令选择">9.指令选择</h2>
+<p>IR node对应单个操作，但单个机器指令常可完成多个操作</p>
+<p>定义：对给定的中间表示树恰当的机器指令序列</p>
+<p>树型：IR树上的一段树枝</p>
+<p>=&gt;定义：用树型的最小集合（瓦片-树型集合）来覆盖IR树</p>
+<p>最佳覆盖：指令有代价（执行时间），瓦片之和代价最小的覆盖</p>
+<p>最优覆盖：不存在两个相邻瓦片可连成一个更小代价的瓦片</p>
+<p>最优=&gt;最佳，反之不然。</p>
+<p>实际，单条指令的代价和相邻的其他指令相关。</p>
+<h3 id="指令选择算法">指令选择算法</h3>
+<p>最佳算法更简单</p>
+<p>CISC，有些可一次完成多操作，指令瓦片大，最优和最佳之间差别虽然不特别大，但有时是明显的。</p>
+<p>RISC，一条指令完成少量操作，指令瓦片小且代价一致，最优和最佳之间通常没有区别。</p>
+<h4 id="maximal-munch算法最佳覆盖">Maximal Munch算法（最佳覆盖）</h4>
+<p>简单的递归算法：自顶向下</p>
+<pre><code>从根节点开始，寻找适合它的最大瓦片覆盖，
+覆盖后遗留下的若干子树，对每一棵子树重复相同算法。
+</code></pre><p>覆盖同时生成指令，逆序。</p>
+<p>“最大瓦片”的选择，当都可以覆盖根节点时。</p>
+<h4 id="动态规划最优覆盖">动态规划（最优覆盖）</h4>
+<p>动态规划：根据每个子问题（每棵子树的覆盖）的最优解找到整个问题的最优解。</p>
+<p>算法：自底向上</p>
+<pre><code>递归求出结点n的所有儿子（和孙子）的代价，
+然后将每一种树型（瓦片种类）与结点n进行匹配。
+</code></pre><p>叶子代价+瓦片代价 = 根结点代价</p>
+<p>指令流出算法：</p>
+<pre><code>Emission(node n):在结点n选择的瓦片的每一个叶子结点li，执行Emission(li)，流出在结点n匹配的指令
+</code></pre><h4 id="树文法">树文法</h4>
+<p>动态规划算法在CISC+若干类reg+寻址模式机器上的推广。</p>
+<p>d reg - 用于data；a reg - 用于address。</p>
+<p>瓦片的根、叶子中带有 a\d标记</p>
+<p>=&gt;以CFG来描述瓦片</p>
+<p>s-表示语句；a-表示其值放到a reg的表达式；d-表示其值放到d reg的表达式。</p>
+<p>文法有高度歧义，但是动态规划很好适应此情况：文法中每个非终结符，要计算的只是每个结点的最小代价匹配。</p>
+<p>动态规划算法，概念简单，c实现复杂=&gt;类似Yacc的 代码生成器的生成器。</p>
+<p>处理指明机器指令集的文法，文法指明了代价、动作。</p>
+<ul>
+<li>代价=&gt;寻找最优覆盖</li>
+<li>动作=&gt;用于指令流出</li>
+</ul>
+<p>对于RISC大材小用，因为瓦片都非常小，数量也少，故文法中很少含多个非终结符。</p>
+<h4 id="快速匹配">快速匹配</h4>
+<p>之前，结点匹配所有瓦片，瓦片上非叶子结点对应书中结点操作符，则匹配。</p>
+<p>=&gt;为树结点n匹配一个瓦片，可用结点n标号作为case的标号。对选中的标号（MEM）从句，只考虑此标号作为根的那些树型。另一个case用结点n的子结点标号来区分这些树型。</p>
+<h4 id="覆盖算法的效率">覆盖算法的效率</h4>
+<p>线性，指令选择算法比编译器的其他处理快很多。</p>
+<h3 id="cisc机器">CISC机器</h3>
+<p>以RISC为设计参照，实现时的差异解决：</p>
+<p>=&gt;</p>
+<ul>
+<li>
+<p>寄存器少：不受限使用TEMP，交给寄存器分配器完成实际分配工作</p>
+</li>
+<li>
+<p>寄存器分类：乘法eax，edx。显示传送。</p>
+</li>
+<li>
+<p>两地址指令：增加额外传送指令，希望寄存器分配器将t1、t2分配同一寄存器，删除mov</p>
+<pre><code>t1 &lt;- t2 + t3
+mov t1,t2
+add t1,t3
+</code></pre></li>
+<li>
+<p>算术运算可访问存储器：reg中转。对reg的破坏交给reg分配器处理</p>
+</li>
+<li>
+<p>若干寻址模式</p>
+</li>
+<li>
+<p>变长指令</p>
+</li>
+<li>
+<p>有副作用指令</p>
+</li>
+</ul>
+<h3 id="tiger的指令选择">Tiger的指令选择</h3>
+<p>树型匹配后只输出了指令名，具体reg使用在之后的寄存器分配时完成，即指令选择在不确切知道指令使用什么reg的情况下，生成指令。</p>
+<h4 id="抽象的汇编语言指令">抽象的汇编语言指令</h4>
+<h4 id="生成汇编指令">生成汇编指令</h4>
+<h4 id="过程调用">过程调用</h4>
+<h4 id="无帧指针的情形">无帧指针的情形</h4>
+<h2 id="10活跃分析">10.活跃分析</h2>
+<p>分析临时变量的同时使用情况，以及存活情况。将来还要使用的，即此变量是活跃的，这种分析叫活跃分析（回溯方式进行）。</p>
+<p>分析生成控制流图，得到变量的活跃范围=&gt;所需寄存器数量</p>
+<h3 id="数据流方程的解">数据流方程的解</h3>
+<p>变量的活跃性沿着控制流图的边“流动”，决定每个变量活跃范围是数据流问题的一种。</p>
+<p>流图术语：出边（out-edge）、入边（in-edge）。结点n的前驱结点集合、后继结点集合：pred[n]、succ[n]。</p>
+<p>使用和定值：定值(define)-变量或临时变量的赋值；使用(use)-出现在赋值号右边的变量。相关集合同理</p>
+<p>活跃性：一个变量在一条边上是活跃的，指存在一条从这条边通向该变量的一个use的有向路径，且路径不经过此变量的任何def。</p>
+<p>变量在结点的所有入边上都活跃-入口活跃的（live-in）</p>
+<p>变量在结点的所有出边上都活跃-出口活跃的（live-out）</p>
+<h4 id="活跃性计算">活跃性计算</h4>
+<p>这本身就是一个递归定义：</p>
+<pre><code>in[n] = use[n] U (out[n] - def[n])
+out[n] = in[s] (s = succ[n])
+</code></pre><p>算法：迭代方法，到达一个不动点。</p>
+<p>结点适当排序，可显著加速收敛过程。（17章，深度优先搜索算法）</p>
+<p>基本块：对只有一个前驱和后继的结点合并，因为它们对分析影响不大，算法可运行得更快。</p>
+<p>每次一个变量：对一个临时变量t，从它的每个使用点开始，深度优先向后追踪（沿指向前驱的边）搜索，记录每个结点的活跃信息。到达定制点时，结束。（看似代价大，但多数临时变量活跃范围非常短，无需遍历整个流图）</p>
+<h4 id="集合的表示">集合的表示</h4>
+<p>两种：前者适合密集集合，后者适合稀疏集合（平均少于N/K个元素）</p>
+<ul>
+<li>位数组：N位表示N个变量，并集就是“按位或”。（若每个字K位），集合的并运算，需要N/K次操作</li>
+<li>有序变量表：链表。并集操作用链表合并完成。时间和集合大小正比。</li>
+</ul>
+<h4 id="时间复杂度">时间复杂度</h4>
+<p>O(N)~O(N^2^)</p>
+<p>最坏是O(N^4^)，但通过深度优先对结点排序，一般2、3次迭代即可。</p>
+<h4 id="最小不动点">最小不动点</h4>
+<p>数据流方程的解，是保守的近似解。</p>
+<p>变量d是出口活跃，但不一定会被使用。这样虽然非最优解，代码使用的reg更多，但生成的代码一定正确。</p>
+<p>但上面的算法总能计算出最小不动点。</p>
+<h4 id="静态活跃性与动态活跃性">静态活跃性与动态活跃性</h4>
+<p>停机问题引出推论：静态的分析判断一个程序是否曾到达其中的标号L，是做不到的。</p>
+<p>但推论是指不存在这样的判断通法。改进活跃分析可以得到更多控制流信息，但是仍不能解决。</p>
+<p>故只能使用保守近似值，假定条件分支都会走过。</p>
+<p>动态活跃：程序的某个执行从结点 n 到 变量a 的一个使用之间，没有经过 a 的任何定值（define），则变量 a  在结点 n 是动态活跃的。</p>
+<p>静态活跃：存在着一条从 n 到 a 的某个使用的控制流路径，且此路径上没有 a 的任何定值，则变量 a 在结点 n 是静态活跃的。</p>
+<p>明显，前者可以推出后者。</p>
+<p>优化编译器需根据静态活跃信息，来进行寄存器分配和其他优化，因为一般计算不出动态活跃。</p>
+<p>（JIT编译器算是一个启发式的，想要得到动态活跃信息的手段。）</p>
+<h4 id="冲突图">冲突图</h4>
+<p>活跃信息关系到多种优化，它最重要的应用是寄存器分配。</p>
+<p>冲突：阻止两个临时变量分配到同一寄存器的条件。</p>
+<p>产生：最常见的是活跃范围重叠，还有其他，如：必须用一条不能对寄存器 r1 进行寻址的指令来生成 a 时，则 a 和 r1之间存在冲突。</p>
+<p>表示：矩阵、无向图</p>
+<p>对 MOVE指令的特殊处理（感觉就是需要有向图表示冲突）</p>
+<pre><code>t &lt;- s			（复写）
+...
+x &lt;- ... s ...	 （s的使用）
+...
+y &lt;- ... t ...	 （t的使用）
+</code></pre><p>复写时，加入冲突边（s,t），因为在 t 的定值点 s 是活跃的。</p>
+<p>但实际上不需要给 s、t 分配不同寄存器，因为它们值相同。</p>
+<p>解决：不加入冲突边（t,s）</p>
+<p>=&gt;为每个新定值添加冲突边的方法：</p>
+<ol>
+<li>对于任何变量 a 定值的非传送指令，以及在此指令处是出口活跃的变量 b1&hellip;bi，添加冲突边（a,b1）&hellip;（a,bi）</li>
+<li>对于任何传送指令 a &lt;- c，如果此指令处变量 b1&hellip;bi是出口活跃的，对于不同于 c 的变量 bi，添加冲突边（a,b1）&hellip;（a,bi）</li>
+</ol>
+<h3 id="tiger的活跃分析">Tiger的活跃分析</h3>
+<ol>
+<li>分析控制流，生成控制流图</li>
+<li>在控制流图中分析变量的活跃新，生成冲突图</li>
+</ol>
+<h4 id="图">图</h4>
+<h4 id="控制流图">控制流图</h4>
+<h4 id="活跃分析">活跃分析</h4>
+<h2 id="11寄存器分配">11.寄存器分配</h2>
+<p>任务：</p>
+<ol>
+<li>为大量临时变量分配实际中的少量机器寄存器里</li>
+<li>尽可能将MOVE指令的源、目的寄存器分配为同一个，以便删除 MOVE 指令</li>
+</ol>
+<p>解法：</p>
+<p>冲突图着色，用目标机器的 K 个寄存器代表 K 种颜色，对冲突图着色，相邻结点不同色即可。</p>
+<p>若 K 种颜色的着色问题无解，则必须将一部分变量、临时变量放入存储器，成为溢出（spilling）。</p>
+<h3 id="通过简化进行着色">通过简化进行着色</h3>
+<p>寄存器分配（除特殊，如表达式树）、图着色都是 NP 完全问题。但存在一种可给出较好结果的线性时间近似算法：构造、简化、溢出、选择。</p>
+<ol>
+<li>构造：构造冲突图。（利用数据流分析的方法）</li>
+<li>简化：简单的启发式对图着色。图 G 中结点 m 度数小于 K，则若 G&rsquo; = G - {m}可用 K 着色，则 G也可以。故基于栈（递归）的算法：重复删除度数 &lt; K的结点（压栈），产生更多的简化机会。</li>
+<li>溢出：图 G 中只有高度数结点，即简化算法失效。需要在执行时将它存储在存储器中。标记结点，压栈，继续简化。</li>
+<li>选择：将颜色指派给图中结点。栈顶结点弹出着色，重构冲突图。对于潜在溢出结点，弹出不着色。潜在溢出结点，可能周围的颜色有相同的，则其实是可以对它着色的，反之，则成为实际溢出。（这叫做乐观着色技术）</li>
+<li>重新开始：选择阶段着色不了一些结点，需改写：使用前从存储器读出，定值后存回。——即将一个被溢出的临时变量，转变成几个具有较小活跃范围的新临时变量。新临时变量可能导致新冲突，需重复上面过程，知道没有溢出而简化成功。（实际中，几乎总是迭代一两次就可以了）</li>
+</ol>
+<h3 id="合并">合并</h3>
+<p>冲突图中很容易将两个不存在边的结点合并，这对于 MOVE 指令而言，结点的合并可以删除冗余传送指令。但合并后结点的边，是合并前两结点边的并集。这很可能导致原本可以 K 着色的图，无解。</p>
+<p>有两种保守的安全策略避免：</p>
+<ol>
+<li>Briggs：结点 a、b 合并产生的结点 ab 的高度数邻接结点不超过 K 个，则可合并。此方案不改变图的可着色性。</li>
+<li>George：对于结点 a 的每一个邻居 t，或是 t 已与 b 冲突，或是 t 是低度数，则 a、b可合并。（证明没看懂，为什么合并后还是可以移除 S 内结点？不会度数增加超过 K 吗？）</li>
+</ol>
+<p>“保守”是指它们合并不成功时仍安全，只是程序会执行一些无必要的传送指令。但比溢出要好。</p>
+<p>将合并穿插到简化中，删除大部分传送指令，且不引入新溢出：</p>
+<ol>
+<li>构造：构造冲突图，将结点分类：传送有关的（MOVE的目的或源操作数）、传送无关的。</li>
+<li>简化：每次删除一个低度数、传送无关指令</li>
+<li>合并：保守合并（由于简化，可合并结点可能比原来多 | 删除MOVE），若产生的结点是传送无关的，则可用于下一轮简化。重复“简化-合并”，直到仅剩下高度数、传送有关结点。</li>
+<li>冻结：寻找一个度数较低、传送有关结点，冻结相关传送指令（放弃对这些传送指令合并）。则此结点（可能还有被冻结指令相关的其他结点）被看成是传送无关的，继续“简化-合并”。</li>
+<li>溢出：无低度数结点，选择一个潜在溢出、高度数结点压栈</li>
+<li>选择：出栈并指派颜色</li>
+</ol>
+<p>有一些MOVE执行，既没有合并，也没有冻结——受抑制的。比如:</p>
+<pre><code>结点 x、y、z，
+（x,z）
+x &lt;- y
+y &lt;- z
+当 xy 时，（xy,z）因冲突而无法合并。
+xy &lt;- z是受抑制的传送。
+它不导致其他结点成为传送有关结点，可删除。（？）
+</code></pre><p><strong>溢出：</strong>（不知道用在哪里？）</p>
+<p>溢出时，必须对整个程序重复一边“构造-简化”（为什么？对实际溢出加入实现指令）</p>
+<p>最简解法：重复构造时，忽略所有已找到的合并。这使得新一轮构造中，合并不会增加溢出数量。</p>
+<p>更有效算法：在发现第一个潜在的溢出之前，照常合并，发现之后，忽略所有合并（不合并）。</p>
+<p><strong>合并溢出：</strong></p>
+<p>问题：</p>
+<ol>
+<li>溢出结点的多少和机器寄存器数量相关。</li>
+<li>前端产生许多临时变量，SSA转换时还会将临时变量分裂。若是保存在栈帧中，导致栈帧过大。</li>
+<li>更坏情况，是很多传送指令涉及一对被溢出结点，则需要一个 存/取序列，序列中又涉及一个临时变量，进一步导致溢出。序列本身代价很高。</li>
+</ol>
+<p>解法：溢出的偶对中很多从不会同时活跃，故采取激进的合并，不考虑被溢出结点有多少高度数邻结点。也不需要限制栈帧单元数量。</p>
+<ol>
+<li>用活跃信息构造冲突图</li>
+<li>MOVE指令关联的一对溢出结点不冲突，则合并</li>
+<li>“简化-选择”着色，不会进一步产生溢出。简化时选最低度数结点，选择时取第一个可用颜色，不对颜色预先限制</li>
+<li>颜色对应于被溢出变量在活动记录中的存储单元</li>
+</ol>
+<p>时机：算法在生成溢出指令和重新生成寄存器0临时变量的冲突图之前进行，避免已合并的MOVE相关溢出结点，生成 存/取指令序列。</p>
+<h3 id="预着色的结点">预着色的结点</h3>
+<p>预着色结点通过保守的合并算法，与其他（非预着色）结点合并。</p>
+<h4 id="机器寄存器的临时副本">机器寄存器的临时副本</h4>
+<p>着色算法通过不断的“简化-合并-溢出”过程来工作，直到只剩下预着色结点。然后“选择”阶段才开始向冲突图加入其他的结点（并着色）。</p>
+<p>预着色结点不能溢出，活跃范围要小，前端通过生成保存、恢复预着色结点值的MOVE指令来实现这一点。寄存器压力大时，溢出保存的临时变量。</p>
+<h4 id="调用者被调用者保护的寄存器">调用者、被调用者保护的寄存器</h4>
+<p>分配准则：</p>
+<ol>
+<li>跨调用活跃的变量——分配到被调用者保护的寄存器中。（在过程入口出口，做一次保护和恢复即可）</li>
+<li>局部变量/跨过程调用不活跃的编译器生成的临时变量——分配到调用者保护的寄存器。（不需要保存、恢复任何寄存器）</li>
+</ol>
+<p>前者 x，与所有调用者保护的（预着色的）寄存器冲突，且与所有用于保存被调用者保护的寄存器而生成的新临时变量冲突。此时前者是一个溢出。</p>
+<p>普通的溢出启发式算法：溢出度数高、使用少的结点。不会选择 x 溢出，而是 t231（前一节）。然后将 r7 给 x 着色。</p>
+<h4 id="实例">实例</h4>
+<ol>
+<li>冲突图</li>
+<li>计算溢出优先级，（Use+Def）/度 =&gt; 使用较少的</li>
+<li>合并</li>
+<li>选择，发现潜在溢出点 c 无颜色可分配，则 c 转为实际的溢出结点</li>
+<li>加入实现溢出的指令，重写程序。</li>
+<li>重复上述</li>
+<li>可着色后，用分配的寄存器重写程序</li>
+<li>删除源、目的相同的MOVE</li>
+</ol>
+<h3 id="图着色的实现">图着色的实现</h3>
+<p>两种频繁的查询冲突图：</p>
+<ol>
+<li>获得与结点 X 相邻的所有结点</li>
+<li>判断 X 和 Y 是否相邻</li>
+</ol>
+<p>对1：邻接表</p>
+<p>对2：结点号为索引的二维位矩阵（非常稀疏时，整数偶对的散列表更好）</p>
+<p>同时使用这两种数据结构表示冲突图。</p>
+<p>不需要表示预着色结点的邻接表，因为它用于“选择”（不作用于预着色结点）和Briggs合并测试。</p>
+<p>George合并测试可以合并一个普通结点 a 和一个机器寄存器 r，只需要 a 的邻接表。</p>
+<p>Briggs合并测试用于两个普通结点（非预着色）</p>
+<p>传送相关结点——计数器，记录涉及MOVE条数。——判断结点的传送相关性</p>
+<p>所有结点——相邻结点计数器，判断度数，用于简化时删除</p>
+<p>寄存器分配中，需快速执行每个“简化”、“合并”、“冻结”，通过维护4张表，避免时间二次两级爆炸：</p>
+<ol>
+<li>低度数、传送无关的结点（simplifyWorklist）</li>
+<li>有可能合并的传送指令（worklistMoves）</li>
+<li>低度数、传送有关的结点（freezeWorklist）</li>
+<li>高度数的结点（spillWorklist）</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Wo0dsHole </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://Wo0dsHole.github.io/2019/tiger_c/>https://Wo0dsHole.github.io/2019/tiger_c/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://Wo0dsHole.github.io/tags/%E7%BC%96%E8%AF%91%E7%90%86%E8%AE%BA/">
+                    #编译理论</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://Wo0dsHole.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://Wo0dsHole.github.io/2019/8/" class="prev" rel="prev" title="8-爱情观(一)"><i class="iconfont icon-left"></i>&nbsp;8-爱情观(一)</a>
+         
+        
+        <a href="https://Wo0dsHole.github.io/2019/9/" class="next" rel="next" title="9-爱情观(二)">9-爱情观(二)&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">1993 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://Wo0dsHole.github.io/">Wo0dsHole</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

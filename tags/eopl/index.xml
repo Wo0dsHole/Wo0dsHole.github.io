@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>eopl on 树洞</title>
+    <link>https://Wo0dsHole.github.io/tags/eopl/</link>
+    <description>Recent content in eopl on 树洞</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 07 May 2019 00:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://Wo0dsHole.github.io/tags/eopl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EOPL-0:前言</title>
+      <link>https://Wo0dsHole.github.io/2019/eopl0/</link>
+      <pubDate>Tue, 07 May 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://Wo0dsHole.github.io/2019/eopl0/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

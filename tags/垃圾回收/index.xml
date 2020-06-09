@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>垃圾回收 on 树洞</title>
+    <link>https://Wo0dsHole.github.io/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</link>
+    <description>Recent content in 垃圾回收 on 树洞</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Mar 2000 00:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://Wo0dsHole.github.io/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>垃圾回收</title>
+      <link>https://Wo0dsHole.github.io/2000/b1/</link>
+      <pubDate>Tue, 14 Mar 2000 00:00:00 +0800</pubDate>
+      
+      <guid>https://Wo0dsHole.github.io/2000/b1/</guid>
+      <description>GC [TOC]
+learn from 《垃圾回收算法与实现》
+勘误表链接：http://www.ituring.com.cn/book/1460
+Aim  GC基础：3种算法本身、保守式&amp;amp;准确式、衡量指标、 指标取舍：从“GC基础”出发，尤其是衡量指标角度，去领悟更多 GC算法的内在道理（如何在指标间权衡） 实践实现：minigc 学习实践分析：v8 尝试分析：现在的 v8 （实践自己的学习方法）  2019/4/23
+前言 GC = 虚拟内存
+两部分结构，感受实现与理论的细节差异
+理解解释器可从一点深挖，自然会波及整体
+GC不过时，现在计算机结构的设计中：空间虚拟存储的支持
+序言 垃圾 = 程序不用的内存空间
+垃圾回收 = 找到垃圾 &amp;amp; 使可再次利用（回收）
+意义：内存bug的复杂性——依托于环境。故需要GC来解决一类问题
+3中GC算法
+编程中对内存空间的留意（理解）
+书中符号约定，主要是箭头需要额外记忆
+知识基础：c的函数指针、c++模板
+GC基本概念 书中约定 域：1个字
+指针：算法篇，均可识别 &amp;amp; 指针指向对象首地址
+children：子对象指针数组
+堆：大小固定 HEAP_SIZE &amp;amp; 左低右高
+allocation_fail()：基于约定不扩大堆，故销毁计算结果，报错
+ +------+------+------+| | | |A | + | + | || | | | | |+------+------+------+| || |v +-----&amp;gt;+------++-------+ | || | C | |B | | +------++-------+对象：头、域  object+---------+-----------------+| | || header | body || | |+---------+-----------------+key：header的对外隐藏</description>
+    </item>
+    
+  </channel>
+</rss>
