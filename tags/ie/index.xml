@@ -23,7 +23,7 @@
 最近 F-secure的研究员公开了 x64 exploit以及 write-up。其中的分析非常好，很少见到分析得如此透彻的文章。看后便把 x86 exp写了。
 这篇 blog作为学习此漏洞过程中的梳理与总结，F-secure中已有内容不再重复。
 IE Single UAF to RCE What is &amp;ldquo;write&amp;rdquo;? 此 IE exp最大的亮点在于：它是如何由 Single UAF完成 RCE的？这就涉及到了对 “写” 本质的理解。
-“写” 对应于程序语言中的 “赋值”，在编译理论中这样的赋值也被称为 “副作用”（Side effect）。
+“写” 对应于程序语言中的 “赋值”，在编译理论中这样的赋值也被称为 “副作用”（Side Effect）。
 程序语言很大程度上是对现实世界的建模，对于副作用（“写”）的理解，《SICP》中一针见血地道出——它是对 “时间” 的模拟。
 程序中一个变量x在某一语句被赋值了，那么x在赋值前后便产生了差异，这种差异就体现出了 “时间” 的概念——（赋值前）x ！===（赋值后）x。
 Another &amp;ldquo;write&amp;rdquo; 现在的漏洞利用，不论是 windows内核还是浏览器，大都是先达到任意地址读写，即获得 r/w primitive。
