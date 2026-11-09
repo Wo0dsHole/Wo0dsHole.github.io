@@ -1,0 +1,79 @@
+{{- define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description }}
+  </div>
+  {{- end }}
+</header>
+
+{{- $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $categories := site.Taxonomies.categories }}
+
+<p class="directory-summary">共 {{ len $categories }} 个分类，{{ len $posts }} 篇文章</p>
+
+{{- range $name, $pages := $categories }}
+{{- $termPage := site.GetPage (printf "/categories/%s" $name) }}
+<section class="archive-year" id="{{ $name | urlize }}">
+  <h2 class="archive-year-header">
+    {{- with $termPage }}
+    <a class="archive-header-link" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- else }}
+    {{ $name }}
+    {{- end }}
+    <sup class="archive-count">&nbsp;{{ $pages.Count }}</sup>
+  </h2>
+  <div class="archive-posts">
+    {{- range $pages.Pages.ByDate.Reverse }}
+    <div class="archive-entry">
+      <h3 class="archive-entry-title entry-hint-parent">
+        {{- .Title | markdownify }}
+      </h3>
+      <div class="archive-meta">
+        {{- partial "post_meta.html" . -}}
+      </div>
+      <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- /* 未分类文章 */}}
+{{- $categorized := slice }}
+{{- range $categories }}
+{{- range .Pages }}
+{{- $categorized = $categorized | append .RelPermalink }}
+{{- end }}
+{{- end }}
+{{- $uncategorized := slice }}
+{{- range $posts }}
+{{- if not (in $categorized .RelPermalink) }}
+{{- $uncategorized = $uncategorized | append . }}
+{{- end }}
+{{- end }}
+{{- if $uncategorized }}
+<section class="archive-year" id="uncategorized">
+  <h2 class="archive-year-header">
+    未分类
+    <sup class="archive-count">&nbsp;{{ len $uncategorized }}</sup>
+  </h2>
+  <div class="archive-posts">
+    {{- range sort $uncategorized "Date" "desc" }}
+    <div class="archive-entry">
+      <h3 class="archive-entry-title entry-hint-parent">
+        {{- .Title | markdownify }}
+      </h3>
+      <div class="archive-meta">
+        {{- partial "post_meta.html" . -}}
+      </div>
+      <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- end }}{{/* end main */}}

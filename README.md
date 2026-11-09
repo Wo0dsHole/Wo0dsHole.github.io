@@ -2,7 +2,7 @@
 
 Hugo + PaperMod + GitHub Pages + Giscus 个人博客，支持 **U盘便携** 和 **Codespaces** 两种工作流。
 
-> **当前进度（2026-11-09）**：第 1、2、4、5 步已完成 —— 博客已上线：https://Wo0dsHole.github.io/Blog/ ，Giscus 评论已配置，并已创建测试文章。第 3 步为配置说明；第 6-8 步（大附件 Release、Codespaces、U盘便携）可选，随时可补。
+> **当前进度（2026-11-09）**：第 1、2、4、5 步已完成 —— 博客已上线：https://Wo0dsHole.github.io/Blog/ ，Giscus 评论已配置，已有测试文章、关于页和按分类生成的目录页。第 3 步为配置说明；第 6-8 步（大附件 Release、Codespaces、U盘便携）可选，随时可补。
 
 ---
 
@@ -116,6 +116,8 @@ hugo server -D --bind 0.0.0.0
 | `content/search.md` / `archives.md` | 搜索页 / 归档页（PaperMod 内置） |
 | `archetypes/default.md` | 新文章模板（`hugo new` 时自动套用） |
 | `assets/css/extended.css` | 自定义 CSS（PaperMod 自动加载） |
+| `content/about.md` | 关于页 |
+| `content/directory.md` + `layouts/directory.html` | 按分类自动生成的文章目录页 |
 | `.github/workflows/hugo-deploy.yml` | GitHub Actions：push 后自动构建部署 |
 | `.devcontainer/devcontainer.json` | Codespaces 零配置环境 |
 | `.gitignore` | 忽略 `public/`、`tools/` 等 |
@@ -273,6 +275,17 @@ ShowToc: true
 ```
 
 **更新 PaperMod 主题**：`git submodule update --remote themes/PaperMod`，提交并推送。
+
+### 添加自定义页面
+
+在 `content/` 下新建 Markdown 文件即可，例如 `content/about.md` 会生成 `/about/`。导航菜单在 `hugo.toml` 的 `[[menu.main]]` 中配置，`weight` 控制顺序。
+
+需要特殊排版时，在页面 front matter 指定 `layout`，并在 `layouts/` 下创建同名模板。本站的目录页就是这样实现的：
+
+- `content/directory.md` → `layout: "directory"`
+- `layouts/directory.html` → 按文章分类自动生成目录
+
+页面常用 front matter 开关：`comments: false`（关评论）、`searchHidden: true`（不进搜索）、`hideMeta: true`（隐藏日期等信息）、`ShowToc: false`（关目录）。
 
 ---
 

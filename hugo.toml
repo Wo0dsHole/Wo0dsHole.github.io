@@ -41,7 +41,11 @@ summaryLength = 120
   # 首页顶部欢迎语（不需要可删掉这几行）
   [params.homeInfoParams]
     Title = '欢迎来到我的博客'
-    Content = '记录技术探索与日常'
+    Content = '''
+记录技术探索与日常。
+
+[关于](about/) · [目录](directory/) · [归档](archives/) · [标签](tags/) · [搜索](search/)
+'''
 
   # 评论系统 — Giscus
   [params.giscus]
@@ -65,9 +69,19 @@ summaryLength = 120
 # 导航菜单
 # ============================================================
 [[menu.main]]
+  name = '关于'
+  url = '/about/'
+  weight = 5
+
+[[menu.main]]
   name = '归档'
   url = '/archives/'
   weight = 10
+
+[[menu.main]]
+  name = '目录'
+  url = '/directory/'
+  weight = 15
 
 [[menu.main]]
   name = '搜索'
