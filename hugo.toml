@@ -6,7 +6,7 @@
 baseURL = 'https://Wo0dsHole.github.io/Blog/'
 defaultContentLanguage = 'zh'
 locale = 'zh-CN'
-title = 'My Blog'
+title = '百年呓语'
 theme = 'PaperMod'
 
 # 分页
@@ -40,9 +40,8 @@ summaryLength = 120
 
   # 首页顶部欢迎语（不需要可删掉这几行）
   [params.homeInfoParams]
-    Title = '欢迎来到我的博客'
+    Title = '这里，刻着我的墓志铭。'
     Content = '''
-记录技术探索与日常。
 
 [关于](about/) · [目录](directory/) · [归档](archives/) · [标签](tags/) · [搜索](search/)
 '''
