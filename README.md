@@ -291,6 +291,13 @@ ShowToc: true
 
 **`hugo server` 看不到文章？** 草稿需要 `-D` 参数：`hugo server -D`。
 
+**搜索框是灰色/搜不到内容？** PaperMod 搜索依赖首页生成的 `index.json`，确认 `hugo.toml` 中包含：
+
+```toml
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+```
+
 **Giscus 不显示？** 检查：仓库是 Public；Discussions 已启用；`repoId`/`categoryId` 正确；文章不是草稿。
 
 **`gh release upload` 报 "release not found"？** 还没创建 `assets-v1` 的 Release（第 6 步）。
