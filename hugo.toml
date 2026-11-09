@@ -15,6 +15,10 @@ paginate = 10
 # 摘要长度（字）
 summaryLength = 120
 
+# 搜索索引（PaperMod 搜索必需，生成 /index.json）
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
 [params]
   # PaperMod 搜索
   ShowSearch = true
