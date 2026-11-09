@@ -2,7 +2,7 @@
 
 Hugo + PaperMod + GitHub Pages + Giscus 个人博客，支持 **U盘便携** 和 **Codespaces** 两种工作流。
 
-> **当前进度（2026-11-09）**：第 1、2、4、5 步已完成 —— 博客已上线：https://Wo0dsHole.github.io/Blog/ ，Giscus 评论已配置，已有测试文章、关于页和按分类生成的目录页。第 3 步为配置说明；第 6-8 步（大附件 Release、Codespaces、U盘便携）可选，随时可补。
+> **当前进度（2026-11-09）**：第 1、2、4、5 步已完成 —— 博客已上线：https://Wo0dsHole.github.io/ ，Giscus 评论已配置，已有测试文章、关于页和按分类生成的目录页。第 3 步为配置说明；第 6-8 步（大附件 Release、Codespaces、U盘便携）可选，随时可补。
 
 ---
 
@@ -46,7 +46,7 @@ gh --version
 ## 第 1 步：创建 GitHub 仓库
 
 1. 打开 https://github.com/new
-2. 仓库名：`Blog`
+2. 仓库名：`Wo0dsHole.github.io`（用户站点，地址为根路径 `https://Wo0dsHole.github.io/`；若用其他名字如 `Blog`，地址会变成 `https://Wo0dsHole.github.io/Blog/`）
 3. **必须选 Public**（Giscus 评论系统要求公开仓库）
 4. 不要勾选 "Add a README file"（本目录已有）
 5. 创建后，进入 **Settings → Features**，勾选 **Discussions**（Giscus 依赖）
@@ -54,7 +54,7 @@ gh --version
 ✅ **已完成**，仓库地址：
 
 ```
-https://github.com/Wo0dsHole/Blog.git
+https://github.com/Wo0dsHole/Wo0dsHole.github.io.git
 ```
 
 ---
@@ -77,10 +77,10 @@ git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/Pape
 ### 2.2 填写 hugo.toml 占位符
 
 ✅ 本目录的 `hugo.toml` 已填入仓库信息，无需再改：
-- `baseURL = 'https://Wo0dsHole.github.io/Blog/'`
-- `[params.giscus] repo = 'Wo0dsHole/Blog'`
+- `baseURL = 'https://Wo0dsHole.github.io/'`
+- `[params.giscus] repo = 'Wo0dsHole/Wo0dsHole.github.io'`
 
-只剩 `repoId`、`categoryId` 两个占位符，第 4 步配置。
+`repoId`、`categoryId` 也已填入，见第 4 步。
 
 > **baseURL 规则**：仓库名是 `<用户名>.github.io` 时，`baseURL = 'https://<用户名>.github.io/'`；其他仓库名（如 `Blog`）则 `baseURL = 'https://<用户名>.github.io/Blog/'`。
 
@@ -92,7 +92,7 @@ git config user.email "你的邮箱"
 git add .
 git commit -m "初始化博客"
 git branch -M main
-git remote add origin https://github.com/Wo0dsHole/Blog.git
+git remote add origin https://github.com/Wo0dsHole/Wo0dsHole.github.io.git
 git push -u origin main
 ```
 
@@ -133,11 +133,11 @@ Giscus 用 GitHub Discussions 存储评论，免费、无广告。
 
 1. 打开 https://github.com/apps/giscus → **Install** → 选择博客仓库
 2. 打开 https://giscus.app/zh-CN
-3. "仓库" 填入 `Wo0dsHole/Blog`，页面自动验证并生成配置代码，形如：
+3. "仓库" 填入 `Wo0dsHole/Wo0dsHole.github.io`，页面自动验证并生成配置代码，形如：
 
 ```html
 <script src="https://giscus.app/client.js"
-    data-repo="Wo0dsHole/Blog"
+    data-repo="Wo0dsHole/Wo0dsHole.github.io"
     data-repo-id="R_kgDOxxxxxx"
     data-category="Announcements"
     data-category-id="DIC_kwDOxxxxxx" ...>
@@ -156,7 +156,7 @@ Giscus 用 GitHub Discussions 存储评论，免费、无广告。
 
 1. 打开仓库 **Settings → Pages**，**Source** 选择 **GitHub Actions**
 2. Push 代码后，**Actions** 标签页应看到 `Deploy Hugo to Pages` 运行
-3. 完成后博客地址：`https://Wo0dsHole.github.io/Blog/`
+3. 完成后博客地址：`https://Wo0dsHole.github.io/`
 
 > 首次部署约 1-2 分钟，之后每次 push 自动触发。
 
@@ -179,7 +179,7 @@ git push origin assets-v1
 gh auth login   # 首次使用需登录
 gh release upload assets-v1 你的大文件.zip
 
-# 公开 URL：https://github.com/Wo0dsHole/Blog/releases/download/assets-v1/你的大文件.zip
+# 公开 URL：https://github.com/Wo0dsHole/Wo0dsHole.github.io/releases/download/assets-v1/你的大文件.zip
 ```
 
 更新同名附件时先删后传：
@@ -271,7 +271,7 @@ ShowToc: true
 **插入大附件**：先 `gh release upload assets-v1 文件.zip`，再在文章里放链接：
 
 ```markdown
-[📥 下载](https://github.com/Wo0dsHole/Blog/releases/download/assets-v1/文件.zip)
+[📥 下载](https://github.com/Wo0dsHole/Wo0dsHole.github.io/releases/download/assets-v1/文件.zip)
 ```
 
 **更新 PaperMod 主题**：`git submodule update --remote themes/PaperMod`，提交并推送。

@@ -1,9 +1,9 @@
 # ============================================================
 # Hugo + PaperMod 配置文件
-# 仓库：https://github.com/Wo0dsHole/Blog
+# 仓库：https://github.com/Wo0dsHole/Wo0dsHole.github.io
 # ============================================================
 
-baseURL = 'https://Wo0dsHole.github.io/Blog/'
+baseURL = 'https://Wo0dsHole.github.io/'
 defaultContentLanguage = 'zh'
 locale = 'zh-CN'
 title = '百年呓语'
@@ -48,7 +48,7 @@ summaryLength = 120
 
   # 评论系统 — Giscus
   [params.giscus]
-    repo = 'Wo0dsHole/Blog'
+    repo = 'Wo0dsHole/Wo0dsHole.github.io'
     repoId = 'R_kgDOVn4JrQ'
     category = 'Announcements'
     categoryId = 'DIC_kwDOVn4Jrc4DKtgh'
