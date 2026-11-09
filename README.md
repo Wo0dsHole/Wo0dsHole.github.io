@@ -2,7 +2,7 @@
 
 Hugo + PaperMod + GitHub Pages + Giscus 个人博客，支持 **U盘便携** 和 **Codespaces** 两种工作流。
 
-> **当前进度（2026-11-09）**：第 1 步已完成 —— 仓库 [Wo0dsHole/Blog](https://github.com/Wo0dsHole/Blog) 已创建（Public，已启用 Discussions），正在执行第 2 步。
+> **当前进度（2026-11-09）**：第 1、2、5 步已完成 —— 代码已推送，Actions 部署成功，博客已上线：https://Wo0dsHole.github.io/Blog/ 。剩余：第 4 步安装 Giscus 应用并填入 `categoryId`（第 6-8 步可选，随时可补）。
 
 ---
 
@@ -60,6 +60,8 @@ https://github.com/Wo0dsHole/Blog.git
 ---
 
 ## 第 2 步：本地初始化（git + 主题 + 配置）
+
+> ✅ 已完成（2026-11-09）：git 仓库、PaperMod submodule、配置和首次提交均已就绪。
 
 本目录已经是初始化好的 Hugo 站点，直接做以下操作（在本目录 `D:\ai\Blog` 下）：
 
@@ -123,6 +125,8 @@ hugo server -D --bind 0.0.0.0
 
 ## 第 4 步：配置 Giscus 评论
 
+> ⚠️ 待完成：`repo` 与 `repoId`（`R_kgDOVn4JrQ`）已填入，还需安装 Giscus 应用并填入 `categoryId`。
+
 Giscus 用 GitHub Discussions 存储评论，免费、无广告。
 
 1. 打开 https://github.com/apps/giscus → **Install** → 选择博客仓库
@@ -145,6 +149,8 @@ Giscus 用 GitHub Discussions 存储评论，免费、无广告。
 ---
 
 ## 第 5 步：启用 GitHub Pages 部署
+
+> ✅ 已完成：Pages 已设为 GitHub Actions，首次部署成功，博客已上线。
 
 1. 打开仓库 **Settings → Pages**，**Source** 选择 **GitHub Actions**
 2. Push 代码后，**Actions** 标签页应看到 `Deploy Hugo to Pages` 运行
