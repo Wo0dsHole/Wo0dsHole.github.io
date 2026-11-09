@@ -120,7 +120,9 @@ hugo server -D --bind 0.0.0.0
 | `content/directory.md` + `layouts/directory.html` | 按分类自动生成的文章目录页 |
 | `.github/workflows/hugo-deploy.yml` | GitHub Actions：push 后自动构建部署 |
 | `.devcontainer/devcontainer.json` | Codespaces 零配置环境 |
-| `.gitignore` | 忽略 `public/`、`tools/` 等 |
+| `new-post.sh` | 生成文章 Page Bundle 框架 |
+| `.gitattributes` | 强制 `.sh` 使用 LF、`.bat` 使用 CRLF |
+| `.gitignore` | 忽略 `public/`、`tools/`、`drafts/` 等 |
 | `portable.bat` | U盘便携一键启动脚本 |
 
 ---
@@ -237,10 +239,17 @@ U:\
 # 开始写作前（先同步）
 git pull --rebase && git submodule update --init --recursive
 
-# 创建新文章（在 content/posts/ 下生成同名目录）
-hugo new posts/2026-08-04-文章标题/index.md
+# 生成新文章框架（Page Bundle），默认生成到 drafts/
+./new-post.sh "文章标题" 英文slug
+# → drafts/2026-11-09-英文slug/index.md
 
-# 本地预览（草稿需 -D）
+# 写完内容后移动到文章目录，并把 draft: true 改成 false
+mv drafts/2026-11-09-英文slug content/posts/
+
+# 也可以直接生成到 content/posts/（draft: true，不会发布）
+./new-post.sh "文章标题" 英文slug content/posts
+
+# 本地预览（草稿需 -D；Hugo 未在 PATH 时用 ./tools/hugo.exe）
 hugo server -D --bind 0.0.0.0
 ```
 
@@ -251,6 +260,8 @@ content/posts/2026-08-04-文章标题/
 ├── index.md           ← 正文
 └── 配图.png            ← 图片放同一目录
 ```
+
+> 目录名就是文章 URL：`/posts/2026-11-09-英文slug/`。slug 建议用英文或拼音，中文会被 URL 编码，能用但不美观。
 
 ```markdown
 ---

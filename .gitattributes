@@ -1,0 +1,5 @@
+# Shell 脚本保持 LF，避免 Git Bash 在 Windows 上报 bad interpreter
+*.sh text eol=lf
+
+# Windows 批处理保持 CRLF
+*.bat text eol=crlf

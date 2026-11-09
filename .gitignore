@@ -6,6 +6,9 @@
 # 便携工具（U盘用，不提交到仓库）
 tools/
 
+# 文章草稿暂存区（写好后移动到 content/posts/）
+/drafts/
+
 # OS
 .DS_Store
 Thumbs.db

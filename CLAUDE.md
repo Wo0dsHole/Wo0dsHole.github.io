@@ -15,7 +15,10 @@ hugo server -D --bind 0.0.0.0
 # Build for production
 hugo --minify
 
-# New post
+# New post frame (page bundle; creates drafts/YYYY-MM-DD-slug/index.md)
+./new-post.sh "文章标题" slug
+
+# Alternative: Hugo archetype directly into content
 hugo new posts/YYYY-MM-DD-slug/index.md
 
 # Update PaperMod theme
@@ -45,5 +48,6 @@ gh release upload assets-v1 filename.zip
 | `.github/workflows/hugo-deploy.yml` | Auto-deploy to GitHub Pages |
 | `.devcontainer/devcontainer.json` | Codespaces zero-config env |
 | `portable.bat` | USB one-click launcher |
+| `new-post.sh` | Generates a page-bundle post frame in `drafts/` |
 | `archetypes/default.md` | Template for new posts |
 | `assets/css/extended.css` | Custom CSS (auto-loaded by PaperMod) |
