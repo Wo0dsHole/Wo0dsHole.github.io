@@ -2,7 +2,7 @@
 
 Hugo + PaperMod + GitHub Pages + Giscus 个人博客，支持 **U盘便携** 和 **Codespaces** 两种工作流。
 
-> **当前进度（2026-11-09）**：第 1、2、5 步已完成 —— 代码已推送，Actions 部署成功，博客已上线：https://Wo0dsHole.github.io/Blog/ 。剩余：第 4 步安装 Giscus 应用并填入 `categoryId`（第 6-8 步可选，随时可补）。
+> **当前进度（2026-11-09）**：第 1、2、4、5 步已完成 —— 博客已上线：https://Wo0dsHole.github.io/Blog/ ，Giscus 评论已配置，并已创建测试文章。第 3 步为配置说明；第 6-8 步（大附件 Release、Codespaces、U盘便携）可选，随时可补。
 
 ---
 
@@ -112,7 +112,7 @@ hugo server -D --bind 0.0.0.0
 | 文件 | 作用 |
 |------|------|
 | `hugo.toml` | 主配置：站点信息、PaperMod 参数、导航菜单、Giscus、代码高亮 |
-| `layouts/partials/comments.html` | Giscus 评论模板，PaperMod 自动加载 |
+| `layouts/_partials/comments.html` | Giscus 评论模板，PaperMod 自动加载 |
 | `content/search.md` / `archives.md` | 搜索页 / 归档页（PaperMod 内置） |
 | `archetypes/default.md` | 新文章模板（`hugo new` 时自动套用） |
 | `assets/css/extended.css` | 自定义 CSS（PaperMod 自动加载） |
@@ -125,7 +125,7 @@ hugo server -D --bind 0.0.0.0
 
 ## 第 4 步：配置 Giscus 评论
 
-> ⚠️ 待完成：`repo` 与 `repoId`（`R_kgDOVn4JrQ`）已填入，还需安装 Giscus 应用并填入 `categoryId`。
+> ✅ 已完成（2026-11-09）：`repo`、`repoId`（`R_kgDOVn4JrQ`）、`categoryId`（`DIC_kwDOVn4Jrc4DKtgh`）均已填入，Giscus 应用已安装。
 
 Giscus 用 GitHub Discussions 存储评论，免费、无广告。
 

@@ -29,7 +29,7 @@ gh release upload assets-v1 filename.zip
 
 - **Theme**: PaperMod via git submodule at `themes/PaperMod`
 - **Deploy**: GitHub Actions (`.github/workflows/hugo-deploy.yml`) builds and deploys on push to `main`
-- **Comments**: Giscus via `layouts/partials/comments.html`, configured in `hugo.toml` → `[params.giscus]`
+- **Comments**: Giscus via `layouts/_partials/comments.html`, configured in `hugo.toml` → `[params.giscus]`
 - **Search**: PaperMod built-in Fuse.js, requires `content/search.md`
 - **Images**: Hugo page bundles — images go in the same directory as the post's `index.md`, referenced by relative filename
 - **Large attachments (100MB–2GB)**: Uploaded to a permanent GitHub Release (`assets-v1` tag), linked via URL in posts
@@ -41,7 +41,7 @@ gh release upload assets-v1 filename.zip
 | File | Purpose |
 |------|---------|
 | `hugo.toml` | Site config, PaperMod params, Giscus settings, nav menu |
-| `layouts/partials/comments.html` | Giscus JS embed |
+| `layouts/_partials/comments.html` | Giscus JS embed |
 | `.github/workflows/hugo-deploy.yml` | Auto-deploy to GitHub Pages |
 | `.devcontainer/devcontainer.json` | Codespaces zero-config env |
 | `portable.bat` | USB one-click launcher |

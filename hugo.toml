@@ -16,11 +16,6 @@ paginate = 10
 summaryLength = 120
 
 [params]
-  # 首页顶部欢迎语（不需要可删掉这几行）
-  [params.homeInfoParams]
-    Title = '欢迎来到我的博客'
-    Content = '记录技术探索与日常'
-
   # PaperMod 搜索
   ShowSearch = true
   ShowCodeCopyButtons = true
@@ -30,18 +25,26 @@ summaryLength = 120
   ShowPostNavLinks = true
   ShowToc = true
 
+  # 启用评论（模板见 layouts/_partials/comments.html）
+  comments = true
+
   # 日期格式
   dateFormat = '2006-01-02'
 
   # 默认主题模式
   # defaultTheme = 'auto'   # auto | light | dark
 
+  # 首页顶部欢迎语（不需要可删掉这几行）
+  [params.homeInfoParams]
+    Title = '欢迎来到我的博客'
+    Content = '记录技术探索与日常'
+
   # 评论系统 — Giscus
   [params.giscus]
     repo = 'Wo0dsHole/Blog'
     repoId = 'R_kgDOVn4JrQ'
     category = 'Announcements'
-    categoryId = '<从 giscus.app 获取>'
+    categoryId = 'DIC_kwDOVn4Jrc4DKtgh'
     mapping = 'pathname'
     reactionsEnabled = '1'
     emitMetadata = '0'
