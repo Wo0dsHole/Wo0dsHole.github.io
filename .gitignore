@@ -1,0 +1,20 @@
+# Hugo
+/public/
+/resources/
+.hugo_build.lock
+
+# 便携工具（U盘用，不提交到仓库）
+tools/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code 本地设置
+.claude/settings.local.json

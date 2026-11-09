@@ -1,0 +1,97 @@
+# ============================================================
+# Hugo + PaperMod 配置文件
+# 仓库：https://github.com/Wo0dsHole/Blog
+# ============================================================
+
+baseURL = 'https://Wo0dsHole.github.io/Blog/'
+defaultContentLanguage = 'zh'
+locale = 'zh-CN'
+title = 'My Blog'
+theme = 'PaperMod'
+
+# 分页
+paginate = 10
+
+# 摘要长度（字）
+summaryLength = 120
+
+[params]
+  # 首页顶部欢迎语（不需要可删掉这几行）
+  [params.homeInfoParams]
+    Title = '欢迎来到我的博客'
+    Content = '记录技术探索与日常'
+
+  # PaperMod 搜索
+  ShowSearch = true
+  ShowCodeCopyButtons = true
+  ShowReadingTime = true
+  ShowWordCount = true
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowToc = true
+
+  # 日期格式
+  dateFormat = '2006-01-02'
+
+  # 默认主题模式
+  # defaultTheme = 'auto'   # auto | light | dark
+
+  # 评论系统 — Giscus
+  [params.giscus]
+    repo = 'Wo0dsHole/Blog'
+    repoId = 'R_kgDOVn4JrQ'
+    category = 'Announcements'
+    categoryId = '<从 giscus.app 获取>'
+    mapping = 'pathname'
+    reactionsEnabled = '1'
+    emitMetadata = '0'
+    inputPosition = 'bottom'
+    lang = 'zh-CN'
+    loading = 'lazy'
+
+  # 社交媒体链接（可选）
+  # [[params.socialIcons]]
+  #   name = 'github'
+  #   url = 'https://github.com/<YOUR_USERNAME>'
+
+# ============================================================
+# 导航菜单
+# ============================================================
+[[menu.main]]
+  name = '归档'
+  url = '/archives/'
+  weight = 10
+
+[[menu.main]]
+  name = '搜索'
+  url = '/search/'
+  weight = 20
+
+[[menu.main]]
+  name = '标签'
+  url = '/tags/'
+  weight = 30
+
+# ============================================================
+# 分类法
+# ============================================================
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+  series = 'series'
+
+# ============================================================
+# Markdown 设置
+# ============================================================
+[markup]
+  [markup.highlight]
+    style = 'monokai'
+    noClasses = false
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+
+# ============================================================
+# 主题引入方式：git submodule（见 README 第 2 步）
+#   git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+# ============================================================
