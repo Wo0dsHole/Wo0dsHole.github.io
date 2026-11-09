@@ -42,6 +42,11 @@ DATE="$(date +%Y-%m-%d)"
 STAMP="$(date +%Y-%m-%dT%H:%M:%S%:z)"
 DEST="$ROOT/$OUT_DIR/$DATE-$SLUG"
 
+IN_POSTS=0
+case "$DEST" in
+  "$ROOT/content/posts/"*) IN_POSTS=1 ;;
+esac
+
 if [ -e "$DEST" ]; then
   echo "错误：目录已存在：$DEST"
   exit 1
@@ -79,8 +84,13 @@ echo "   $DEST/index.md"
 echo
 echo "接下来："
 echo "  1. 编辑 index.md，图片放进同一个文件夹"
-echo "  2. 写完后移到文章目录："
-echo "     mv \"$DEST\" \"$ROOT/content/posts/\""
-echo "  3. 把 front matter 里的 draft: true 改成 false"
-echo "  4. 提交发布："
+if [ "$IN_POSTS" -eq 1 ]; then
+  echo "  2. 发布时把 front matter 里的 draft: true 改成 false"
+  echo "  3. 提交发布："
+else
+  echo "  2. 写完后移到文章目录："
+  echo "     mv \"$DEST\" \"$ROOT/content/posts/\""
+  echo "  3. 把 front matter 里的 draft: true 改成 false"
+  echo "  4. 提交发布："
+fi
 echo "     cd \"$ROOT\" && git add -A && git commit -m \"新文章: $TITLE\" && git push"
